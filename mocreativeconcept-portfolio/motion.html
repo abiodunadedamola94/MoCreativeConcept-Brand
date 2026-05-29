@@ -3,1418 +3,383 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Motion & Animation — Abiodun Adedamola</title>
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+<title>Motion & Animation — MoCreativeConcept</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400&display=swap" rel="stylesheet">
 <style>
-/* ─── TOKENS ─── */
-:root {
-  --void:       #07070e;
-  --deep:       #0f0f1a;
-  --surface:    #14141f;
-  --surface2:   #1c1c2a;
-  --surface3:   #22223a;
-  --border:     rgba(255,255,255,0.06);
-  --border2:    rgba(255,255,255,0.11);
-  --signal:     #7b68ee;
-  --signal-glow:rgba(123,104,238,0.28);
-  --sky:        #38bdf8;
-  --pulse:      #10b981;
-  --rose:       #f43f5e;
-  --amber:      #f59e0b;
-  --warm:       #ede9e0;
-  --muted:      #7a8899;
-  --muted2:     #4a5566;
-  --radius:     16px;
+:root{
+  --void:#07070e;--deep:#0f0f1a;--surface:#14141f;--surface2:#1c1c2a;
+  --border:rgba(255,255,255,0.06);--border2:rgba(255,255,255,0.11);
+  --signal:#7b68ee;--sky:#38bdf8;--pulse:#10b981;
+  --warm:#ede9e0;--muted:#7a8899;--muted2:#4a5566;--radius:16px;
 }
-
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
 html{scroll-behavior:smooth;}
+body{background:var(--void);color:var(--warm);font-family:'DM Sans',sans-serif;-webkit-font-smoothing:antialiased;overflow-x:hidden;}
 
-body{
-  background:var(--void);
-  color:var(--warm);
-  font-family:'DM Sans',sans-serif;
-  -webkit-font-smoothing:antialiased;
-  overflow-x:hidden;
-  cursor:none;
-}
+/* NAV */
+nav{display:flex;align-items:center;justify-content:space-between;padding:28px 24px 0;max-width:1100px;margin:0 auto;}
+.logo{font-family:'Syne',sans-serif;font-weight:800;font-size:17px;letter-spacing:-0.03em;color:var(--warm);text-decoration:none;}
+.logo span{color:var(--signal);}
+.nav-links{display:flex;gap:20px;align-items:center;}
+.nl{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);text-decoration:none;transition:color .2s;}
+.nl:hover{color:var(--warm);}
+.nl.active{color:var(--signal);}
+@media(max-width:520px){.nav-links .nl:not(.active){display:none;}}
 
-/* ─── CUSTOM CURSOR ─── */
-.cursor{
-  position:fixed;
-  width:10px;height:10px;
-  background:var(--signal);
-  border-radius:50%;
-  pointer-events:none;
-  z-index:9999;
-  transform:translate(-50%,-50%);
-  transition:transform 0.08s,width 0.2s,height 0.2s,background 0.2s;
-  mix-blend-mode:screen;
-}
-.cursor-ring{
-  position:fixed;
-  width:36px;height:36px;
-  border:1px solid rgba(123,104,238,0.5);
-  border-radius:50%;
-  pointer-events:none;
-  z-index:9998;
-  transform:translate(-50%,-50%);
-  transition:transform 0.18s ease,width 0.25s,height 0.25s,border-color 0.25s;
-}
-body:hover .cursor{opacity:1;}
+/* PAGE */
+.page{max-width:1100px;margin:0 auto;padding:0 24px 80px;}
 
-/* ─── NOISE TEXTURE ─── */
-body::before{
-  content:'';
-  position:fixed;inset:0;
-  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
-  pointer-events:none;z-index:0;
-}
+/* HERO */
+.hero{padding:80px 0 48px;}
+.eyebrow{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:var(--signal);margin-bottom:24px;display:flex;align-items:center;gap:8px;}
+.eyebrow::before{content:'';width:24px;height:1px;background:var(--signal);}
+.hero-title{font-family:'Syne',sans-serif;font-weight:800;font-size:clamp(44px,8vw,96px);letter-spacing:-0.04em;line-height:0.9;color:var(--warm);margin-bottom:32px;}
+.hero-title em{font-style:normal;color:transparent;-webkit-text-stroke:1px rgba(123,104,238,0.6);}
+.hero-sub{font-size:clamp(14px,1.8vw,17px);color:var(--muted);font-weight:300;max-width:520px;line-height:1.65;margin-bottom:36px;}
+.hero-meta{display:flex;gap:28px;flex-wrap:wrap;}
+.hmv{font-family:'Syne',sans-serif;font-weight:700;font-size:22px;color:var(--pulse);letter-spacing:-0.03em;line-height:1;}
+.hml{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted2);}
 
-/* ─── AMBIENT GLOW ORBS ─── */
-.orb{
-  position:fixed;border-radius:50%;
-  filter:blur(80px);pointer-events:none;z-index:0;
-  animation:drift 14s ease-in-out infinite alternate;
-}
-.orb-1{width:400px;height:400px;background:rgba(123,104,238,0.1);top:-100px;left:-100px;}
-.orb-2{width:300px;height:300px;background:rgba(56,189,248,0.07);bottom:-80px;right:-60px;animation-delay:-7s;}
-.orb-3{width:200px;height:200px;background:rgba(16,185,129,0.06);top:50%;left:60%;animation-delay:-3s;}
-@keyframes drift{
-  from{transform:translate(0,0);}
-  to{transform:translate(30px,20px);}
-}
+/* SEC LABEL */
+.slabel{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted2);margin-bottom:24px;display:flex;align-items:center;gap:12px;}
+.slabel::after{content:'';flex:1;height:0.5px;background:var(--border2);}
 
-/* ─── PAGE SHELL ─── */
-.page{
-  position:relative;z-index:1;
-  max-width:1100px;
-  margin:0 auto;
-  padding:0 20px 80px;
-}
+/* REEL GRID */
+.reel-grid{display:grid;grid-template-columns:1fr;gap:24px;margin-bottom:60px;}
+@media(min-width:640px){.reel-grid{grid-template-columns:1fr 1fr;}.reel-card:first-child{grid-column:1/-1;}}
+@media(min-width:900px){.reel-grid{grid-template-columns:repeat(3,1fr);}.reel-card:first-child{grid-column:1/3;}}
 
-/* ─── NAV ─── */
-nav{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  padding:28px 0 0;
-  margin-bottom:80px;
-}
-.nav-logo{
-  font-family:'Syne',sans-serif;
-  font-weight:800;
-  font-size:18px;
-  letter-spacing:-0.03em;
-  color:var(--warm);
-  text-decoration:none;
-}
-.nav-logo span{color:var(--signal);}
+/* CARD */
+.reel-card{position:relative;border-radius:var(--radius);overflow:hidden;background:var(--surface);border:0.5px solid var(--border2);transition:border-color .25s,transform .2s;}
+.reel-card:hover{border-color:var(--signal);transform:translateY(-2px);}
 
-.nav-links{
-  display:flex;gap:28px;align-items:center;
-}
-.nav-link{
-  font-family:'DM Mono',monospace;
-  font-size:10px;
-  letter-spacing:0.1em;
-  text-transform:uppercase;
-  color:var(--muted);
-  text-decoration:none;
-  transition:color 0.2s;
-}
-.nav-link:hover{color:var(--warm);}
-.nav-link.active{color:var(--signal);}
+.video-wrap{position:relative;width:100%;aspect-ratio:16/9;background:var(--deep);overflow:hidden;}
 
-/* ─── HERO ─── */
-.hero{
-  margin-bottom:90px;
-  position:relative;
-}
+/* THUMBNAIL */
+.thumb-layer{position:absolute;inset:0;z-index:3;transition:opacity .4s,transform .4s;cursor:pointer;}
+.thumb-layer.hidden{opacity:0;pointer-events:none;transform:scale(1.03);}
+.thumb-cta{position:absolute;bottom:16px;left:50%;transform:translateX(-50%);display:flex;align-items:center;gap:7px;padding:7px 16px;border-radius:99px;background:rgba(0,0,0,0.55);backdrop-filter:blur(8px);border:0.5px solid rgba(255,255,255,0.15);font-family:'DM Mono',monospace;font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.8);white-space:nowrap;pointer-events:none;}
+.reel-card:hover .thumb-cta{background:rgba(123,104,238,0.3);border-color:rgba(123,104,238,0.5);}
 
-.hero-eyebrow{
-  display:inline-flex;
-  align-items:center;
-  gap:8px;
-  font-family:'DM Mono',monospace;
-  font-size:10px;
-  letter-spacing:0.14em;
-  text-transform:uppercase;
-  color:var(--signal);
-  margin-bottom:24px;
-}
-.hero-eyebrow::before{
-  content:'';
-  width:24px;height:1px;
-  background:var(--signal);
-}
+/* EMBED */
+.embed-layer{position:absolute;inset:0;z-index:2;}
+.embed-layer video,.embed-layer iframe{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border:none;}
 
-.hero-title{
-  font-family:'Syne',sans-serif;
-  font-weight:800;
-  font-size:clamp(44px, 8vw, 96px);
-  letter-spacing:-0.04em;
-  line-height:0.9;
-  color:var(--warm);
-  margin-bottom:32px;
-}
-.hero-title em{
-  font-style:normal;
-  color:transparent;
-  -webkit-text-stroke:1px rgba(123,104,238,0.6);
-}
-
-.hero-sub{
-  font-size:clamp(14px,1.8vw,17px);
-  color:var(--muted);
-  font-weight:300;
-  max-width:520px;
-  line-height:1.65;
-  margin-bottom:36px;
-}
-
-.hero-meta{
-  display:flex;
-  gap:28px;
-  flex-wrap:wrap;
-}
-.hero-meta-item{
-  display:flex;
-  flex-direction:column;
-  gap:3px;
-}
-.hero-meta-val{
-  font-family:'Syne',sans-serif;
-  font-weight:700;
-  font-size:22px;
-  color:var(--pulse);
-  letter-spacing:-0.03em;
-}
-.hero-meta-label{
-  font-family:'DM Mono',monospace;
-  font-size:9px;
-  letter-spacing:0.1em;
-  text-transform:uppercase;
-  color:var(--muted2);
-}
-
-/* ─── SECTION LABEL ─── */
-.sec-label{
-  font-family:'DM Mono',monospace;
-  font-size:9px;
-  letter-spacing:0.14em;
-  text-transform:uppercase;
-  color:var(--muted2);
-  margin-bottom:24px;
-  display:flex;align-items:center;gap:12px;
-}
-.sec-label::after{
-  content:'';flex:1;height:0.5px;background:var(--border2);
-}
-
-/* ─── REEL GRID ─── */
-.reel-grid{
-  display:grid;
-  grid-template-columns:1fr;
-  gap:24px;
-  margin-bottom:80px;
-}
-
-/* featured = wider card */
-.reel-card{
-  position:relative;
-  border-radius:var(--radius);
-  overflow:hidden;
-  background:var(--surface);
-  border:0.5px solid var(--border2);
-  cursor:none;
-  group:true;
-}
-
-/* video wrapper with aspect ratio */
-.video-wrap{
-  position:relative;
-  width:100%;
-  aspect-ratio:16/9;
-  background:var(--deep);
-  overflow:hidden;
-}
-
-/* placeholder gradient bg — replaces with real video */
-.video-placeholder{
-  position:absolute;inset:0;
-  display:flex;align-items:center;justify-content:center;
-  flex-direction:column;
-  gap:16px;
-}
-
-.video-placeholder video,
-.video-placeholder iframe{
-  position:absolute;inset:0;
-  width:100%;height:100%;
-  object-fit:cover;
-  border:none;
-}
-
-/* gradient placeholder art */
-.placeholder-art{
-  position:absolute;inset:0;
-}
-
-/* play indicator */
-.play-indicator{
-  position:absolute;
-  bottom:16px;right:16px;
-  display:flex;align-items:center;gap:8px;
-  background:rgba(0,0,0,0.5);
-  backdrop-filter:blur(8px);
-  border:0.5px solid rgba(255,255,255,0.12);
-  border-radius:99px;
-  padding:6px 14px;
-  font-family:'DM Mono',monospace;
-  font-size:9px;
-  letter-spacing:0.1em;
-  text-transform:uppercase;
-  color:var(--warm);
-  opacity:0;
-  transform:translateY(4px);
-  transition:opacity 0.25s,transform 0.25s;
-  pointer-events:none;
-  z-index:10;
-}
-.play-dot{
-  width:6px;height:6px;border-radius:50%;
-  background:var(--pulse);
-  animation:blink 1.5s ease-in-out infinite;
-}
+/* PLAY INDICATOR */
+.play-ind{position:absolute;bottom:16px;right:16px;display:flex;align-items:center;gap:8px;background:rgba(0,0,0,0.5);backdrop-filter:blur(8px);border:0.5px solid rgba(255,255,255,0.12);border-radius:99px;padding:6px 14px;font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.1em;text-transform:uppercase;color:var(--warm);opacity:0;transform:translateY(4px);transition:opacity .25s,transform .25s;pointer-events:none;z-index:10;}
+.reel-card:hover .play-ind,.reel-card.playing .play-ind{opacity:1;transform:translateY(0);}
+.pdot{width:6px;height:6px;border-radius:50%;background:var(--pulse);animation:blink 1.5s ease-in-out infinite;}
 @keyframes blink{0%,100%{opacity:1;}50%{opacity:0.3;}}
 
-.reel-card:hover .play-indicator,
-.reel-card.playing .play-indicator{opacity:1;transform:translateY(0);}
+/* CARD INFO */
+.card-info{padding:18px 20px 20px;display:flex;align-items:flex-start;justify-content:space-between;gap:12px;flex-wrap:wrap;}
+.ci-index{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.12em;color:var(--muted2);margin-bottom:5px;}
+.ci-title{font-family:'Syne',sans-serif;font-weight:700;font-size:clamp(15px,2.5vw,18px);letter-spacing:-0.02em;color:var(--warm);margin-bottom:4px;}
+.ci-desc{font-size:12px;color:var(--muted);line-height:1.55;max-width:400px;}
+.ci-tags{display:flex;gap:5px;flex-wrap:wrap;margin-top:8px;}
+.ctag{font-size:10px;padding:3px 8px;border-radius:5px;background:var(--surface2);border:0.5px solid var(--border2);color:var(--muted);font-family:'DM Mono',monospace;letter-spacing:0.04em;}
+.open-btn{display:inline-flex;align-items:center;gap:6px;font-family:'DM Mono',monospace;font-size:10px;letter-spacing:0.08em;text-transform:uppercase;color:var(--signal);text-decoration:none;border:0.5px solid rgba(123,104,238,0.3);border-radius:8px;padding:7px 12px;transition:background .2s,border-color .2s;white-space:nowrap;flex-shrink:0;}
+.open-btn:hover{background:rgba(123,104,238,0.15);border-color:var(--signal);}
+.tool-badge{font-size:9px;color:var(--muted2);font-family:'DM Mono',monospace;letter-spacing:0.06em;margin-top:6px;display:block;}
 
-/* card info */
-.card-info{
-  padding:20px 22px 22px;
-  display:flex;
-  align-items:flex-start;
-  justify-content:space-between;
-  gap:16px;
-}
+/* MARQUEE */
+.mwrap{overflow:hidden;border-top:0.5px solid var(--border);border-bottom:0.5px solid var(--border);padding:11px 0;margin-bottom:60px;}
+.mtrack{display:flex;width:max-content;animation:marquee 22s linear infinite;}
+.mi{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted2);padding:0 24px;white-space:nowrap;}
+.mi b{color:var(--signal);margin-right:10px;font-weight:400;}
+@keyframes marquee{from{transform:translateX(0);}to{transform:translateX(-50%);}}
 
-.card-meta{}
-.card-index{
-  font-family:'DM Mono',monospace;
-  font-size:9px;
-  letter-spacing:0.12em;
-  color:var(--muted2);
-  margin-bottom:6px;
-}
-.card-title{
-  font-family:'Syne',sans-serif;
-  font-weight:700;
-  font-size:18px;
-  letter-spacing:-0.02em;
-  color:var(--warm);
-  margin-bottom:4px;
-}
-.card-desc{
-  font-size:12px;
-  color:var(--muted);
-  line-height:1.55;
-  max-width:400px;
-}
-.card-tags{
-  display:flex;gap:6px;flex-wrap:wrap;
-  margin-top:10px;
-}
-.ctag{
-  font-size:10px;
-  padding:3px 9px;
-  border-radius:6px;
-  background:var(--surface2);
-  border:0.5px solid var(--border2);
-  color:var(--muted);
-  font-family:'DM Mono',monospace;
-  letter-spacing:0.04em;
-}
+/* FOOTER */
+footer{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;padding:24px 0 36px;border-top:0.5px solid var(--border);}
+.fn{font-family:'Syne',sans-serif;font-weight:700;font-size:14px;letter-spacing:-0.02em;color:var(--warm);}
+.fn span{color:var(--signal);}
+.flinks{display:flex;gap:20px;flex-wrap:wrap;}
+.flink{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:0.06em;color:var(--muted2);text-decoration:none;}
+.flink.cta{color:var(--sky);border-bottom:0.5px solid rgba(56,189,248,0.3);padding-bottom:1px;}
 
-.card-action{
-  flex-shrink:0;
-  display:flex;flex-direction:column;align-items:flex-end;gap:8px;
-}
-.open-btn{
-  display:inline-flex;align-items:center;gap:6px;
-  font-family:'DM Mono',monospace;
-  font-size:10px;
-  letter-spacing:0.08em;
-  text-transform:uppercase;
-  color:var(--signal);
-  text-decoration:none;
-  border:0.5px solid rgba(123,104,238,0.3);
-  border-radius:8px;
-  padding:7px 12px;
-  transition:background 0.2s,border-color 0.2s;
-  white-space:nowrap;
-}
-.open-btn:hover{
-  background:var(--signal-glow);
-  border-color:var(--signal);
-}
-.open-btn svg{transition:transform 0.2s;}
-.open-btn:hover svg{transform:translate(2px,-2px);}
-
-.tool-badge{
-  font-size:9px;
-  color:var(--muted2);
-  font-family:'DM Mono',monospace;
-  letter-spacing:0.06em;
-}
-
-/* ─── SCROLL FADE IN ─── */
-.fade-up{
-  opacity:0;
-  transform:translateY(28px);
-  transition:opacity 0.65s cubic-bezier(0.22,1,0.36,1),
-             transform 0.65s cubic-bezier(0.22,1,0.36,1);
-}
-.fade-up.visible{opacity:1;transform:translateY(0);}
-
-/* ─── MARQUEE STRIP ─── */
-.marquee-wrap{
-  overflow:hidden;
-  border-top:0.5px solid var(--border);
-  border-bottom:0.5px solid var(--border);
-  padding:12px 0;
-  margin-bottom:80px;
-}
-.marquee-track{
-  display:flex;gap:0;
-  width:max-content;
-  animation:marquee 22s linear infinite;
-}
-.marquee-item{
-  font-family:'Syne',sans-serif;
-  font-size:11px;
-  font-weight:600;
-  letter-spacing:0.12em;
-  text-transform:uppercase;
-  color:var(--muted2);
-  padding:0 28px;
-  white-space:nowrap;
-}
-.marquee-item span{color:var(--signal);margin-right:12px;}
-@keyframes marquee{
-  from{transform:translateX(0);}
-  to{transform:translateX(-50%);}
-}
-
-/* ─── UPLOAD CTA ─── */
-.upload-section{
-  background:var(--surface);
-  border:0.5px solid var(--border2);
-  border-radius:var(--radius);
-  padding:36px 32px;
-  text-align:center;
-  margin-bottom:80px;
-  position:relative;
-  overflow:hidden;
-}
-.upload-section::before{
-  content:'';
-  position:absolute;inset:0;
-  background:radial-gradient(ellipse at 50% 0%,rgba(123,104,238,0.08) 0%,transparent 65%);
-  pointer-events:none;
-}
-.upload-title{
-  font-family:'Syne',sans-serif;
-  font-weight:700;
-  font-size:20px;
-  letter-spacing:-0.02em;
-  color:var(--warm);
-  margin-bottom:8px;
-}
-.upload-sub{
-  font-size:13px;
-  color:var(--muted);
-  margin-bottom:20px;
-  line-height:1.6;
-}
-.upload-formats{
-  display:flex;gap:10px;justify-content:center;flex-wrap:wrap;
-}
-.fmt{
-  font-family:'DM Mono',monospace;
-  font-size:10px;
-  letter-spacing:0.08em;
-  padding:5px 12px;
-  border-radius:6px;
-  border:0.5px solid var(--border2);
-  color:var(--muted);
-}
-
-/* ─── FOOTER ─── */
-footer{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  flex-wrap:wrap;
-  gap:16px;
-  padding-top:28px;
-  border-top:0.5px solid var(--border);
-}
-.foot-name{
-  font-family:'Syne',sans-serif;
-  font-weight:700;
-  font-size:14px;
-  letter-spacing:-0.02em;
-  color:var(--warm);
-}
-.foot-name span{color:var(--signal);}
-.foot-links{
-  display:flex;gap:20px;flex-wrap:wrap;
-}
-.foot-link{
-  font-family:'DM Mono',monospace;
-  font-size:10px;
-  letter-spacing:0.06em;
-  color:var(--muted2);
-  text-decoration:none;
-}
-.foot-link.cta{
-  color:var(--sky);
-  border-bottom:0.5px solid rgba(56,189,248,0.3);
-  padding-bottom:1px;
-}
-
-/* ═══════════════════════
-   RESPONSIVE
-═══════════════════════ */
-@media(min-width:640px){
-  .reel-grid{
-    grid-template-columns:1fr 1fr;
-  }
-  /* first card spans full width — featured */
-  .reel-card:first-child{
-    grid-column:1/-1;
-  }
-  .reel-card:first-child .card-title{font-size:22px;}
-}
-
-@media(min-width:900px){
-  .page{padding:0 48px 100px;}
-  nav{padding:36px 0 0;margin-bottom:100px;}
-  .reel-grid{
-    grid-template-columns:repeat(3,1fr);
-  }
-  .reel-card:first-child{
-    grid-column:1/3;
-  }
-  .reel-card:nth-child(2){
-    grid-row:1;
-  }
-}
-
-@media(max-width:520px){
-  nav .nav-links{gap:16px;}
-  .nav-link:not(.active){display:none;}
-  .card-info{flex-direction:column;}
-  .card-action{align-items:flex-start;}
-}
-
-/* ─── THUMBNAIL + LAZY EMBED SYSTEM ─── */
-.thumb-layer {
-  position: absolute;
-  inset: 0;
-  z-index: 3;
-  transition: opacity 0.4s ease, transform 0.4s ease;
-  cursor: pointer;
-}
-.thumb-layer.hidden {
-  opacity: 0;
-  pointer-events: none;
-  transform: scale(1.03);
-}
-.thumb-cta {
-  position: absolute;
-  bottom: 16px;
-  left: 50%;
-  transform: translateX(-50%);
-  display: flex;
-  align-items: center;
-  gap: 7px;
-  padding: 7px 16px;
-  border-radius: 99px;
-  background: rgba(0,0,0,0.55);
-  backdrop-filter: blur(8px);
-  border: 0.5px solid rgba(255,255,255,0.15);
-  font-family: 'DM Mono', monospace;
-  font-size: 10px;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: rgba(255,255,255,0.8);
-  white-space: nowrap;
-  transition: background 0.2s, border-color 0.2s;
-  pointer-events: none;
-}
-.reel-card:hover .thumb-cta {
-  background: rgba(123,104,238,0.3);
-  border-color: rgba(123,104,238,0.5);
-}
-.embed-layer {
-  position: absolute;
-  inset: 0;
-  z-index: 2;
-}
-.embed-layer iframe {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  border: none;
-}
-
-.lightbox{
-  position:fixed;inset:0;
-  background:rgba(7,7,14,0.92);
-  backdrop-filter:blur(12px);
-  z-index:1000;
-  display:none;
-  align-items:center;
-  justify-content:center;
-  padding:20px;
-}
-.lightbox.open{display:flex;}
-.lightbox-inner{
-  width:100%;
-  max-width:960px;
-  position:relative;
-}
-.lightbox-video{
-  width:100%;
-  aspect-ratio:16/9;
-  background:#000;
-  border-radius:12px;
-  overflow:hidden;
-}
-.lightbox-video video,
-.lightbox-video iframe{
-  width:100%;height:100%;object-fit:cover;border:none;
-}
-.lightbox-close{
-  position:absolute;
-  top:-44px;right:0;
-  background:none;border:none;
-  color:var(--muted);
-  font-size:13px;
-  font-family:'DM Mono',monospace;
-  letter-spacing:0.1em;
-  text-transform:uppercase;
-  cursor:pointer;
-  display:flex;align-items:center;gap:8px;
-}
-.lightbox-close:hover{color:var(--warm);}
+/* REVEAL */
+.reveal{opacity:0;transform:translateY(24px);transition:opacity .65s cubic-bezier(.22,1,.36,1),transform .65s cubic-bezier(.22,1,.36,1);}
+.reveal.show{opacity:1;transform:translateY(0);}
 </style>
 </head>
 <body>
 
-<!-- cursor -->
-<div class="cursor" id="cursor"></div>
-<div class="cursor-ring" id="cursor-ring"></div>
-
-<!-- ambient -->
-<div class="orb orb-1"></div>
-<div class="orb orb-2"></div>
-<div class="orb orb-3"></div>
+<nav>
+  <a href="/" class="logo">MoCreative<span>.</span></a>
+  <div class="nav-links">
+    <a href="/" class="nl">Home</a>
+    <a href="https://mocreativeportfolio.lovable.app" target="_blank" rel="noopener" class="nl">Work</a>
+    <a href="/motion" class="nl active">Motion</a>
+    <a href="/about" class="nl">About</a>
+    <a href="mailto:Abiodunadedamola94@gmail.com" class="nl">Contact</a>
+  </div>
+</nav>
 
 <div class="page">
 
-  <!-- NAV -->
-  <nav>
-    <a href="index.html" class="nav-logo">Abiodun<span>.</span></a>
-    <div class="nav-links">
-      <a href="https://mocreativeportfolio.lovable.app" target="_blank" rel="noopener" class="nav-link">Work</a>
-      <a href="#" class="nav-link active">Motion</a>
-      <a href="about.html" class="nav-link">About</a>
-      <a href="mailto:Abiodunadedamola94@gmail.com" class="nav-link">Contact</a>
-    </div>
-  </nav>
-
-  <!-- HERO -->
-  <section class="hero fade-up">
-    <div class="hero-eyebrow">Motion & Animation</div>
+  <section class="hero reveal">
+    <div class="eyebrow">Motion & Animation</div>
     <h1 class="hero-title">Products<br>that <em>move.</em></h1>
     <p class="hero-sub">Figma-native product motion — transitions, microinteractions, and animated flows that make digital experiences feel alive and intentional.</p>
     <div class="hero-meta">
-      <div class="hero-meta-item">
-        <span class="hero-meta-val">5</span>
-        <span class="hero-meta-label">Motion projects</span>
-      </div>
-      <div class="hero-meta-item">
-        <span class="hero-meta-val">Figma</span>
-        <span class="hero-meta-label">Primary tool</span>
-      </div>
-      <div class="hero-meta-item">
-        <span class="hero-meta-val">AI-first</span>
-        <span class="hero-meta-label">Design approach</span>
-      </div>
+      <div><div class="hmv">5</div><div class="hml">Motion projects</div></div>
+      <div><div class="hmv">Figma</div><div class="hml">Primary tool</div></div>
+      <div><div class="hmv">AI-first</div><div class="hml">Design approach</div></div>
     </div>
   </section>
 
-  <!-- MARQUEE -->
-  <div class="marquee-wrap">
-    <div class="marquee-track" aria-hidden="true">
-      <span class="marquee-item"><span>✦</span>Scroll transitions</span>
-      <span class="marquee-item"><span>✦</span>Micro-interactions</span>
-      <span class="marquee-item"><span>✦</span>Animated onboarding</span>
-      <span class="marquee-item"><span>✦</span>AI-driven flows</span>
-      <span class="marquee-item"><span>✦</span>Dashboard motion</span>
-      <span class="marquee-item"><span>✦</span>Prototype-ready</span>
-      <span class="marquee-item"><span>✦</span>Figma variables</span>
-      <span class="marquee-item"><span>✦</span>Smart animate</span>
-      <!-- duplicate for seamless loop -->
-      <span class="marquee-item"><span>✦</span>Scroll transitions</span>
-      <span class="marquee-item"><span>✦</span>Micro-interactions</span>
-      <span class="marquee-item"><span>✦</span>Animated onboarding</span>
-      <span class="marquee-item"><span>✦</span>AI-driven flows</span>
-      <span class="marquee-item"><span>✦</span>Dashboard motion</span>
-      <span class="marquee-item"><span>✦</span>Prototype-ready</span>
-      <span class="marquee-item"><span>✦</span>Figma variables</span>
-      <span class="marquee-item"><span>✦</span>Smart animate</span>
+  <div class="mwrap">
+    <div class="mtrack" aria-hidden="true">
+      <span class="mi"><b>✦</b>Scroll transitions</span>
+      <span class="mi"><b>✦</b>Micro-interactions</span>
+      <span class="mi"><b>✦</b>Animated onboarding</span>
+      <span class="mi"><b>✦</b>AI-driven flows</span>
+      <span class="mi"><b>✦</b>Dashboard motion</span>
+      <span class="mi"><b>✦</b>Figma variables</span>
+      <span class="mi"><b>✦</b>Smart animate</span>
+      <span class="mi"><b>✦</b>Brand motion</span>
+      <span class="mi"><b>✦</b>Scroll transitions</span>
+      <span class="mi"><b>✦</b>Micro-interactions</span>
+      <span class="mi"><b>✦</b>Animated onboarding</span>
+      <span class="mi"><b>✦</b>AI-driven flows</span>
+      <span class="mi"><b>✦</b>Dashboard motion</span>
+      <span class="mi"><b>✦</b>Figma variables</span>
+      <span class="mi"><b>✦</b>Smart animate</span>
+      <span class="mi"><b>✦</b>Brand motion</span>
     </div>
   </div>
 
-  <!-- REEL GRID -->
-  <p class="sec-label">Selected Motion Work</p>
+  <p class="slabel">Selected Motion Work</p>
 
-  <div class="reel-grid" id="reel-grid">
+  <div class="reel-grid">
 
-    <!-- CARD 1 — FEATURED: Fanta -->
-    <div class="reel-card fade-up" data-index="0" style="--delay:0.05s">
-      <div class="video-wrap" data-video="https://res.cloudinary.com/dd1zvfkdo/video/upload/q_auto,f_auto/v1780058279/Fanta_lxmi00.mp4">
-
-        <!-- THUMBNAIL -->
-        <div class="thumb-layer" aria-label="Fanta project thumbnail">
+    <!-- CARD 1: Fanta (video) -->
+    <div class="reel-card reveal" data-video="https://res.cloudinary.com/dd1zvfkdo/video/upload/q_auto,f_auto/v1780058279/Fanta_lxmi00.mp4">
+      <div class="video-wrap">
+        <div class="thumb-layer">
           <svg viewBox="0 0 800 450" xmlns="http://www.w3.org/2000/svg" style="position:absolute;inset:0;width:100%;height:100%;" preserveAspectRatio="xMidYMid slice">
-            <defs>
-              <radialGradient id="f-bg" cx="50%" cy="50%" r="70%"><stop offset="0%" stop-color="#ff6a00"/><stop offset="100%" stop-color="#1a0800"/></radialGradient>
-              <radialGradient id="f-glow1" cx="30%" cy="35%" r="45%"><stop offset="0%" stop-color="#ff9500" stop-opacity="0.9"/><stop offset="100%" stop-color="transparent"/></radialGradient>
-              <radialGradient id="f-glow2" cx="75%" cy="65%" r="40%"><stop offset="0%" stop-color="#ff3d00" stop-opacity="0.7"/><stop offset="100%" stop-color="transparent"/></radialGradient>
-              <filter id="f-blur"><feGaussianBlur stdDeviation="18"/></filter>
-              <filter id="f-grain"><feTurbulence type="fractalNoise" baseFrequency="0.75" numOctaves="3" stitchTiles="stitch"/><feColorMatrix type="saturate" values="0"/><feBlend in="SourceGraphic" mode="multiply" result="blend"/><feComposite in="blend" in2="SourceGraphic" operator="in"/></filter>
-              <clipPath id="f-phone"><rect x="310" y="30" width="180" height="340" rx="24"/></clipPath>
-            </defs>
-
-            <!-- BG -->
-            <rect width="800" height="450" fill="url(#f-bg)"/>
-            <rect width="800" height="450" fill="url(#f-glow1)"/>
-            <rect width="800" height="450" fill="url(#f-glow2)"/>
-
-            <!-- Burst rays -->
-            <g opacity="0.18" transform="translate(400,225)">
-              <line x1="0" y1="0" x2="0" y2="-260" stroke="#ffb347" stroke-width="60"/>
-              <line x1="0" y1="0" x2="224" y2="-130" stroke="#ff6a00" stroke-width="40"/>
-              <line x1="0" y1="0" x2="224" y2="130" stroke="#ff4500" stroke-width="50"/>
-              <line x1="0" y1="0" x2="0" y2="260" stroke="#ffb347" stroke-width="35"/>
-              <line x1="0" y1="0" x2="-224" y2="130" stroke="#ff6a00" stroke-width="45"/>
-              <line x1="0" y1="0" x2="-224" y2="-130" stroke="#ff4500" stroke-width="55"/>
-            </g>
-
-            <!-- Floating bubbles -->
-            <circle cx="120" cy="90" r="48" fill="#ff7c00" opacity="0.35" filter="url(#f-blur)"/>
-            <circle cx="680" cy="340" r="72" fill="#ff3d00" opacity="0.3" filter="url(#f-blur)"/>
-            <circle cx="700" cy="100" r="36" fill="#ffb347" opacity="0.4" filter="url(#f-blur)"/>
-            <circle cx="90" cy="360" r="52" fill="#ff6a00" opacity="0.28" filter="url(#f-blur)"/>
-
-            <!-- Small accent circles -->
-            <circle cx="160" cy="200" r="8" fill="#ffb347" opacity="0.7"/>
-            <circle cx="620" cy="160" r="5" fill="#fff" opacity="0.5"/>
-            <circle cx="550" cy="380" r="10" fill="#ff7c00" opacity="0.6"/>
-            <circle cx="240" cy="380" r="6" fill="#ffb347" opacity="0.5"/>
-
-            <!-- Phone frame -->
-            <rect x="308" y="28" width="184" height="344" rx="26" fill="rgba(0,0,0,0.5)" stroke="rgba(255,150,0,0.4)" stroke-width="1.5"/>
-            <!-- Phone screen -->
-            <rect x="315" y="36" width="170" height="328" rx="20" fill="#1a0800" clip-path="url(#f-phone)"/>
-            <!-- Screen glow -->
-            <rect x="315" y="36" width="170" height="328" rx="20" fill="url(#f-glow1)" opacity="0.4" clip-path="url(#f-phone)"/>
-
-            <!-- UI inside phone -->
-            <g clip-path="url(#f-phone)">
-              <!-- top bar -->
-              <rect x="315" y="36" width="170" height="44" fill="rgba(255,106,0,0.2)"/>
-              <!-- logo area -->
-              <circle cx="400" cy="58" r="10" fill="#ff7c00" opacity="0.9"/>
-              <rect x="375" y="95" width="50" height="6" rx="3" fill="#ff9500" opacity="0.8"/>
-              <rect x="360" y="107" width="80" height="4" rx="2" fill="rgba(255,255,255,0.3)"/>
-              <!-- product label -->
-              <rect x="330" y="125" width="140" height="100" rx="12" fill="rgba(255,106,0,0.15)" stroke="rgba(255,106,0,0.3)" stroke-width="1"/>
-              <circle cx="400" cy="165" r="28" fill="rgba(255,140,0,0.3)" stroke="rgba(255,140,0,0.6)" stroke-width="1.5"/>
-              <rect x="350" y="237" width="100" height="8" rx="4" fill="#ff7c00" opacity="0.7"/>
-              <rect x="365" y="253" width="70" height="5" rx="2.5" fill="rgba(255,255,255,0.2)"/>
-              <!-- CTA -->
-              <rect x="340" y="280" width="120" height="32" rx="16" fill="#ff6a00" opacity="0.95"/>
-              <rect x="360" y="291" width="80" height="10" rx="5" fill="rgba(255,255,255,0.6)"/>
-              <!-- bottom nav -->
-              <rect x="315" y="325" width="170" height="39" fill="rgba(0,0,0,0.4)"/>
-              <circle cx="355" cy="345" r="5" fill="#ff7c00" opacity="0.8"/>
-              <circle cx="400" cy="345" r="5" fill="rgba(255,255,255,0.3)"/>
-              <circle cx="445" cy="345" r="5" fill="rgba(255,255,255,0.3)"/>
-            </g>
-
-            <!-- Fanta wordmark -->
-            <text x="110" y="240" font-family="Georgia,serif" font-size="72" font-weight="700" fill="rgba(255,180,80,0.12)" letter-spacing="-2">Fanta</text>
-
-            <!-- Brand label bottom-left -->
-            <rect x="28" y="398" width="120" height="26" rx="13" fill="rgba(0,0,0,0.45)" stroke="rgba(255,106,0,0.4)" stroke-width="1"/>
-            <text x="88" y="415" font-family="monospace" font-size="10" fill="#ff9500" text-anchor="middle" letter-spacing="1">BRAND MOTION</text>
-
-            <!-- Play icon hint -->
-            <circle cx="400" cy="225" r="28" fill="rgba(0,0,0,0.45)" stroke="rgba(255,150,50,0.5)" stroke-width="1.5"/>
-            <polygon points="394,216 418,225 394,234" fill="#ffb347" opacity="0.85"/>
+            <defs><radialGradient id="f1" cx="50%" cy="50%" r="70%"><stop offset="0%" stop-color="#1a0800"/><stop offset="100%" stop-color="#0a0400"/></radialGradient><radialGradient id="f2" cx="30%" cy="35%" r="45%"><stop offset="0%" stop-color="#ff9500" stop-opacity=".9"/><stop offset="100%" stop-color="transparent"/></radialGradient><radialGradient id="f3" cx="75%" cy="65%" r="40%"><stop offset="0%" stop-color="#ff3d00" stop-opacity=".6"/><stop offset="100%" stop-color="transparent"/></radialGradient><filter id="fb"><feGaussianBlur stdDeviation="18"/></filter></defs>
+            <rect width="800" height="450" fill="url(#f1)"/><rect width="800" height="450" fill="url(#f2)"/><rect width="800" height="450" fill="url(#f3)"/>
+            <circle cx="130" cy="100" r="80" fill="#ff7c00" opacity=".3" filter="url(#fb)"/><circle cx="670" cy="340" r="90" fill="#ff3d00" opacity=".25" filter="url(#fb)"/>
+            <g opacity=".15" transform="translate(400,225)"><line x1="0" y1="0" x2="0" y2="-260" stroke="#ffb347" stroke-width="60"/><line x1="0" y1="0" x2="224" y2="-130" stroke="#ff6a00" stroke-width="40"/><line x1="0" y1="0" x2="224" y2="130" stroke="#ff4500" stroke-width="50"/><line x1="0" y1="0" x2="0" y2="260" stroke="#ffb347" stroke-width="35"/><line x1="0" y1="0" x2="-224" y2="130" stroke="#ff6a00" stroke-width="45"/><line x1="0" y1="0" x2="-224" y2="-130" stroke="#ff4500" stroke-width="55"/></g>
+            <rect x="308" y="28" width="184" height="344" rx="26" fill="rgba(0,0,0,.5)" stroke="rgba(255,150,0,.4)" stroke-width="1.5"/>
+            <rect x="315" y="36" width="170" height="328" rx="20" fill="#1a0800"/>
+            <circle cx="400" cy="58" r="10" fill="#ff7c00" opacity=".9"/><rect x="350" y="80" width="100" height="7" rx="3.5" fill="#ff9500" opacity=".8"/><rect x="340" y="120" width="120" height="90" rx="12" fill="rgba(255,106,0,.15)" stroke="rgba(255,106,0,.3)" stroke-width="1"/><circle cx="400" cy="158" r="26" fill="rgba(255,140,0,.3)" stroke="rgba(255,140,0,.6)" stroke-width="1.5"/><rect x="340" y="228" width="120" height="30" rx="15" fill="#ff6a00" opacity=".9"/><rect x="315" y="325" width="170" height="39" fill="rgba(0,0,0,.4)"/>
+            <circle cx="400" cy="225" r="26" fill="rgba(0,0,0,.5)" stroke="rgba(255,150,50,.5)" stroke-width="1.5"/><polygon points="394,216 416,225 394,234" fill="#ffb347" opacity=".85"/>
+            <rect x="28" y="398" width="120" height="24" rx="12" fill="rgba(0,0,0,.5)" stroke="rgba(255,106,0,.4)" stroke-width="1"/><text x="88" y="414" font-family="monospace" font-size="9" fill="#ff9500" text-anchor="middle" letter-spacing="1.5">BRAND MOTION</text>
           </svg>
-
-          <!-- Click to activate overlay -->
-          <div class="thumb-cta">
-            <span>Click to play</span>
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-          </div>
+          <div class="thumb-cta"><span>Click to play</span><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg></div>
         </div>
-
         <div class="embed-layer"></div>
-        <div class="play-indicator"><div class="play-dot"></div>Autoplaying</div>
+        <div class="play-ind"><div class="pdot"></div>Playing</div>
       </div>
       <div class="card-info">
-        <div class="card-meta">
-          <div class="card-index">01 / Featured</div>
-          <div class="card-title">Fanta — Brand Motion</div>
-          <div class="card-desc">A bold, energetic product motion concept — expressive brand interactions and animated transitions that capture Fanta's playful, vibrant identity.</div>
-          <div class="card-tags">
-            <span class="ctag">Brand Motion</span>
-            <span class="ctag">Figma Animation</span>
-            <span class="ctag">Smart Animate</span>
-          </div>
+        <div>
+          <div class="ci-index">01 / Featured</div>
+          <div class="ci-title">Fanta — Brand Motion</div>
+          <div class="ci-desc">Bold, energetic brand motion concept — expressive interactions and animated transitions capturing Fanta's playful identity.</div>
+          <div class="ci-tags"><span class="ctag">Brand Motion</span><span class="ctag">Smart Animate</span><span class="ctag">Figma</span></div>
         </div>
-        <div class="card-action">
-          <a href="https://www.figma.com/proto/vVqHaIkvDwgd3keDOPEc8v/Fanta?node-id=1-58&p=f&t=cxyoMeYqpFLxb9Qq-0&scaling=min-zoom&content-scaling=fixed&page-id=0%3A1&starting-point-node-id=1%3A58" class="open-btn" target="_blank" rel="noopener">
-            Open in Figma
-            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M7 7h10v10"/></svg>
-          </a>
+        <div style="flex-shrink:0">
+          <a href="https://www.figma.com/proto/vVqHaIkvDwgd3keDOPEc8v/Fanta?node-id=1-58&scaling=min-zoom&content-scaling=fixed&page-id=0%3A1&starting-point-node-id=1%3A58" class="open-btn" target="_blank" rel="noopener">Open <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M7 7h10v10"/></svg></a>
           <span class="tool-badge">Figma · MP4</span>
         </div>
       </div>
     </div>
 
-    <!-- CARD 2: Liquid Glass -->
-    <div class="reel-card fade-up" data-index="1" style="--delay:0.12s">
-      <div class="video-wrap" data-figma="https://www.figma.com/embed?embed_host=share&url=https%3A%2F%2Fwww.figma.com%2Fproto%2F5ONNz2wVRTqq1BhD4XZYdj%2FLiquid-glass%3Fnode-id%3D30-69%26p%3Df%26t%3D0zlChgwVLRRTcoOc-0%26scaling%3Dscale-down%26content-scaling%3Dfixed%26page-id%3D0%253A1%26starting-point-node-id%3D30%253A69">
-
-        <!-- THUMBNAIL -->
-        <div class="thumb-layer" aria-label="Liquid Glass project thumbnail">
+    <!-- CARD 2: Liquid Glass (Figma) -->
+    <div class="reel-card reveal" data-figma="https://www.figma.com/embed?embed_host=share&url=https%3A%2F%2Fwww.figma.com%2Fproto%2F5ONNz2wVRTqq1BhD4XZYdj%2FLiquid-glass%3Fnode-id%3D30-69%26scaling%3Dscale-down%26content-scaling%3Dfixed%26page-id%3D0%253A1%26starting-point-node-id%3D30%253A69">
+      <div class="video-wrap">
+        <div class="thumb-layer">
           <svg viewBox="0 0 800 450" xmlns="http://www.w3.org/2000/svg" style="position:absolute;inset:0;width:100%;height:100%;" preserveAspectRatio="xMidYMid slice">
-            <defs>
-              <radialGradient id="lg-bg" cx="40%" cy="40%" r="80%"><stop offset="0%" stop-color="#1a2a4a"/><stop offset="60%" stop-color="#0a1020"/><stop offset="100%" stop-color="#060810"/></radialGradient>
-              <radialGradient id="lg-aurora1" cx="25%" cy="30%" r="50%"><stop offset="0%" stop-color="#7af4ff" stop-opacity="0.35"/><stop offset="100%" stop-color="transparent"/></radialGradient>
-              <radialGradient id="lg-aurora2" cx="75%" cy="70%" r="45%"><stop offset="0%" stop-color="#b87aff" stop-opacity="0.28"/><stop offset="100%" stop-color="transparent"/></radialGradient>
-              <radialGradient id="lg-aurora3" cx="60%" cy="20%" r="35%"><stop offset="0%" stop-color="#7affce" stop-opacity="0.2"/><stop offset="100%" stop-color="transparent"/></radialGradient>
-              <filter id="lg-blur"><feGaussianBlur stdDeviation="22"/></filter>
-              <filter id="lg-glow"><feGaussianBlur stdDeviation="4" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
-              <linearGradient id="lg-glass" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="rgba(255,255,255,0.18)"/><stop offset="50%" stop-color="rgba(255,255,255,0.06)"/><stop offset="100%" stop-color="rgba(255,255,255,0.12)"/></linearGradient>
-              <linearGradient id="lg-glass2" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="rgba(120,220,255,0.15)"/><stop offset="100%" stop-color="rgba(180,120,255,0.1)"/></linearGradient>
-            </defs>
-
-            <!-- Deep space BG -->
-            <rect width="800" height="450" fill="url(#lg-bg)"/>
-            <rect width="800" height="450" fill="url(#lg-aurora1)"/>
-            <rect width="800" height="450" fill="url(#lg-aurora2)"/>
-            <rect width="800" height="450" fill="url(#lg-aurora3)"/>
-
-            <!-- Background bokeh blobs -->
-            <circle cx="150" cy="120" r="90" fill="#4af0ff" opacity="0.07" filter="url(#lg-blur)"/>
-            <circle cx="650" cy="330" r="110" fill="#a07aff" opacity="0.09" filter="url(#lg-blur)"/>
-            <circle cx="580" cy="80" r="70" fill="#7affce" opacity="0.07" filter="url(#lg-blur)"/>
-            <circle cx="200" cy="370" r="80" fill="#7ac8ff" opacity="0.07" filter="url(#lg-blur)"/>
-
-            <!-- Star field -->
-            <circle cx="80" cy="60" r="1.2" fill="white" opacity="0.6"/>
-            <circle cx="200" cy="140" r="0.8" fill="white" opacity="0.4"/>
-            <circle cx="560" cy="50" r="1.5" fill="white" opacity="0.5"/>
-            <circle cx="720" cy="180" r="0.9" fill="white" opacity="0.45"/>
-            <circle cx="340" cy="400" r="1.1" fill="white" opacity="0.35"/>
-            <circle cx="660" cy="420" r="0.7" fill="white" opacity="0.5"/>
-            <circle cx="100" cy="310" r="1.3" fill="white" opacity="0.4"/>
-            <circle cx="440" cy="30" r="1" fill="#b0f0ff" opacity="0.6"/>
-
-            <!-- Main glass card -->
-            <rect x="220" y="80" width="360" height="240" rx="24" fill="url(#lg-glass)" stroke="rgba(255,255,255,0.2)" stroke-width="1"/>
-            <!-- Inner highlight -->
-            <rect x="221" y="81" width="358" height="60" rx="23" fill="rgba(255,255,255,0.06)"/>
-            <!-- Vertical shine -->
-            <rect x="230" y="82" width="3" height="236" rx="2" fill="rgba(255,255,255,0.15)"/>
-
-            <!-- Second glass card (behind, offset) -->
-            <rect x="250" y="110" width="300" height="200" rx="20" fill="rgba(120,200,255,0.07)" stroke="rgba(120,200,255,0.18)" stroke-width="1"/>
-
-            <!-- UI inside main card -->
-            <!-- Header row -->
-            <rect x="244" y="104" width="80" height="8" rx="4" fill="rgba(255,255,255,0.5)"/>
-            <circle cx="544" cy="108" r="10" fill="rgba(255,255,255,0.12)" stroke="rgba(255,255,255,0.3)" stroke-width="1"/>
-            <!-- Divider -->
-            <line x1="228" y1="128" x2="572" y2="128" stroke="rgba(255,255,255,0.1)" stroke-width="0.5"/>
-            <!-- Metric cards row -->
-            <rect x="236" y="140" width="98" height="62" rx="14" fill="rgba(120,240,255,0.1)" stroke="rgba(120,240,255,0.25)" stroke-width="1"/>
-            <rect x="344" y="140" width="98" height="62" rx="14" fill="rgba(180,120,255,0.1)" stroke="rgba(180,120,255,0.25)" stroke-width="1"/>
-            <rect x="452" y="140" width="98" height="62" rx="14" fill="rgba(120,255,200,0.1)" stroke="rgba(120,255,200,0.25)" stroke-width="1"/>
-            <!-- Metric values -->
-            <rect x="248" y="154" width="40" height="10" rx="5" fill="rgba(120,240,255,0.7)"/>
-            <rect x="248" y="170" width="60" height="6" rx="3" fill="rgba(255,255,255,0.2)"/>
-            <rect x="356" y="154" width="36" height="10" rx="5" fill="rgba(180,120,255,0.7)"/>
-            <rect x="356" y="170" width="54" height="6" rx="3" fill="rgba(255,255,255,0.2)"/>
-            <rect x="464" y="154" width="44" height="10" rx="5" fill="rgba(120,255,200,0.7)"/>
-            <rect x="464" y="170" width="50" height="6" rx="3" fill="rgba(255,255,255,0.2)"/>
-            <!-- Chart area -->
-            <rect x="236" y="216" width="314" height="70" rx="12" fill="rgba(255,255,255,0.04)" stroke="rgba(255,255,255,0.08)" stroke-width="0.5"/>
-            <polyline points="248,274 278,258 308,265 338,245 368,252 398,238 428,244 458,232 488,240 518,228 538,234" stroke="rgba(120,240,255,0.7)" stroke-width="2" fill="none"/>
-            <polyline points="248,274 278,258 308,265 338,245 368,252 398,238 428,244 458,232 488,240 518,228 538,234 538,286 248,286" fill="rgba(120,240,255,0.06)"/>
-            <!-- Bottom row -->
-            <rect x="236" y="298" width="148" height="10" rx="5" fill="rgba(255,255,255,0.15)"/>
-            <rect x="426" y="296" width="70" height="14" rx="7" fill="rgba(120,240,255,0.3)" stroke="rgba(120,240,255,0.5)" stroke-width="1"/>
-            <rect x="434" y="300" width="54" height="6" rx="3" fill="rgba(255,255,255,0.5)"/>
-
-            <!-- Floating glass pill -->
-            <rect x="90" y="190" width="100" height="36" rx="18" fill="rgba(255,255,255,0.08)" stroke="rgba(255,255,255,0.2)" stroke-width="1"/>
-            <rect x="103" y="204" width="50" height="8" rx="4" fill="rgba(255,255,255,0.4)"/>
-            <rect x="160" y="207" width="16" height="4" rx="2" fill="rgba(120,240,255,0.6)"/>
-
-            <!-- Floating glass pill right -->
-            <rect x="610" y="150" width="110" height="36" rx="18" fill="rgba(180,120,255,0.1)" stroke="rgba(180,120,255,0.3)" stroke-width="1"/>
-            <rect x="623" y="164" width="56" height="8" rx="4" fill="rgba(255,255,255,0.35)"/>
-            <circle cx="702" cy="168" r="6" fill="rgba(180,120,255,0.5)"/>
-
-            <!-- Label -->
-            <rect x="28" y="398" width="136" height="26" rx="13" fill="rgba(0,0,0,0.45)" stroke="rgba(120,220,255,0.35)" stroke-width="1"/>
-            <text x="96" y="415" font-family="monospace" font-size="10" fill="#7af0ff" text-anchor="middle" letter-spacing="1">GLASSMORPHISM</text>
-
-            <!-- Play hint -->
-            <circle cx="400" cy="225" r="28" fill="rgba(0,0,0,0.35)" stroke="rgba(120,220,255,0.4)" stroke-width="1.5"/>
-            <polygon points="394,216 418,225 394,234" fill="rgba(180,240,255,0.85)" opacity="0.85"/>
+            <defs><radialGradient id="lg1" cx="40%" cy="40%" r="80%"><stop offset="0%" stop-color="#1a2a4a"/><stop offset="100%" stop-color="#060810"/></radialGradient><radialGradient id="lg2" cx="25%" cy="30%" r="50%"><stop offset="0%" stop-color="#7af4ff" stop-opacity=".3"/><stop offset="100%" stop-color="transparent"/></radialGradient><radialGradient id="lg3" cx="75%" cy="70%" r="45%"><stop offset="0%" stop-color="#b87aff" stop-opacity=".25"/><stop offset="100%" stop-color="transparent"/></radialGradient><filter id="lgb"><feGaussianBlur stdDeviation="22"/></filter><linearGradient id="lgg" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="rgba(255,255,255,.18)"/><stop offset="100%" stop-color="rgba(255,255,255,.06)"/></linearGradient></defs>
+            <rect width="800" height="450" fill="url(#lg1)"/><rect width="800" height="450" fill="url(#lg2)"/><rect width="800" height="450" fill="url(#lg3)"/>
+            <circle cx="150" cy="120" r="90" fill="#4af0ff" opacity=".06" filter="url(#lgb)"/><circle cx="650" cy="330" r="110" fill="#a07aff" opacity=".08" filter="url(#lgb)"/>
+            <rect x="220" y="80" width="360" height="240" rx="24" fill="url(#lgg)" stroke="rgba(255,255,255,.2)" stroke-width="1"/>
+            <rect x="221" y="81" width="358" height="55" rx="23" fill="rgba(255,255,255,.06)"/>
+            <rect x="244" y="104" width="80" height="8" rx="4" fill="rgba(255,255,255,.5)"/>
+            <rect x="236" y="140" width="98" height="58" rx="14" fill="rgba(120,240,255,.1)" stroke="rgba(120,240,255,.25)" stroke-width="1"/>
+            <rect x="344" y="140" width="98" height="58" rx="14" fill="rgba(180,120,255,.1)" stroke="rgba(180,120,255,.25)" stroke-width="1"/>
+            <rect x="452" y="140" width="98" height="58" rx="14" fill="rgba(120,255,200,.1)" stroke="rgba(120,255,200,.25)" stroke-width="1"/>
+            <rect x="236" y="212" width="314" height="68" rx="12" fill="rgba(255,255,255,.04)" stroke="rgba(255,255,255,.08)" stroke-width=".5"/>
+            <polyline points="248,270 278,254 308,261 338,241 368,248 398,234 428,240 458,228 488,236 518,224 538,230" stroke="rgba(120,240,255,.7)" stroke-width="2" fill="none"/>
+            <circle cx="400" cy="225" r="26" fill="rgba(0,0,0,.4)" stroke="rgba(120,220,255,.4)" stroke-width="1.5"/><polygon points="394,216 416,225 394,234" fill="rgba(180,240,255,.85)"/>
+            <rect x="28" y="398" width="136" height="24" rx="12" fill="rgba(0,0,0,.5)" stroke="rgba(120,220,255,.35)" stroke-width="1"/><text x="96" y="414" font-family="monospace" font-size="9" fill="#7af0ff" text-anchor="middle" letter-spacing="1.5">GLASSMORPHISM</text>
           </svg>
-
-          <div class="thumb-cta">
-            <span>Click to interact</span>
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-          </div>
+          <div class="thumb-cta"><span>Click to interact</span><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg></div>
         </div>
-
         <div class="embed-layer"></div>
-        <div class="play-indicator"><div class="play-dot"></div>Interactive</div>
+        <div class="play-ind"><div class="pdot"></div>Interactive</div>
       </div>
       <div class="card-info">
-        <div class="card-meta">
-          <div class="card-index">02</div>
-          <div class="card-title">Liquid Glass</div>
-          <div class="card-desc">A fluid, glassmorphic UI motion study — translucent layers, depth-driven blur effects, and liquid transitions that push the boundaries of modern interface aesthetics.</div>
-          <div class="card-tags">
-            <span class="ctag">Glassmorphism</span>
-            <span class="ctag">UI Motion</span>
-            <span class="ctag">Visual Design</span>
-          </div>
+        <div>
+          <div class="ci-index">02</div>
+          <div class="ci-title">Liquid Glass</div>
+          <div class="ci-desc">Fluid, glassmorphic UI motion study — translucent layers, depth-driven blur, and liquid transitions pushing modern interface aesthetics.</div>
+          <div class="ci-tags"><span class="ctag">Glassmorphism</span><span class="ctag">UI Motion</span></div>
         </div>
-        <div class="card-action">
-          <a href="https://www.figma.com/proto/5ONNz2wVRTqq1BhD4XZYdj/Liquid-glass?node-id=30-69&p=f&t=0zlChgwVLRRTcoOc-0&scaling=scale-down&content-scaling=fixed&page-id=0%3A1&starting-point-node-id=30%3A69" class="open-btn" target="_blank" rel="noopener">
-            Open
-            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M7 7h10v10"/></svg>
-          </a>
+        <div style="flex-shrink:0">
+          <a href="https://www.figma.com/proto/5ONNz2wVRTqq1BhD4XZYdj/Liquid-glass?node-id=30-69&scaling=scale-down&content-scaling=fixed&page-id=0%3A1&starting-point-node-id=30%3A69" class="open-btn" target="_blank" rel="noopener">Open <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M7 7h10v10"/></svg></a>
           <span class="tool-badge">Figma Prototype</span>
         </div>
       </div>
     </div>
 
-    <!-- CARD 3: SmallClosedWorld -->
-    <div class="reel-card fade-up" data-index="2" style="--delay:0.18s">
-      <div class="video-wrap" data-video="https://res.cloudinary.com/dd1zvfkdo/video/upload/q_auto,f_auto/v1780058247/SmallWorld_iqdbyw.mp4">
-
-        <!-- THUMBNAIL -->
-        <div class="thumb-layer" aria-label="SmallClosedWorld project thumbnail">
-          <svg viewBox="0 0 800 450" xmlns="http://www.w3.org/2000/svg" style="position:absolute;inset:0;width:100%;height:100%;" preserveAspectRatio="xMidYMid slice">
-            <defs>
-              <radialGradient id="sc-bg" cx="50%" cy="50%" r="70%"><stop offset="0%" stop-color="#0e1420"/><stop offset="100%" stop-color="#04060c"/></radialGradient>
-              <radialGradient id="sc-warm" cx="48%" cy="50%" r="30%"><stop offset="0%" stop-color="#c8a870" stop-opacity="0.18"/><stop offset="100%" stop-color="transparent"/></radialGradient>
-              <radialGradient id="sc-cold" cx="20%" cy="25%" r="35%"><stop offset="0%" stop-color="#4a6fa5" stop-opacity="0.15"/><stop offset="100%" stop-color="transparent"/></radialGradient>
-              <filter id="sc-soft"><feGaussianBlur stdDeviation="14"/></filter>
-              <filter id="sc-glow"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
-              <linearGradient id="sc-vignette" x1="0%" y1="0%" x2="0%" y2="100%"><stop offset="0%" stop-color="rgba(0,0,0,0.4)"/><stop offset="50%" stop-color="rgba(0,0,0,0)"/><stop offset="100%" stop-color="rgba(0,0,0,0.6)"/></linearGradient>
-              <linearGradient id="sc-line" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="rgba(200,168,112,0)"/><stop offset="40%" stop-color="rgba(200,168,112,0.6)"/><stop offset="100%" stop-color="rgba(200,168,112,0)"/></linearGradient>
-            </defs>
-
-            <!-- BG -->
-            <rect width="800" height="450" fill="url(#sc-bg)"/>
-            <rect width="800" height="450" fill="url(#sc-warm)"/>
-            <rect width="800" height="450" fill="url(#sc-cold)"/>
-
-            <!-- Fine grain texture lines (simulate film grain feel) -->
-            <rect width="800" height="450" fill="url(#sc-vignette)"/>
-
-            <!-- Distant ambient glow -->
-            <circle cx="400" cy="225" r="130" fill="#c8a870" opacity="0.04" filter="url(#sc-soft)"/>
-            <circle cx="180" cy="140" r="70" fill="#4a6fa5" opacity="0.07" filter="url(#sc-soft)"/>
-
-            <!-- Thin horizontal grid lines — world grid -->
-            <line x1="0" y1="150" x2="800" y2="150" stroke="rgba(200,168,112,0.06)" stroke-width="0.5"/>
-            <line x1="0" y1="225" x2="800" y2="225" stroke="rgba(200,168,112,0.08)" stroke-width="0.5"/>
-            <line x1="0" y1="300" x2="800" y2="300" stroke="rgba(200,168,112,0.06)" stroke-width="0.5"/>
-            <!-- Vertical -->
-            <line x1="266" y1="0" x2="266" y2="450" stroke="rgba(200,168,112,0.05)" stroke-width="0.5"/>
-            <line x1="533" y1="0" x2="533" y2="450" stroke="rgba(200,168,112,0.05)" stroke-width="0.5"/>
-
-            <!-- Globe / world circle -->
-            <circle cx="400" cy="225" r="115" fill="none" stroke="rgba(200,168,112,0.18)" stroke-width="1"/>
-            <circle cx="400" cy="225" r="115" fill="rgba(200,168,112,0.025)"/>
-            <!-- Equator & meridian -->
-            <ellipse cx="400" cy="225" rx="115" ry="30" fill="none" stroke="rgba(200,168,112,0.1)" stroke-width="0.75"/>
-            <ellipse cx="400" cy="225" rx="38" ry="115" fill="none" stroke="rgba(200,168,112,0.08)" stroke-width="0.75"/>
-            <!-- Poles -->
-            <line x1="400" y1="110" x2="400" y2="340" stroke="rgba(200,168,112,0.12)" stroke-width="0.5"/>
-
-            <!-- Landmass silhouettes (abstract blobs) -->
-            <ellipse cx="380" cy="205" rx="34" ry="22" fill="rgba(200,168,112,0.18)" transform="rotate(-15,380,205)"/>
-            <ellipse cx="430" cy="240" rx="22" ry="14" fill="rgba(200,168,112,0.14)" transform="rotate(10,430,240)"/>
-            <ellipse cx="360" cy="248" rx="16" ry="10" fill="rgba(200,168,112,0.1)"/>
-
-            <!-- Orbit ring -->
-            <ellipse cx="400" cy="225" rx="148" ry="42" fill="none" stroke="rgba(100,160,255,0.2)" stroke-width="1" stroke-dasharray="4 6"/>
-
-            <!-- Satellite dot on orbit -->
-            <circle cx="537" cy="211" r="4" fill="#7ac8ff" opacity="0.8" filter="url(#sc-glow)"/>
-            <circle cx="537" cy="211" r="8" fill="rgba(120,200,255,0.15)"/>
-
-            <!-- Tiny stars -->
-            <circle cx="60" cy="50" r="1" fill="white" opacity="0.5"/>
-            <circle cx="740" cy="80" r="1.2" fill="white" opacity="0.4"/>
-            <circle cx="700" cy="390" r="0.8" fill="white" opacity="0.5"/>
-            <circle cx="120" cy="380" r="1.1" fill="white" opacity="0.3"/>
-            <circle cx="290" cy="40" r="0.9" fill="white" opacity="0.45"/>
-            <circle cx="510" cy="420" r="1" fill="white" opacity="0.4"/>
-            <circle cx="680" cy="250" r="0.7" fill="white" opacity="0.35"/>
-            <circle cx="50" cy="230" r="1.2" fill="#c8d8ff" opacity="0.4"/>
-
-            <!-- UI overlay — minimal card -->
-            <rect x="544" y="120" width="188" height="108" rx="14" fill="rgba(14,20,32,0.75)" stroke="rgba(200,168,112,0.2)" stroke-width="1"/>
-            <rect x="558" y="136" width="80" height="7" rx="3.5" fill="rgba(200,168,112,0.5)"/>
-            <rect x="558" y="150" width="120" height="5" rx="2.5" fill="rgba(255,255,255,0.15)"/>
-            <rect x="558" y="162" width="100" height="5" rx="2.5" fill="rgba(255,255,255,0.1)"/>
-            <line x1="558" y1="178" x2="716" y2="178" stroke="rgba(200,168,112,0.12)" stroke-width="0.5"/>
-            <rect x="558" y="188" width="52" height="24" rx="12" fill="rgba(200,168,112,0.15)" stroke="rgba(200,168,112,0.35)" stroke-width="1"/>
-            <rect x="566" y="196" width="36" height="8" rx="4" fill="rgba(200,168,112,0.6)"/>
-            <!-- Coordinate readout -->
-            <rect x="68" y="300" width="155" height="76" rx="14" fill="rgba(14,20,32,0.7)" stroke="rgba(74,111,165,0.3)" stroke-width="1"/>
-            <rect x="82" y="314" width="60" height="6" rx="3" fill="rgba(120,160,255,0.4)"/>
-            <rect x="82" y="326" width="100" height="5" rx="2.5" fill="rgba(255,255,255,0.12)"/>
-            <rect x="82" y="337" width="80" height="5" rx="2.5" fill="rgba(255,255,255,0.08)"/>
-            <rect x="82" y="352" width="44" height="18" rx="9" fill="rgba(74,111,165,0.25)" stroke="rgba(74,111,165,0.4)" stroke-width="1"/>
-            <rect x="88" y="358" width="32" height="6" rx="3" fill="rgba(120,160,255,0.5)"/>
-
-            <!-- Hairline connecting globe to UI -->
-            <line x1="515" y1="225" x2="544" y2="174" stroke="rgba(200,168,112,0.2)" stroke-width="0.75" stroke-dasharray="3 4"/>
-            <line x1="284" y1="280" x2="224" y2="338" stroke="rgba(74,111,165,0.2)" stroke-width="0.75" stroke-dasharray="3 4"/>
-
-            <!-- Bottom rule line -->
-            <rect x="200" y="390" width="400" height="0.5" fill="url(#sc-line)"/>
-
-            <!-- Label -->
-            <rect x="28" y="398" width="162" height="26" rx="13" fill="rgba(0,0,0,0.55)" stroke="rgba(200,168,112,0.25)" stroke-width="1"/>
-            <text x="109" y="415" font-family="monospace" font-size="10" fill="#c8a870" text-anchor="middle" letter-spacing="1">MOTION STORY</text>
-
-            <!-- Play hint -->
-            <circle cx="400" cy="225" r="24" fill="rgba(0,0,0,0.5)" stroke="rgba(200,168,112,0.35)" stroke-width="1.5"/>
-            <polygon points="395,217 415,225 395,233" fill="rgba(200,168,112,0.85)"/>
-          </svg>
-
-          <div class="thumb-cta">
-            <span>Click to play</span>
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-          </div>
-        </div>
-
-        <div class="embed-layer"></div>
-        <div class="play-indicator"><div class="play-dot"></div>Autoplaying</div>
-      </div>
-      <div class="card-info">
-        <div class="card-meta">
-          <div class="card-index">03</div>
-          <div class="card-title">SmallClosedWorld</div>
-          <div class="card-desc">An intimate, detail-rich motion concept — micro-scale interactions and contained world-building through animated UI flows. A study in motion storytelling.</div>
-          <div class="card-tags">
-            <span class="ctag">Motion Storytelling</span>
-            <span class="ctag">Interaction Design</span>
-            <span class="ctag">Figma Animation</span>
-          </div>
-        </div>
-        <div class="card-action">
-          <a href="https://www.figma.com/proto/tyIbosivFCJcqRw6iL9H0n/SmallClosedWorld--Abiodun-Adedamola?node-id=82-2354&starting-point-node-id=29%3A2" class="open-btn" target="_blank" rel="noopener">
-            Open in Figma
-            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M7 7h10v10"/></svg>
-          </a>
-          <span class="tool-badge">Figma · MP4</span>
-        </div>
-      </div>
-    </div>
-
-    <!-- CARD 4: Fanta Animation -->
-    <div class="reel-card fade-up" data-index="3" style="--delay:0.24s">
-      <div class="video-wrap" data-video="https://res.cloudinary.com/dd1zvfkdo/video/upload/q_auto,f_auto/v1780058134/Fanta_Animation_bmvju7.mp4">
-        <div class="thumb-layer" aria-label="Fanta Animation thumbnail">
-          <svg viewBox="0 0 800 450" xmlns="http://www.w3.org/2000/svg" style="position:absolute;inset:0;width:100%;height:100%;" preserveAspectRatio="xMidYMid slice">
-            <defs>
-              <radialGradient id="fa-bg" cx="50%" cy="50%" r="70%"><stop offset="0%" stop-color="#1a0c00"/><stop offset="100%" stop-color="#0a0400"/></radialGradient>
-              <radialGradient id="fa-g1" cx="70%" cy="30%" r="50%"><stop offset="0%" stop-color="#ff4500" stop-opacity="0.7"/><stop offset="100%" stop-color="transparent"/></radialGradient>
-              <radialGradient id="fa-g2" cx="25%" cy="70%" r="45%"><stop offset="0%" stop-color="#ffb300" stop-opacity="0.5"/><stop offset="100%" stop-color="transparent"/></radialGradient>
-              <filter id="fa-blur"><feGaussianBlur stdDeviation="16"/></filter>
-            </defs>
-            <rect width="800" height="450" fill="url(#fa-bg)"/>
-            <rect width="800" height="450" fill="url(#fa-g1)"/>
-            <rect width="800" height="450" fill="url(#fa-g2)"/>
-            <!-- Animated wave rings -->
-            <circle cx="400" cy="225" r="60"  fill="none" stroke="rgba(255,140,0,0.4)" stroke-width="1.5"/>
-            <circle cx="400" cy="225" r="100" fill="none" stroke="rgba(255,100,0,0.25)" stroke-width="1"/>
-            <circle cx="400" cy="225" r="145" fill="none" stroke="rgba(255,70,0,0.15)" stroke-width="0.75"/>
-            <circle cx="400" cy="225" r="190" fill="none" stroke="rgba(255,140,0,0.08)" stroke-width="0.5"/>
-            <!-- Bottle silhouette hint -->
-            <ellipse cx="400" cy="180" rx="28" ry="50" fill="rgba(255,120,0,0.2)" stroke="rgba(255,140,0,0.4)" stroke-width="1"/>
-            <rect x="384" y="228" width="32" height="70" rx="6" fill="rgba(255,100,0,0.18)" stroke="rgba(255,120,0,0.3)" stroke-width="1"/>
-            <rect x="390" y="156" width="20" height="28" rx="4" fill="rgba(255,140,0,0.25)"/>
-            <!-- Fizz dots -->
-            <circle cx="390" cy="195" r="2.5" fill="#ffb347" opacity="0.8"/>
-            <circle cx="408" cy="210" r="2" fill="#ff8c00" opacity="0.7"/>
-            <circle cx="396" cy="230" r="1.5" fill="#ffb347" opacity="0.6"/>
-            <circle cx="404" cy="218" r="2" fill="#ff6a00" opacity="0.75"/>
-            <circle cx="385" cy="215" r="1.8" fill="#ffb300" opacity="0.7"/>
-            <!-- Spark lines -->
-            <line x1="340" y1="160" x2="360" y2="175" stroke="rgba(255,180,0,0.5)" stroke-width="1.5"/>
-            <line x1="460" y1="155" x2="442" y2="172" stroke="rgba(255,140,0,0.5)" stroke-width="1.5"/>
-            <line x1="340" y1="295" x2="362" y2="278" stroke="rgba(255,100,0,0.4)" stroke-width="1.2"/>
-            <line x1="460" y1="290" x2="440" y2="275" stroke="rgba(255,180,0,0.4)" stroke-width="1.2"/>
-            <!-- Label -->
-            <rect x="28" y="398" width="148" height="26" rx="13" fill="rgba(0,0,0,0.5)" stroke="rgba(255,106,0,0.4)" stroke-width="1"/>
-            <text x="102" y="415" font-family="monospace" font-size="10" fill="#ff9500" text-anchor="middle" letter-spacing="1">FANTA ANIMATION</text>
-            <!-- Play -->
-            <circle cx="400" cy="225" r="26" fill="rgba(0,0,0,0.5)" stroke="rgba(255,150,50,0.5)" stroke-width="1.5"/>
-            <polygon points="394,216 416,225 394,234" fill="#ffb347" opacity="0.9"/>
-          </svg>
-          <div class="thumb-cta">
-            <span>Click to play</span>
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-          </div>
-        </div>
-        <div class="embed-layer"></div>
-        <div class="play-indicator"><div class="play-dot"></div>Autoplaying</div>
-      </div>
-      <div class="card-info">
-        <div class="card-meta">
-          <div class="card-index">04</div>
-          <div class="card-title">Fanta — Animation Cut</div>
-          <div class="card-desc">A second motion direction for the Fanta brand concept — tighter animation timing, energetic transitions, and an alternate visual pacing study.</div>
-          <div class="card-tags">
-            <span class="ctag">Brand Motion</span>
-            <span class="ctag">Animation</span>
-            <span class="ctag">Figma</span>
-          </div>
-        </div>
-        <div class="card-action">
-          <a href="https://www.figma.com/proto/vVqHaIkvDwgd3keDOPEc8v/Fanta?node-id=1-58&p=f&t=cxyoMeYqpFLxb9Qq-0&scaling=min-zoom&content-scaling=fixed&page-id=0%3A1&starting-point-node-id=1%3A58" class="open-btn" target="_blank" rel="noopener">
-            Open in Figma
-            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M7 7h10v10"/></svg>
-          </a>
-          <span class="tool-badge">Figma · MP4</span>
-        </div>
-      </div>
-    </div>
-
-    <!-- CARD 5: Interactive Category Carousel -->
-    <div class="reel-card fade-up" data-index="4" style="--delay:0.30s">
-      <div class="video-wrap" data-video="https://res.cloudinary.com/dd1zvfkdo/video/upload/q_auto,f_auto/v1780057817/Interactive_Category_Slide_i6ylv1.mp4">
-        <div class="thumb-layer" aria-label="Interactive Category Carousel thumbnail">
-          <svg viewBox="0 0 800 450" xmlns="http://www.w3.org/2000/svg" style="position:absolute;inset:0;width:100%;height:100%;" preserveAspectRatio="xMidYMid slice">
-            <defs>
-              <radialGradient id="ic-bg" cx="50%" cy="50%" r="70%"><stop offset="0%" stop-color="#0d1428"/><stop offset="100%" stop-color="#060810"/></radialGradient>
-              <radialGradient id="ic-g1" cx="30%" cy="40%" r="45%"><stop offset="0%" stop-color="#7b68ee" stop-opacity="0.35"/><stop offset="100%" stop-color="transparent"/></radialGradient>
-              <radialGradient id="ic-g2" cx="75%" cy="60%" r="40%"><stop offset="0%" stop-color="#38bdf8" stop-opacity="0.25"/><stop offset="100%" stop-color="transparent"/></radialGradient>
-              <filter id="ic-blur"><feGaussianBlur stdDeviation="14"/></filter>
-            </defs>
-            <rect width="800" height="450" fill="url(#ic-bg)"/>
-            <rect width="800" height="450" fill="url(#ic-g1)"/>
-            <rect width="800" height="450" fill="url(#ic-g2)"/>
-            <!-- Background glows -->
-            <circle cx="200" cy="200" r="100" fill="#7b68ee" opacity="0.07" filter="url(#ic-blur)"/>
-            <circle cx="600" cy="260" r="80" fill="#38bdf8" opacity="0.07" filter="url(#ic-blur)"/>
-            <!-- Carousel track line -->
-            <line x1="60" y1="225" x2="740" y2="225" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
-            <!-- Active card (center, large) -->
-            <rect x="290" y="115" width="220" height="220" rx="20" fill="rgba(123,104,238,0.18)" stroke="rgba(123,104,238,0.5)" stroke-width="1.5"/>
-            <rect x="291" y="116" width="218" height="50" rx="19" fill="rgba(123,104,238,0.12)"/>
-            <circle cx="400" cy="195" r="36" fill="rgba(123,104,238,0.25)" stroke="rgba(123,104,238,0.4)" stroke-width="1"/>
-            <rect x="350" y="244" width="100" height="9" rx="4.5" fill="rgba(255,255,255,0.5)"/>
-            <rect x="365" y="259" width="70" height="6" rx="3" fill="rgba(255,255,255,0.2)"/>
-            <rect x="355" y="280" width="90" height="28" rx="14" fill="rgba(123,104,238,0.6)"/>
-            <rect x="372" y="290" width="56" height="8" rx="4" fill="rgba(255,255,255,0.7)"/>
-            <!-- Left card (peek) -->
-            <rect x="80" y="145" width="180" height="180" rx="16" fill="rgba(56,189,248,0.08)" stroke="rgba(56,189,248,0.2)" stroke-width="1"/>
-            <circle cx="170" cy="205" r="26" fill="rgba(56,189,248,0.15)" stroke="rgba(56,189,248,0.3)" stroke-width="1"/>
-            <rect x="110" y="244" width="120" height="7" rx="3.5" fill="rgba(255,255,255,0.2)"/>
-            <rect x="125" y="257" width="90" height="5" rx="2.5" fill="rgba(255,255,255,0.1)"/>
-            <!-- Right card (peek) -->
-            <rect x="540" y="145" width="180" height="180" rx="16" fill="rgba(16,185,129,0.08)" stroke="rgba(16,185,129,0.2)" stroke-width="1"/>
-            <circle cx="630" cy="205" r="26" fill="rgba(16,185,129,0.15)" stroke="rgba(16,185,129,0.3)" stroke-width="1"/>
-            <rect x="560" y="244" width="120" height="7" rx="3.5" fill="rgba(255,255,255,0.2)"/>
-            <rect x="575" y="257" width="90" height="5" rx="2.5" fill="rgba(255,255,255,0.1)"/>
-            <!-- Slide dots -->
-            <circle cx="385" cy="355" r="4" fill="rgba(123,104,238,0.9)"/>
-            <circle cx="400" cy="355" r="5" fill="#7b68ee"/>
-            <circle cx="415" cy="355" r="4" fill="rgba(123,104,238,0.4)"/>
-            <circle cx="430" cy="355" r="3" fill="rgba(255,255,255,0.15)"/>
-            <!-- Arrow hints -->
-            <circle cx="96" cy="225" r="18" fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.12)" stroke-width="1"/>
-            <polyline points="101,225 94,219 94,231" fill="none" stroke="rgba(255,255,255,0.4)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-            <circle cx="704" cy="225" r="18" fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.12)" stroke-width="1"/>
-            <polyline points="699,225 706,219 706,231" fill="none" stroke="rgba(255,255,255,0.4)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-            <!-- Label -->
-            <rect x="28" y="398" width="178" height="26" rx="13" fill="rgba(0,0,0,0.5)" stroke="rgba(123,104,238,0.35)" stroke-width="1"/>
-            <text x="117" y="415" font-family="monospace" font-size="10" fill="#7b68ee" text-anchor="middle" letter-spacing="1">CAROUSEL SLIDE</text>
-            <!-- Play -->
-            <circle cx="400" cy="225" r="26" fill="rgba(0,0,0,0.5)" stroke="rgba(123,104,238,0.45)" stroke-width="1.5"/>
-            <polygon points="394,216 416,225 394,234" fill="rgba(180,160,255,0.9)"/>
-          </svg>
-          <div class="thumb-cta">
-            <span>Click to play</span>
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-          </div>
-        </div>
-        <div class="embed-layer"></div>
-        <div class="play-indicator"><div class="play-dot"></div>Autoplaying</div>
-      </div>
-      <div class="card-info">
-        <div class="card-meta">
-          <div class="card-index">05</div>
-          <div class="card-title">Interactive Category Carousel</div>
-          <div class="card-desc">A smooth, gesture-driven category slide prototype — animated card transitions, active state highlighting, and fluid swipe interactions built in Figma.</div>
-          <div class="card-tags">
-            <span class="ctag">Carousel</span>
-            <span class="ctag">Interaction Design</span>
-            <span class="ctag">Smart Animate</span>
-          </div>
-        </div>
-        <div class="card-action">
-          <a href="#" class="open-btn" target="_blank" rel="noopener">
-            View Prototype
-            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M7 7h10v10"/></svg>
-          </a>
-          <span class="tool-badge">Figma · MP4</span>
-        </div>
-      </div>
-    </div>
-
-    <!-- CARD 6 — OPEN SLOT -->
-    <div class="reel-card fade-up" data-index="5" style="--delay:0.36s">
+    <!-- CARD 3: SmallClosedWorld (video) -->
+    <div class="reel-card reveal" data-video="https://res.cloudinary.com/dd1zvfkdo/video/upload/q_auto,f_auto/v1780058247/SmallWorld_iqdbyw.mp4">
       <div class="video-wrap">
-        <div class="thumb-layer" aria-label="Coming soon slot">
+        <div class="thumb-layer">
           <svg viewBox="0 0 800 450" xmlns="http://www.w3.org/2000/svg" style="position:absolute;inset:0;width:100%;height:100%;" preserveAspectRatio="xMidYMid slice">
-            <defs>
-              <radialGradient id="s6-bg" cx="50%" cy="50%" r="70%"><stop offset="0%" stop-color="#0e1020"/><stop offset="100%" stop-color="#06060e"/></radialGradient>
-            </defs>
-            <rect width="800" height="450" fill="url(#s6-bg)"/>
-            <!-- Dashed border frame -->
-            <rect x="40" y="40" width="720" height="370" rx="20" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="1.5" stroke-dasharray="8 6"/>
-            <!-- Plus icon -->
-            <circle cx="400" cy="200" r="32" fill="rgba(255,255,255,0.04)" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
-            <line x1="400" y1="184" x2="400" y2="216" stroke="rgba(255,255,255,0.25)" stroke-width="2" stroke-linecap="round"/>
-            <line x1="384" y1="200" x2="416" y2="200" stroke="rgba(255,255,255,0.25)" stroke-width="2" stroke-linecap="round"/>
-            <rect x="320" y="248" width="160" height="8" rx="4" fill="rgba(255,255,255,0.07)"/>
-            <rect x="345" y="264" width="110" height="6" rx="3" fill="rgba(255,255,255,0.04)"/>
-            <rect x="28" y="398" width="130" height="26" rx="13" fill="rgba(0,0,0,0.4)" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
-            <text x="93" y="415" font-family="monospace" font-size="10" fill="rgba(255,255,255,0.25)" text-anchor="middle" letter-spacing="1">COMING SOON</text>
+            <defs><radialGradient id="sc1" cx="50%" cy="50%" r="70%"><stop offset="0%" stop-color="#0e1420"/><stop offset="100%" stop-color="#04060c"/></radialGradient><radialGradient id="sc2" cx="48%" cy="50%" r="30%"><stop offset="0%" stop-color="#c8a870" stop-opacity=".15"/><stop offset="100%" stop-color="transparent"/></radialGradient><filter id="scb"><feGaussianBlur stdDeviation="14"/></filter></defs>
+            <rect width="800" height="450" fill="url(#sc1)"/><rect width="800" height="450" fill="url(#sc2)"/>
+            <circle cx="400" cy="225" r="130" fill="#c8a870" opacity=".03" filter="url(#scb)"/>
+            <circle cx="400" cy="225" r="115" fill="none" stroke="rgba(200,168,112,.18)" stroke-width="1"/>
+            <ellipse cx="400" cy="225" rx="115" ry="30" fill="none" stroke="rgba(200,168,112,.1)" stroke-width=".75"/>
+            <ellipse cx="400" cy="225" rx="38" ry="115" fill="none" stroke="rgba(200,168,112,.08)" stroke-width=".75"/>
+            <ellipse cx="400" cy="225" rx="148" ry="42" fill="none" stroke="rgba(100,160,255,.2)" stroke-width="1" stroke-dasharray="4 6"/>
+            <ellipse cx="380" cy="205" rx="34" ry="22" fill="rgba(200,168,112,.18)" transform="rotate(-15,380,205)"/>
+            <ellipse cx="430" cy="240" rx="22" ry="14" fill="rgba(200,168,112,.14)" transform="rotate(10,430,240)"/>
+            <circle cx="537" cy="211" r="4" fill="#7ac8ff" opacity=".8"/><circle cx="537" cy="211" r="8" fill="rgba(120,200,255,.15)"/>
+            <circle cx="60" cy="50" r="1" fill="white" opacity=".5"/><circle cx="740" cy="80" r="1.2" fill="white" opacity=".4"/><circle cx="700" cy="390" r=".8" fill="white" opacity=".5"/><circle cx="120" cy="380" r="1.1" fill="white" opacity=".3"/>
+            <circle cx="400" cy="225" r="24" fill="rgba(0,0,0,.5)" stroke="rgba(200,168,112,.35)" stroke-width="1.5"/><polygon points="395,217 415,225 395,233" fill="rgba(200,168,112,.85)"/>
+            <rect x="28" y="398" width="130" height="24" rx="12" fill="rgba(0,0,0,.55)" stroke="rgba(200,168,112,.25)" stroke-width="1"/><text x="93" y="414" font-family="monospace" font-size="9" fill="#c8a870" text-anchor="middle" letter-spacing="1.5">MOTION STORY</text>
           </svg>
-          <div class="thumb-cta" style="opacity:0.4;pointer-events:none;">
-            <span>Next project</span>
-          </div>
+          <div class="thumb-cta"><span>Click to play</span><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg></div>
         </div>
         <div class="embed-layer"></div>
-        <div class="play-indicator"><div class="play-dot"></div>Coming soon</div>
+        <div class="play-ind"><div class="pdot"></div>Playing</div>
       </div>
       <div class="card-info">
-        <div class="card-meta">
-          <div class="card-index">06</div>
-          <div class="card-title">Next Motion Project</div>
-          <div class="card-desc">More motion work in progress — drop in your next Figma link or MP4 to activate this slot.</div>
-          <div class="card-tags">
-            <span class="ctag">Slot ready</span>
-          </div>
+        <div>
+          <div class="ci-index">03</div>
+          <div class="ci-title">SmallClosedWorld</div>
+          <div class="ci-desc">Intimate, detail-rich motion concept — micro-scale interactions and contained world-building through animated UI flows.</div>
+          <div class="ci-tags"><span class="ctag">Motion Story</span><span class="ctag">Interaction Design</span></div>
         </div>
-        <div class="card-action">
-          <a href="mailto:Abiodunadedamola94@gmail.com" class="open-btn">
-            Get in touch
-            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M7 7h10v10"/></svg>
-          </a>
-          <span class="tool-badge">In progress</span>
+        <div style="flex-shrink:0">
+          <a href="https://www.figma.com/proto/tyIbosivFCJcqRw6iL9H0n/SmallClosedWorld--Abiodun-Adedamola?node-id=82-2354&starting-point-node-id=29%3A2" class="open-btn" target="_blank" rel="noopener">Open <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M7 7h10v10"/></svg></a>
+          <span class="tool-badge">Figma · MP4</span>
         </div>
       </div>
     </div>
 
-  </div><!-- /reel-grid -->
+    <!-- CARD 4: Fanta Animation (video) -->
+    <div class="reel-card reveal" data-video="https://res.cloudinary.com/dd1zvfkdo/video/upload/q_auto,f_auto/v1780058134/Fanta_Animation_bmvju7.mp4">
+      <div class="video-wrap">
+        <div class="thumb-layer">
+          <svg viewBox="0 0 800 450" xmlns="http://www.w3.org/2000/svg" style="position:absolute;inset:0;width:100%;height:100%;" preserveAspectRatio="xMidYMid slice">
+            <defs><radialGradient id="fa1" cx="50%" cy="50%" r="70%"><stop offset="0%" stop-color="#1a0c00"/><stop offset="100%" stop-color="#0a0400"/></radialGradient><radialGradient id="fa2" cx="70%" cy="30%" r="50%"><stop offset="0%" stop-color="#ff4500" stop-opacity=".65"/><stop offset="100%" stop-color="transparent"/></radialGradient><radialGradient id="fa3" cx="25%" cy="70%" r="45%"><stop offset="0%" stop-color="#ffb300" stop-opacity=".45"/><stop offset="100%" stop-color="transparent"/></radialGradient></defs>
+            <rect width="800" height="450" fill="url(#fa1)"/><rect width="800" height="450" fill="url(#fa2)"/><rect width="800" height="450" fill="url(#fa3)"/>
+            <circle cx="400" cy="225" r="60" fill="none" stroke="rgba(255,140,0,.4)" stroke-width="1.5"/>
+            <circle cx="400" cy="225" r="100" fill="none" stroke="rgba(255,100,0,.25)" stroke-width="1"/>
+            <circle cx="400" cy="225" r="145" fill="none" stroke="rgba(255,70,0,.14)" stroke-width=".75"/>
+            <ellipse cx="400" cy="180" rx="28" ry="50" fill="rgba(255,120,0,.2)" stroke="rgba(255,140,0,.4)" stroke-width="1"/>
+            <rect x="384" y="228" width="32" height="70" rx="6" fill="rgba(255,100,0,.18)" stroke="rgba(255,120,0,.3)" stroke-width="1"/>
+            <circle cx="390" cy="195" r="2.5" fill="#ffb347" opacity=".8"/><circle cx="408" cy="210" r="2" fill="#ff8c00" opacity=".7"/><circle cx="396" cy="230" r="1.5" fill="#ffb347" opacity=".6"/>
+            <circle cx="400" cy="225" r="26" fill="rgba(0,0,0,.5)" stroke="rgba(255,150,50,.5)" stroke-width="1.5"/><polygon points="394,216 416,225 394,234" fill="#ffb347" opacity=".9"/>
+            <rect x="28" y="398" width="148" height="24" rx="12" fill="rgba(0,0,0,.5)" stroke="rgba(255,106,0,.4)" stroke-width="1"/><text x="102" y="414" font-family="monospace" font-size="9" fill="#ff9500" text-anchor="middle" letter-spacing="1.5">FANTA ANIMATION</text>
+          </svg>
+          <div class="thumb-cta"><span>Click to play</span><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg></div>
+        </div>
+        <div class="embed-layer"></div>
+        <div class="play-ind"><div class="pdot"></div>Playing</div>
+      </div>
+      <div class="card-info">
+        <div>
+          <div class="ci-index">04</div>
+          <div class="ci-title">Fanta — Animation Cut</div>
+          <div class="ci-desc">Second motion direction — tighter timing, energetic transitions, and an alternate visual pacing study for the Fanta brand.</div>
+          <div class="ci-tags"><span class="ctag">Brand Motion</span><span class="ctag">Animation</span></div>
+        </div>
+        <div style="flex-shrink:0">
+          <a href="https://www.figma.com/proto/vVqHaIkvDwgd3keDOPEc8v/Fanta?node-id=1-58&scaling=min-zoom&content-scaling=fixed&page-id=0%3A1&starting-point-node-id=1%3A58" class="open-btn" target="_blank" rel="noopener">Open <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M7 7h10v10"/></svg></a>
+          <span class="tool-badge">Figma · MP4</span>
+        </div>
+      </div>
+    </div>
 
-  
+    <!-- CARD 5: Interactive Category Carousel (video) -->
+    <div class="reel-card reveal" data-video="https://res.cloudinary.com/dd1zvfkdo/video/upload/q_auto,f_auto/v1780057817/Interactive_Category_Slide_i6ylv1.mp4">
+      <div class="video-wrap">
+        <div class="thumb-layer">
+          <svg viewBox="0 0 800 450" xmlns="http://www.w3.org/2000/svg" style="position:absolute;inset:0;width:100%;height:100%;" preserveAspectRatio="xMidYMid slice">
+            <defs><radialGradient id="ic1" cx="50%" cy="50%" r="70%"><stop offset="0%" stop-color="#0d1428"/><stop offset="100%" stop-color="#060810"/></radialGradient><radialGradient id="ic2" cx="30%" cy="40%" r="45%"><stop offset="0%" stop-color="#7b68ee" stop-opacity=".3"/><stop offset="100%" stop-color="transparent"/></radialGradient><radialGradient id="ic3" cx="75%" cy="60%" r="40%"><stop offset="0%" stop-color="#38bdf8" stop-opacity=".2"/><stop offset="100%" stop-color="transparent"/></radialGradient></defs>
+            <rect width="800" height="450" fill="url(#ic1)"/><rect width="800" height="450" fill="url(#ic2)"/><rect width="800" height="450" fill="url(#ic3)"/>
+            <rect x="80" y="145" width="180" height="180" rx="16" fill="rgba(56,189,248,.07)" stroke="rgba(56,189,248,.2)" stroke-width="1"/>
+            <rect x="290" y="115" width="220" height="220" rx="20" fill="rgba(123,104,238,.18)" stroke="rgba(123,104,238,.5)" stroke-width="1.5"/>
+            <rect x="540" y="145" width="180" height="180" rx="16" fill="rgba(16,185,129,.07)" stroke="rgba(16,185,129,.2)" stroke-width="1"/>
+            <circle cx="170" cy="205" r="26" fill="rgba(56,189,248,.15)" stroke="rgba(56,189,248,.3)" stroke-width="1"/>
+            <circle cx="400" cy="190" r="36" fill="rgba(123,104,238,.25)" stroke="rgba(123,104,238,.4)" stroke-width="1"/>
+            <circle cx="630" cy="205" r="26" fill="rgba(16,185,129,.15)" stroke="rgba(16,185,129,.3)" stroke-width="1"/>
+            <rect x="350" y="238" width="100" height="9" rx="4.5" fill="rgba(255,255,255,.5)"/>
+            <rect x="355" y="274" width="90" height="26" rx="13" fill="rgba(123,104,238,.6)"/>
+            <circle cx="385" cy="355" r="4" fill="rgba(123,104,238,.9)"/><circle cx="400" cy="355" r="5" fill="#7b68ee"/><circle cx="415" cy="355" r="4" fill="rgba(123,104,238,.4)"/>
+            <circle cx="400" cy="225" r="26" fill="rgba(0,0,0,.5)" stroke="rgba(123,104,238,.45)" stroke-width="1.5"/><polygon points="394,216 416,225 394,234" fill="rgba(180,160,255,.9)"/>
+            <rect x="28" y="398" width="162" height="24" rx="12" fill="rgba(0,0,0,.5)" stroke="rgba(123,104,238,.35)" stroke-width="1"/><text x="109" y="414" font-family="monospace" font-size="9" fill="#7b68ee" text-anchor="middle" letter-spacing="1.5">CAROUSEL SLIDE</text>
+          </svg>
+          <div class="thumb-cta"><span>Click to play</span><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg></div>
+        </div>
+        <div class="embed-layer"></div>
+        <div class="play-ind"><div class="pdot"></div>Playing</div>
+      </div>
+      <div class="card-info">
+        <div>
+          <div class="ci-index">05</div>
+          <div class="ci-title">Interactive Category Carousel</div>
+          <div class="ci-desc">Smooth gesture-driven category slide — animated card transitions, active state highlighting, and fluid swipe interactions.</div>
+          <div class="ci-tags"><span class="ctag">Carousel</span><span class="ctag">Smart Animate</span></div>
+        </div>
+        <div style="flex-shrink:0">
+          <a href="mailto:Abiodunadedamola94@gmail.com" class="open-btn">Get in touch <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M7 7h10v10"/></svg></a>
+          <span class="tool-badge">Figma · MP4</span>
+        </div>
+      </div>
+    </div>
 
-  <!-- FOOTER -->
+  </div>
+
   <footer>
-    <div class="foot-name">Abiodun<span>.</span></div>
-    <div class="foot-links">
-      <a href="mailto:Abiodunadedamola94@gmail.com" class="foot-link">Abiodunadedamola94@gmail.com</a>
-      <span class="foot-link">Lagos · Remote</span>
-      <a href="about.html" class="foot-link">About →</a>
-      <a href="https://mocreativeportfolio.lovable.app" target="_blank" rel="noopener" class="foot-link cta">Portfolio →</a>
+    <div class="fn">MoCreative<span>.</span></div>
+    <div class="flinks">
+      <a href="/" class="flink">Home</a>
+      <a href="/about" class="flink">About</a>
+      <a href="mailto:Abiodunadedamola94@gmail.com" class="flink">Contact</a>
+      <a href="https://mocreativeportfolio.lovable.app" target="_blank" rel="noopener" class="flink cta">Portfolio →</a>
     </div>
   </footer>
 
-</div><!-- /page -->
-
-<!-- LIGHTBOX -->
-<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Motion preview">
-  <div class="lightbox-inner">
-    <button class="lightbox-close" id="lb-close">
-      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M18 6L6 18M6 6l12 12"/></svg>
-      Close
-    </button>
-    <div class="lightbox-video" id="lb-content"></div>
-  </div>
 </div>
 
-<style>
-@keyframes shimmer{
-  from{opacity:0.15;transform:scaleX(0.8);}
-  to{opacity:0.5;transform:scaleX(1);}
-}
-</style>
-
 <script>
-/* ── CUSTOM CURSOR ── */
-const cur = document.getElementById('cursor');
-const ring = document.getElementById('cursor-ring');
-let mx=0,my=0,rx=0,ry=0;
-document.addEventListener('mousemove',e=>{
-  mx=e.clientX;my=e.clientY;
-  cur.style.left=mx+'px';cur.style.top=my+'px';
-});
-(function animRing(){
-  rx+=(mx-rx)*0.12;ry+=(my-ry)*0.12;
-  ring.style.left=rx+'px';ring.style.top=ry+'px';
-  requestAnimationFrame(animRing);
-})();
-document.querySelectorAll('a,button,.reel-card').forEach(el=>{
-  el.addEventListener('mouseenter',()=>{
-    cur.style.width='18px';cur.style.height='18px';
-    ring.style.width='52px';ring.style.height='52px';
-    ring.style.borderColor='rgba(123,104,238,0.8)';
-  });
-  el.addEventListener('mouseleave',()=>{
-    cur.style.width='10px';cur.style.height='10px';
-    ring.style.width='36px';ring.style.height='36px';
-    ring.style.borderColor='rgba(123,104,238,0.5)';
-  });
-});
+// Reveal on scroll
+const obs=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting){x.target.classList.add('show');obs.unobserve(x.target);}});},{threshold:0.08});
+document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
 
-/* ── SCROLL FADE UP ── */
-const obs = new IntersectionObserver(entries=>{
-  entries.forEach((e,i)=>{
-    if(e.isIntersecting){
-      const delay = e.target.style.getPropertyValue('--delay') || '0s';
-      e.target.style.transitionDelay = delay;
-      e.target.classList.add('visible');
-      obs.unobserve(e.target);
+// Thumbnail → media on click
+document.querySelectorAll('.reel-card[data-video],.reel-card[data-figma]').forEach(card=>{
+  const thumb=card.querySelector('.thumb-layer');
+  const embed=card.querySelector('.embed-layer');
+  if(!thumb||!embed)return;
+  thumb.addEventListener('click',()=>{
+    if(embed.hasChildNodes())return;
+    if(card.dataset.video){
+      const v=document.createElement('video');
+      v.src=card.dataset.video;v.autoplay=true;v.muted=true;v.loop=true;v.playsInline=true;
+      v.style.cssText='position:absolute;inset:0;width:100%;height:100%;object-fit:cover;';
+      embed.appendChild(v);v.play().catch(()=>{});
+    } else if(card.dataset.figma){
+      const f=document.createElement('iframe');
+      f.src=card.dataset.figma;f.allowFullscreen=true;f.title='Figma Prototype';
+      embed.appendChild(f);
     }
-  });
-},{threshold:0.12});
-document.querySelectorAll('.fade-up').forEach(el=>obs.observe(el));
-
-/* ── AUTOPLAY ON SCROLL ── */
-const videoObs = new IntersectionObserver(entries=>{
-  entries.forEach(e=>{
-    const vid = e.target.querySelector('video');
-    if(!vid) return;
-    if(e.isIntersecting){ vid.play(); e.target.classList.add('playing'); }
-    else { vid.pause(); e.target.classList.remove('playing'); }
-  });
-},{threshold:0.4});
-document.querySelectorAll('.reel-card').forEach(el=>videoObs.observe(el));
-
-/* ── THUMBNAIL → VIDEO or EMBED on click ── */
-document.querySelectorAll('.video-wrap[data-video], .video-wrap[data-figma]').forEach(wrap => {
-  const thumb = wrap.querySelector('.thumb-layer');
-  const embedLayer = wrap.querySelector('.embed-layer');
-  if (!thumb || !embedLayer) return;
-
-  thumb.addEventListener('click', () => {
-    if (embedLayer.hasChildNodes()) return; // already loaded
-
-    if (wrap.dataset.video) {
-      // MP4 video
-      const vid = document.createElement('video');
-      vid.src = wrap.dataset.video;
-      vid.autoplay = true;
-      vid.muted = true;
-      vid.loop = true;
-      vid.playsInline = true;
-      vid.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;object-fit:cover;';
-      embedLayer.appendChild(vid);
-      vid.play().catch(()=>{});
-    } else if (wrap.dataset.figma) {
-      // Figma iframe
-      const iframe = document.createElement('iframe');
-      iframe.src = wrap.dataset.figma;
-      iframe.allowFullscreen = true;
-      iframe.title = 'Figma Prototype';
-      embedLayer.appendChild(iframe);
-    }
-
     thumb.classList.add('hidden');
-    wrap.closest('.reel-card').classList.add('playing');
+    card.classList.add('playing');
   });
 });
 
-/* ── SCROLL AUTOPLAY for video cards ── */
-const videoScrollObs = new IntersectionObserver(entries => {
-  entries.forEach(e => {
-    const vid = e.target.querySelector('.embed-layer video');
-    if (!vid) return;
-    if (e.isIntersecting) { vid.play().catch(()=>{}); e.target.classList.add('playing'); }
-    else { vid.pause(); }
-  });
-}, { threshold: 0.4 });
-document.querySelectorAll('.reel-card').forEach(el => videoScrollObs.observe(el));
-
-/* ── LIGHTBOX (click playing card to fullscreen) ── */
-const lb = document.getElementById('lightbox');
-const lbContent = document.getElementById('lb-content');
-document.getElementById('lb-close').addEventListener('click',closeLB);
-lb.addEventListener('click',e=>{ if(e.target===lb) closeLB(); });
-document.addEventListener('keydown',e=>{ if(e.key==='Escape') closeLB(); });
-
-document.querySelectorAll('.reel-card').forEach(card=>{
-  card.addEventListener('click',e=>{
-    if(e.target.closest('.open-btn')) return; // let link open
-    const media = card.querySelector('video,iframe');
-    if(!media) return;
-    lbContent.innerHTML = media.outerHTML;
-    const v = lbContent.querySelector('video');
-    if(v){ v.autoplay=true; v.muted=false; v.play(); }
-    lb.classList.add('open');
-    document.body.style.overflow='hidden';
-  });
-});
-
-function closeLB(){
-  lb.classList.remove('open');
-  lbContent.innerHTML='';
-  document.body.style.overflow='';
-}
+// Scroll autoplay
+const vaObs=new IntersectionObserver(e=>{e.forEach(x=>{const v=x.target.querySelector('.embed-layer video');if(!v)return;if(x.isIntersecting){v.play().catch(()=>{});}else{v.pause();}});},{threshold:0.4});
+document.querySelectorAll('.reel-card').forEach(c=>vaObs.observe(c));
 </script>
-
 </body>
 </html>
