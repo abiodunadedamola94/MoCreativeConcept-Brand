@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MoCreativeConcept — Abiodun Adedamola</title>
+<meta name="description" content="AI Product Designer, Motion Designer and Builder-Designer based in Lagos.">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --void:#07070e;--surface:#13131e;--surface2:#1c1c2c;
+  --border:rgba(255,255,255,0.07);--border2:rgba(255,255,255,0.12);
+  --signal:#7b68ee;--signal-g:rgba(123,104,238,0.15);
+  --sky:#38bdf8;--pulse:#10b981;--warm:#ede9e0;--muted:#7a8899;--muted2:#3e4a5a;
+}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{background:var(--void);color:var(--warm);font-family:'DM Sans',sans-serif;-webkit-font-smoothing:antialiased;overflow-x:hidden;}
+/* NAV */
+nav{display:flex;align-items:center;justify-content:space-between;padding:28px 24px 0;max-width:1100px;margin:0 auto;}
+.logo{font-family:'Syne',sans-serif;font-weight:800;font-size:17px;letter-spacing:-0.03em;color:var(--warm);text-decoration:none;}
+.logo span{color:var(--signal);}
+.nav-links{display:flex;gap:20px;align-items:center;}
+.nl{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);text-decoration:none;transition:color .2s;}
+.nl:hover{color:var(--warm);}
+.nl.active{color:var(--signal);}
+.status{display:flex;align-items:center;gap:6px;font-family:'DM Mono',monospace;font-size:9.5px;letter-spacing:0.08em;text-transform:uppercase;color:var(--pulse);background:rgba(16,185,129,0.08);border:0.5px solid rgba(16,185,129,0.3);border-radius:99px;padding:5px 12px;}
+.dot{width:5px;height:5px;border-radius:50%;background:var(--pulse);animation:blink 2s ease-in-out infinite;}
+@keyframes blink{0%,100%{opacity:1;}50%{opacity:0.3;}}
+/* PAGE */
+.page{max-width:1100px;margin:0 auto;padding:0 24px 80px;}
+/* HERO */
+.hero{padding:80px 0 60px;}
+.eyebrow{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:0.16em;text-transform:uppercase;color:var(--muted2);margin-bottom:28px;display:flex;align-items:center;gap:12px;}
+.eyebrow::before{content:'';width:28px;height:1px;background:var(--muted2);}
+.hero-name{font-family:'Syne',sans-serif;font-weight:800;font-size:clamp(48px,9vw,108px);letter-spacing:-0.045em;line-height:0.88;color:var(--warm);margin-bottom:32px;}
+.hero-name .ol{color:transparent;-webkit-text-stroke:1.5px rgba(123,104,238,0.5);}
+.hero-desc{font-size:clamp(14px,1.8vw,17px);color:var(--muted);font-weight:300;max-width:500px;line-height:1.65;margin-bottom:52px;font-style:italic;}
+/* CARD GRID */
+.grid{display:grid;grid-template-columns:1fr;gap:16px;margin-bottom:52px;}
+@media(min-width:600px){.grid{grid-template-columns:1fr 1fr;}.feat{grid-column:1/-1;}}
+@media(min-width:900px){.grid{grid-template-columns:repeat(3,1fr);}.feat{grid-column:1/3;}}
+.card{position:relative;background:var(--surface);border:0.5px solid var(--border2);border-radius:20px;padding:28px 28px 24px;text-decoration:none;color:inherit;overflow:hidden;transition:border-color .25s,transform .25s;display:block;}
+.card::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 0% 0%,var(--cg,rgba(123,104,238,0.08)) 0%,transparent 65%);opacity:0;transition:opacity .3s;pointer-events:none;}
+.card:hover{border-color:var(--ca,var(--signal));transform:translateY(-3px);}
+.card:hover::before{opacity:1;}
+.c1{--ca:var(--signal);--cg:rgba(123,104,238,0.1);}
+.c2{--ca:var(--sky);--cg:rgba(56,189,248,0.08);}
+.c3{--ca:var(--pulse);--cg:rgba(16,185,129,0.07);}
+.ctag{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.12em;text-transform:uppercase;color:var(--ca,var(--signal));margin-bottom:14px;display:flex;align-items:center;gap:8px;}
+.ctag::before{content:'';width:16px;height:1px;background:var(--ca,var(--signal));}
+.card-corner{position:absolute;top:24px;right:24px;width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;background:var(--surface2);border:0.5px solid var(--border2);font-size:18px;}
+.card-title{font-family:'Syne',sans-serif;font-weight:700;font-size:clamp(18px,3vw,24px);letter-spacing:-0.025em;color:var(--warm);margin-bottom:8px;line-height:1.1;}
+.card-desc{font-size:13px;color:var(--muted);line-height:1.6;max-width:380px;margin-bottom:20px;}
+.metrics{display:flex;gap:24px;flex-wrap:wrap;margin-bottom:20px;padding-top:16px;border-top:0.5px solid var(--border);}
+.mv{font-family:'Syne',sans-serif;font-weight:800;font-size:22px;color:var(--pulse);letter-spacing:-0.03em;line-height:1;}
+.ml{font-size:10px;color:var(--muted2);font-family:'DM Mono',monospace;letter-spacing:0.06em;text-transform:uppercase;}
+.arrow{display:inline-flex;align-items:center;gap:7px;font-family:'DM Mono',monospace;font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:var(--ca,var(--signal));transition:gap .2s;}
+.card:hover .arrow{gap:12px;}
+.arrow svg{transition:transform .2s;}
+.card:hover .arrow svg{transform:translate(3px,-3px);}
+/* MARQUEE */
+.mwrap{overflow:hidden;border-top:0.5px solid var(--border);border-bottom:0.5px solid var(--border);padding:11px 0;margin-bottom:40px;}
+.mtrack{display:flex;width:max-content;animation:marquee 24s linear infinite;}
+.mi{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted2);padding:0 24px;white-space:nowrap;}
+.mi b{color:var(--signal);margin-right:10px;font-weight:400;}
+@keyframes marquee{from{transform:translateX(0);}to{transform:translateX(-50%);}}
+/* CONTACT */
+.contact{display:flex;flex-wrap:wrap;gap:12px 28px;align-items:center;padding-top:8px;margin-bottom:52px;}
+.clink{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:0.08em;text-transform:uppercase;color:var(--muted2);text-decoration:none;transition:color .2s;}
+.clink:hover{color:var(--warm);}
+.clink.hi{color:var(--sky);border-bottom:0.5px solid rgba(56,189,248,0.3);padding-bottom:1px;}
+/* FOOTER */
+footer{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;padding:24px 0 36px;border-top:0.5px solid var(--border);}
+.fn{font-family:'Syne',sans-serif;font-weight:700;font-size:14px;letter-spacing:-0.02em;color:var(--warm);}
+.fn span{color:var(--signal);}
+.flinks{display:flex;gap:20px;flex-wrap:wrap;}
+.flink{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:0.06em;color:var(--muted2);text-decoration:none;}
+.flink.cta{color:var(--sky);border-bottom:0.5px solid rgba(56,189,248,0.3);padding-bottom:1px;}
+/* REVEAL */
+.reveal{opacity:0;transform:translateY(24px);transition:opacity .6s cubic-bezier(.22,1,.36,1),transform .6s cubic-bezier(.22,1,.36,1);}
+.reveal.show{opacity:1;transform:translateY(0);}
+/* MOBILE NAV */
+@media(max-width:480px){
+  nav{padding:20px 20px 0;}
+  .nav-links .nl:not(.status){display:none;}
+  .hero{padding:48px 0 36px;}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="/" class="logo">MoCreative<span>.</span></a>
+  <div class="nav-links">
+    <a href="/" class="nl active">Home</a>
+    <a href="https://mocreativeportfolio.lovable.app" target="_blank" rel="noopener" class="nl">Work</a>
+    <a href="/motion" class="nl">Motion</a>
+    <a href="/about" class="nl">About</a>
+    <a href="mailto:Abiodunadedamola94@gmail.com" class="nl">Contact</a>
+    <div class="status"><div class="dot"></div>Open to work</div>
+  </div>
+</nav>
+
+<div class="page">
+<section class="hero">
+  <div class="eyebrow reveal">Lagos, Nigeria · AI Product Designer</div>
+  <h1 class="hero-name reveal" style="transition-delay:.08s">
+    Mo<span class="ol">Creative</span><br>Concept<span style="color:var(--signal);">.</span>
+  </h1>
+  <p class="hero-desc reveal" style="transition-delay:.16s">
+    Where human intuition meets intelligent systems — designing products that move, building systems that ship, crafting brands that last.
+  </p>
+
+  <div class="grid">
+    <!-- MAIN PORTFOLIO -->
+    <a href="https://mocreativeportfolio.lovable.app" target="_blank" rel="noopener" class="card c1 feat reveal" style="transition-delay:.22s">
+      <div class="card-corner" aria-hidden="true">🎨</div>
+      <div class="ctag">Main Portfolio</div>
+      <div class="card-title">Product Design<br>Work</div>
+      <div class="card-desc">AI SaaS, fintech dashboards, design systems, PWAs — full product design work with outcome metrics across every industry shipped.</div>
+      <div class="metrics">
+        <div><div class="mv">40%</div><div class="ml">Efficiency gain</div></div>
+        <div><div class="mv">52%</div><div class="ml">Faster flows</div></div>
+        <div><div class="mv">28%</div><div class="ml">More conversions</div></div>
+      </div>
+      <span class="arrow">View portfolio <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17L17 7M7 7h10v10"/></svg></span>
+    </a>
+
+    <!-- MOTION -->
+    <a href="/motion" class="card c2 reveal" style="transition-delay:.28s">
+      <div class="card-corner" aria-hidden="true">🎬</div>
+      <div class="ctag">Motion & Animation</div>
+      <div class="card-title">Products<br>that move.</div>
+      <div class="card-desc">Figma-native motion — brand animations, UI transitions, microinteractions, and scroll-driven prototype experiences.</div>
+      <span class="arrow">View motion reel <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17L17 7M7 7h10v10"/></svg></span>
+    </a>
+
+    <!-- ABOUT -->
+    <a href="/about" class="card c3 reveal" style="transition-delay:.34s">
+      <div class="card-corner" aria-hidden="true">📄</div>
+      <div class="ctag">Brand & Resume</div>
+      <div class="card-title">Who I am<br>& what I do.</div>
+      <div class="card-desc">Brand identity, mission, experience highlights, and full skill set — in one clean one-pager.</div>
+      <span class="arrow">View one-pager <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17L17 7M7 7h10v10"/></svg></span>
+    </a>
+  </div>
+
+  <div class="mwrap reveal" style="transition-delay:.4s">
+    <div class="mtrack" aria-hidden="true">
+      <span class="mi"><b>✦</b>AI Product Design</span>
+      <span class="mi"><b>✦</b>Motion & Animation</span>
+      <span class="mi"><b>✦</b>Design Systems</span>
+      <span class="mi"><b>✦</b>Vibe Coding</span>
+      <span class="mi"><b>✦</b>Figma Smart Animate</span>
+      <span class="mi"><b>✦</b>Vercel · Supabase</span>
+      <span class="mi"><b>✦</b>Fintech UX</span>
+      <span class="mi"><b>✦</b>Lagos → World</span>
+      <span class="mi"><b>✦</b>AI Product Design</span>
+      <span class="mi"><b>✦</b>Motion & Animation</span>
+      <span class="mi"><b>✦</b>Design Systems</span>
+      <span class="mi"><b>✦</b>Vibe Coding</span>
+      <span class="mi"><b>✦</b>Figma Smart Animate</span>
+      <span class="mi"><b>✦</b>Vercel · Supabase</span>
+      <span class="mi"><b>✦</b>Fintech UX</span>
+      <span class="mi"><b>✦</b>Lagos → World</span>
+    </div>
+  </div>
+
+  <div class="contact reveal" style="transition-delay:.46s">
+    <a href="mailto:Abiodunadedamola94@gmail.com" class="clink hi">Abiodunadedamola94@gmail.com</a>
+    <a href="tel:+2348145361262" class="clink">+234 814 536 1262</a>
+    <a href="https://linkedin.com/in/abiodun-adedamola" target="_blank" rel="noopener" class="clink">LinkedIn</a>
+    <a href="https://x.com" target="_blank" rel="noopener" class="clink">Twitter / X</a>
+  </div>
+</section>
+
+<footer>
+  <div class="fn">MoCreative<span>.</span></div>
+  <div class="flinks">
+    <a href="/motion" class="flink">Motion</a>
+    <a href="/about" class="flink">About</a>
+    <span class="flink">Lagos · Remote · 2026</span>
+    <a href="https://mocreativeportfolio.lovable.app" target="_blank" rel="noopener" class="flink cta">Portfolio →</a>
+  </div>
+</footer>
+</div>
+
+<script>
+const obs = new IntersectionObserver(e=>{
+  e.forEach(x=>{if(x.isIntersecting){x.target.classList.add('show');obs.unobserve(x.target);}});
+},{threshold:0.1});
+document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+</script>
+</body>
+</html>
