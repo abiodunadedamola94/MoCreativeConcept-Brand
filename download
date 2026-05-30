@@ -1,0 +1,186 @@
+# ─────────────────────────────────────────
+#  MoCreativeConcept — .gitignore
+#  Static HTML/CSS/JS portfolio site
+# ─────────────────────────────────────────
+
+
+# ── OS FILES ──────────────────────────────
+
+# macOS
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+.AppleDouble
+.LSOverride
+Icon?
+
+# Windows
+desktop.ini
+$RECYCLE.BIN/
+*.lnk
+
+# Linux
+*~
+.fuse_hidden*
+.directory
+.Trash-*
+.nfs*
+
+
+# ── EDITOR & IDE ──────────────────────────
+
+# VS Code
+.vscode/
+!.vscode/extensions.json
+*.code-workspace
+
+# JetBrains (WebStorm, IntelliJ)
+.idea/
+*.iml
+*.iws
+*.ipr
+out/
+.idea_modules/
+
+# Sublime Text
+*.sublime-project
+*.sublime-workspace
+
+# Vim / Neovim
+*.swp
+*.swo
+*~
+Session.vim
+.netrwhist
+
+# Emacs
+*~
+\#*\#
+/.emacs.desktop
+/.emacs.desktop.lock
+*.elc
+auto-save-list
+tramp
+.\#*
+
+
+# ── NODE (if ever added) ──────────────────
+
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+.npm
+.yarn/cache
+.yarn/unplugged
+.yarn/build-state.yml
+.yarn/install-state.gz
+.pnp.*
+package-lock.json
+yarn.lock
+
+
+# ── BUILD OUTPUTS ─────────────────────────
+
+dist/
+build/
+out/
+.next/
+.nuxt/
+.vite/
+.cache/
+*.min.js
+*.min.css
+
+
+# ── ENVIRONMENT & SECRETS ─────────────────
+
+.env
+.env.*
+.env.local
+.env.development
+.env.staging
+.env.production
+!.env.example
+*.pem
+*.key
+*.cert
+secrets/
+credentials/
+
+
+# ── MEDIA & LARGE ASSETS ──────────────────
+
+# Uncommit large video files — host on Cloudinary / S3 / direct link instead
+*.mp4
+*.mov
+*.avi
+*.mkv
+*.wmv
+*.webm
+
+# Uncompressed source images (keep compressed exports)
+*.psd
+*.ai
+*.sketch
+*.fig
+*.xd
+
+# Raw exports (keep only web-optimised versions)
+*_raw.*
+*_source.*
+*_export_*
+
+
+# ── FIGMA EXPORTS & WORKING FILES ─────────
+
+figma-exports/
+raw-exports/
+working/
+wip/
+_archive/
+archive/
+
+
+# ── LOGS & TEMP ───────────────────────────
+
+logs/
+*.log
+*.tmp
+*.temp
+tmp/
+temp/
+.temp/
+
+
+# ── VERCEL ────────────────────────────────
+
+.vercel
+.vercel/
+
+
+# ── TESTING ───────────────────────────────
+
+coverage/
+.nyc_output
+test-results/
+playwright-report/
+*.test.js
+*.spec.js
+
+
+# ── MISC ──────────────────────────────────
+
+*.zip
+*.tar.gz
+*.rar
+*.7z
+*.bak
+*.backup
+*.orig
+.history/

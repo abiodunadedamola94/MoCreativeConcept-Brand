@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>About — Abiodun Adedamola · MoCreativeConcept</title>
+<meta name="description" content="AI Product Designer, Motion Designer and Builder-Designer. Brand identity, mission, skills and experience.">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0c0c14;--bg1:#111119;--bg2:#16161f;--bg3:#1c1c26;
+  --border:rgba(255,255,255,0.07);--border2:rgba(255,255,255,0.11);--border3:rgba(255,255,255,0.18);
+  --indigo:#5b5bd6;--indigo2:#7c7cef;--indigo-dim:rgba(91,91,214,0.15);
+  --sky:#22d3ee;--pulse:#10b981;--amber:#f59e0b;--rose:#f43f5e;
+  --warm:#ffffff;--warm2:#e8e8f0;--muted:#8b8fa8;--muted2:#3a3d52;
+  --font:'Inter',sans-serif;--mono:'JetBrains Mono',monospace;
+}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--warm2);font-family:var(--font);-webkit-font-smoothing:antialiased;overflow-x:hidden;}
+
+/* ─── ANN BAR ─── */
+.ann-bar{background:#13131e;border-bottom:0.5px solid var(--border);padding:9px 24px;text-align:center;font-family:var(--mono);font-size:11px;color:var(--muted);letter-spacing:0.04em;display:flex;align-items:center;justify-content:center;gap:8px;}
+.ann-dot{width:7px;height:7px;border-radius:50%;background:var(--pulse);animation:blink 2s ease-in-out infinite;}
+@keyframes blink{0%,100%{opacity:1;}50%{opacity:0.4;}}
+
+/* ─── NAV ─── */
+.nav{background:rgba(12,12,20,0.85);backdrop-filter:blur(16px);border-bottom:0.5px solid var(--border);position:sticky;top:0;z-index:100;padding:0 max(24px,4vw);}
+.nav-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:60px;}
+.nav-logo-wrap{display:flex;align-items:center;gap:10px;text-decoration:none;}
+.nav-logo-mark{width:32px;height:32px;border-radius:8px;background:var(--indigo-dim);border:0.5px solid rgba(91,91,214,0.3);display:flex;align-items:center;justify-content:center;font-weight:900;font-size:13px;color:var(--indigo2);}
+.nav-logo-text{font-weight:700;font-size:15px;color:var(--warm);letter-spacing:-0.02em;}
+.nav-logo-sub{font-family:var(--mono);font-size:9px;color:var(--muted2);letter-spacing:0.06em;text-transform:uppercase;display:block;margin-top:1px;}
+.nav-center{display:flex;gap:4px;}
+.nl{font-size:13px;font-weight:400;color:var(--muted);text-decoration:none;padding:6px 14px;border-radius:6px;transition:color .15s,background .15s;}
+.nl:hover{color:var(--warm);background:rgba(255,255,255,0.05);}
+.nl.active{color:var(--warm);}
+.nav-cta{background:var(--indigo);color:var(--warm);border:none;border-radius:7px;padding:8px 18px;font-size:13px;font-weight:600;cursor:pointer;text-decoration:none;transition:opacity .15s;}
+.nav-cta:hover{opacity:.88;}
+@media(max-width:768px){.nav-center{display:none;}}
+
+/* ─── PAGE ─── */
+.page{max-width:1200px;margin:0 auto;padding:0 max(24px,4vw) 100px;}
+
+/* ─── HERO ─── */
+.hero{padding:72px 0 56px;position:relative;border-bottom:0.5px solid var(--border);}
+.hero-bg{position:absolute;inset:0;pointer-events:none;overflow:hidden;}
+.hero-dots{position:absolute;inset:0;background-image:radial-gradient(rgba(255,255,255,0.09) 1px,transparent 1px);background-size:28px 28px;mask-image:radial-gradient(ellipse 80% 70% at 70% 40%,black 0%,transparent 100%);opacity:0.3;}
+.hglow{position:absolute;border-radius:50%;filter:blur(100px);}
+.hg1{width:400px;height:400px;background:rgba(91,91,214,0.1);top:-80px;right:-60px;animation:gd 20s ease-in-out infinite alternate;}
+@keyframes gd{from{transform:translate(0,0);}to{transform:translate(20px,16px);}}
+
+.hero-inner{display:grid;grid-template-columns:1fr auto;gap:48px;align-items:start;}
+@media(max-width:768px){.hero-inner{grid-template-columns:1fr;}.hero-contact-block{order:-1;}}
+
+.hero-badge{display:inline-flex;align-items:center;gap:8px;border:0.5px solid var(--border2);border-radius:6px;padding:5px 12px;font-family:var(--mono);font-size:11px;color:var(--muted);letter-spacing:0.04em;margin-bottom:24px;background:rgba(255,255,255,0.02);}
+.badge-pip{width:6px;height:6px;border-radius:50%;background:var(--pulse);}
+
+.hero-name{font-size:clamp(44px,7vw,80px);font-weight:900;letter-spacing:-0.045em;line-height:0.92;color:var(--warm);margin-bottom:10px;}
+.hero-name .accent{color:var(--indigo2);}
+.hero-role{font-family:var(--mono);font-size:12px;letter-spacing:0.1em;text-transform:uppercase;color:var(--indigo2);margin-bottom:20px;}
+.hero-tagline{font-size:clamp(15px,1.6vw,18px);color:var(--muted);font-weight:300;line-height:1.65;max-width:560px;font-style:italic;margin-bottom:32px;}
+
+.hero-ctas{display:flex;gap:12px;flex-wrap:wrap;}
+.btn-p{background:var(--indigo);color:var(--warm);border:none;border-radius:8px;padding:11px 22px;font-size:13px;font-weight:600;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:7px;transition:opacity .15s,transform .15s;}
+.btn-p:hover{opacity:.88;transform:translateY(-1px);}
+.btn-s{background:transparent;color:var(--warm2);border:0.5px solid var(--border3);border-radius:8px;padding:11px 22px;font-size:13px;font-weight:500;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:7px;transition:border-color .2s,background .2s;}
+.btn-s:hover{border-color:var(--indigo2);background:var(--indigo-dim);}
+
+/* contact block right side */
+.hero-contact-block{display:flex;flex-direction:column;gap:8px;min-width:240px;}
+.hc-label{font-family:var(--mono);font-size:9px;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted2);margin-bottom:4px;}
+.hc-item{display:flex;align-items:center;justify-content:space-between;padding:10px 14px;background:var(--bg2);border:0.5px solid var(--border2);border-radius:8px;text-decoration:none;color:inherit;transition:border-color .15s;}
+.hc-item:hover{border-color:var(--indigo2);}
+.hc-val{font-size:12px;color:var(--warm2);}
+.hc-arr{color:var(--indigo2);font-size:14px;}
+.status-pill{display:inline-flex;align-items:center;gap:6px;background:rgba(16,185,129,0.08);border:0.5px solid rgba(16,185,129,0.25);border-radius:99px;padding:6px 12px;font-family:var(--mono);font-size:10px;color:var(--pulse);letter-spacing:0.06em;margin-top:4px;align-self:flex-start;}
+.sdot{width:5px;height:5px;border-radius:50%;background:var(--pulse);animation:blink 2s ease-in-out infinite;}
+
+/* ─── SECTION ─── */
+.section{padding:64px 0;}
+.s-label{font-family:var(--mono);font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted2);margin-bottom:14px;display:flex;align-items:center;gap:10px;}
+.s-label::after{content:'';flex:1;height:0.5px;background:var(--border);}
+.s-title{font-size:clamp(28px,4vw,44px);font-weight:800;letter-spacing:-0.035em;line-height:1.0;color:var(--warm);margin-bottom:40px;}
+.s-title .accent{color:var(--indigo2);}
+
+/* ─── MV CARDS ─── */
+.mv-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:64px;}
+@media(max-width:640px){.mv-grid{grid-template-columns:1fr;}}
+.mv-card{background:var(--bg2);border:0.5px solid var(--border2);border-radius:14px;padding:28px 28px 24px;position:relative;overflow:hidden;}
+.mv-card::before{content:'';position:absolute;top:0;left:0;width:3px;height:100%;border-radius:2px 0 0 2px;}
+.mv-card.mission::before{background:var(--indigo);}
+.mv-card.vision::before{background:var(--sky);}
+.mv-type{font-family:var(--mono);font-size:9px;letter-spacing:0.14em;text-transform:uppercase;margin-bottom:14px;}
+.mv-card.mission .mv-type{color:var(--indigo2);}
+.mv-card.vision .mv-type{color:var(--sky);}
+.mv-text{font-size:14px;color:var(--muted);line-height:1.7;font-weight:300;}
+
+/* ─── PILLARS ─── */
+.pillar-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);border:0.5px solid var(--border2);border-radius:14px;overflow:hidden;margin-bottom:64px;}
+@media(max-width:768px){.pillar-grid{grid-template-columns:1fr;}}
+.pillar{background:var(--bg1);padding:32px 28px;transition:background .2s;}
+.pillar:hover{background:var(--bg2);}
+.pillar-icon{width:40px;height:40px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:18px;border:0.5px solid var(--border2);margin-bottom:18px;}
+.pillar-title{font-size:15px;font-weight:700;color:var(--warm);margin-bottom:8px;letter-spacing:-0.01em;}
+.pillar-desc{font-size:13px;color:var(--muted);line-height:1.65;}
+
+/* ─── EXPERIENCE ─── */
+.exp-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:64px;}
+@media(max-width:768px){.exp-grid{grid-template-columns:1fr;}}
+.exp-card{background:var(--bg2);border:0.5px solid var(--border2);border-radius:14px;padding:22px 24px;transition:border-color .2s;}
+.exp-card:hover{border-color:rgba(91,91,214,0.35);}
+.exp-top{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:12px;gap:12px;}
+.exp-company{font-size:15px;font-weight:700;color:var(--warm);letter-spacing:-0.02em;}
+.exp-period{font-family:var(--mono);font-size:9px;color:var(--muted2);letter-spacing:0.06em;text-transform:uppercase;background:var(--bg3);border:0.5px solid var(--border);border-radius:4px;padding:3px 8px;white-space:nowrap;}
+.exp-role{font-family:var(--mono);font-size:10px;color:var(--indigo2);letter-spacing:0.06em;margin-bottom:12px;}
+.exp-metrics{display:flex;gap:16px;flex-wrap:wrap;padding:12px 0;border-top:0.5px solid var(--border);border-bottom:0.5px solid var(--border);margin-bottom:12px;}
+.em-v{font-size:20px;font-weight:800;color:var(--pulse);letter-spacing:-0.03em;line-height:1;}
+.em-l{font-family:var(--mono);font-size:9px;color:var(--muted2);letter-spacing:0.06em;text-transform:uppercase;margin-top:2px;}
+.exp-desc{font-size:12px;color:var(--muted);line-height:1.6;}
+
+/* ─── SKILLS ─── */
+.skills-layout{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-bottom:64px;}
+@media(max-width:768px){.skills-layout{grid-template-columns:1fr 1fr;}}
+@media(max-width:480px){.skills-layout{grid-template-columns:1fr;}}
+.skill-group{}
+.sg-title{font-family:var(--mono);font-size:9px;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted2);margin-bottom:12px;}
+.skill-tags{display:flex;flex-wrap:wrap;gap:6px;}
+.stag{font-size:11px;color:var(--muted);background:var(--bg2);border:0.5px solid var(--border2);border-radius:5px;padding:4px 10px;font-family:var(--mono);letter-spacing:0.02em;transition:border-color .15s,color .15s;}
+.stag:hover{border-color:var(--indigo2);color:var(--warm2);}
+
+/* ─── PALETTE STRIP ─── */
+.palette-strip{display:flex;border-radius:10px;overflow:hidden;height:8px;margin-bottom:64px;}
+.ps{flex:1;}
+
+/* ─── SCORE BARS (Praxiomai-style assessment) ─── */
+.score-section{background:var(--bg2);border:0.5px solid var(--border2);border-radius:14px;padding:32px 32px 28px;margin-bottom:64px;}
+.score-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:28px;}
+@media(max-width:768px){.score-grid{grid-template-columns:1fr;}}
+.sg-head{font-size:13px;font-weight:600;color:var(--warm);margin-bottom:4px;}
+.sg-sub{font-family:var(--mono);font-size:9px;color:var(--muted2);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:14px;}
+.bar-row{display:flex;align-items:center;gap:10px;margin-bottom:7px;}
+.bar-label{font-size:11px;color:var(--muted);flex:1;}
+.bar-track{flex:1.5;height:3px;background:rgba(255,255,255,0.06);border-radius:2px;overflow:hidden;}
+.bar-fill{height:3px;border-radius:2px;}
+.bar-pct{font-family:var(--mono);font-size:10px;color:var(--muted2);width:30px;text-align:right;}
+
+/* ─── CTA SECTION ─── */
+.cta-strip{border:0.5px solid var(--border2);border-radius:14px;padding:56px 40px;text-align:center;background:var(--bg2);position:relative;overflow:hidden;margin-bottom:0;}
+.cta-strip::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 60% 70% at 50% 0%,rgba(91,91,214,0.09) 0%,transparent 70%);pointer-events:none;}
+.cta-eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);margin-bottom:20px;}
+.cta-title{font-size:clamp(24px,3.5vw,40px);font-weight:800;letter-spacing:-0.035em;color:var(--warm);margin-bottom:12px;}
+.cta-title .accent{color:var(--indigo2);}
+.cta-sub{font-size:14px;color:var(--muted);line-height:1.65;margin-bottom:8px;}
+.cta-note{font-family:var(--mono);font-size:11px;color:var(--muted2);margin-bottom:36px;letter-spacing:0.04em;}
+.cta-btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;}
+
+/* ─── FOOTER ─── */
+.footer-strip{padding:28px 0;border-top:0.5px solid var(--border);margin-top:64px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:14px;}
+.fn{font-size:14px;font-weight:700;color:var(--warm);letter-spacing:-0.02em;}
+.fn span{color:var(--indigo2);}
+.fl-row{display:flex;gap:20px;flex-wrap:wrap;}
+.fl{font-family:var(--mono);font-size:10px;color:var(--muted2);text-decoration:none;letter-spacing:0.04em;transition:color .15s;}
+.fl:hover{color:var(--warm);}
+.fl.cta{color:var(--sky);}
+
+/* print */
+.print-fab{position:fixed;bottom:24px;right:24px;z-index:200;}
+.print-btn{background:var(--indigo);color:var(--warm);border:none;padding:10px 18px;border-radius:8px;font-size:12px;font-weight:600;cursor:pointer;display:flex;align-items:center;gap:7px;box-shadow:0 4px 24px rgba(91,91,214,0.4);transition:opacity .15s;}
+.print-btn:hover{opacity:.88;}
+@media print{.print-fab,.ann-bar,.nav{display:none;}.page{padding:0;}body{background:#fff;color:#000;}}
+
+/* reveal */
+.reveal{opacity:0;transform:translateY(22px);transition:opacity .65s cubic-bezier(.22,1,.36,1),transform .65s cubic-bezier(.22,1,.36,1);}
+.reveal.show{opacity:1;transform:translateY(0);}
+@media(max-width:640px){.page{padding:0 20px 80px;}}
+</style>
+</head>
+<body>
+
+<div class="print-fab">
+  <button class="print-btn" onclick="window.print()">
+    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+    Save as PDF
+  </button>
+</div>
+
+<div class="ann-bar">
+  <span class="ann-dot"></span>
+  Abiodun Adedamola · AI Product Designer · Motion Designer · Builder · Lagos, Nigeria
+</div>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="/" class="nav-logo-wrap">
+      <div class="nav-logo-mark">MC</div>
+      <div>
+        <div class="nav-logo-text">MoCreativeConcept</div>
+        <span class="nav-logo-sub">Brand One-Pager</span>
+      </div>
+    </a>
+    <div class="nav-center">
+      <a href="/" class="nl">Home</a>
+      <a href="https://mocreativeportfolio.lovable.app" target="_blank" rel="noopener" class="nl">Work</a>
+      <a href="/motion" class="nl">Motion</a>
+      <a href="/about" class="nl active">About</a>
+    </div>
+    <a href="mailto:Abiodunadedamola94@gmail.com" class="nav-cta">Get in touch →</a>
+  </div>
+</nav>
+
+<div class="page">
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-bg"><div class="hero-dots"></div><div class="hglow hg1"></div></div>
+    <div class="hero-inner">
+      <div>
+        <div class="hero-badge reveal"><span class="badge-pip"></span>Lagos, Nigeria · Remote · Open to work</div>
+        <h1 class="hero-name reveal" style="transition-delay:.05s">Abiodun<br><span class="accent">Adedamola.</span></h1>
+        <div class="hero-role reveal" style="transition-delay:.08s">AI Product Designer · Motion Designer · Builder-Designer</div>
+        <p class="hero-tagline reveal" style="transition-delay:.11s">Where human intuition meets intelligent systems — I design the invisible infrastructure of great digital products, then build and ship them.</p>
+        <div class="hero-ctas reveal" style="transition-delay:.14s">
+          <a href="https://mocreativeportfolio.lovable.app" target="_blank" rel="noopener" class="btn-p">View portfolio →</a>
+          <a href="/motion" class="btn-s">Motion reel <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="5 3 19 12 5 21 5 3"/></svg></a>
+        </div>
+      </div>
+      <div class="hero-contact-block reveal" style="transition-delay:.18s">
+        <div class="hc-label">Contact</div>
+        <a href="tel:+2348145361262" class="hc-item"><span class="hc-val">+234 814 536 1262</span><span class="hc-arr">→</span></a>
+        <a href="mailto:Abiodunadedamola94@gmail.com" class="hc-item"><span class="hc-val" style="font-size:11px">Abiodunadedamola94@gmail.com</span><span class="hc-arr">→</span></a>
+        <a href="https://mocreativeportfolio.lovable.app" target="_blank" rel="noopener" class="hc-item"><span class="hc-val" style="font-size:11px">mocreativeportfolio.lovable.app</span><span class="hc-arr">→</span></a>
+        <a href="https://linkedin.com/in/abiodun-adedamola" target="_blank" rel="noopener" class="hc-item"><span class="hc-val">LinkedIn</span><span class="hc-arr">→</span></a>
+        <div class="status-pill"><div class="sdot"></div>Open to work</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MISSION / VISION -->
+  <section class="section">
+    <div class="s-label">Mission & Vision</div>
+    <h2 class="s-title reveal">Purpose-driven design<br>for <span class="accent">intelligent systems.</span></h2>
+    <div class="mv-grid">
+      <div class="mv-card mission reveal">
+        <div class="mv-type">Mission</div>
+        <div class="mv-text">To bridge the gap between human needs and AI-powered systems — designing products that don't just look good, but fundamentally change how people work, learn, and transact.</div>
+      </div>
+      <div class="mv-card vision reveal" style="transition-delay:.08s">
+        <div class="mv-type">Vision</div>
+        <div class="mv-text">A world where every startup, school, and business in Africa and beyond operates on intelligent, beautifully designed digital infrastructure — built by designers who think like engineers and ship like founders.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BRAND PILLARS -->
+  <section class="section" style="padding-top:0">
+    <div class="s-label">Brand Pillars</div>
+    <h2 class="s-title reveal">Three things that make<br>MoCreative <span class="accent">different.</span></h2>
+    <div class="pillar-grid reveal">
+      <div class="pillar">
+        <div class="pillar-icon" style="background:rgba(91,91,214,0.1);border-color:rgba(91,91,214,0.22);">⬡</div>
+        <div class="pillar-title">Systems thinker</div>
+        <div class="pillar-desc">I don't design screens — I design workflows, AI agents, admin dashboards, and operational logic. Every product is a living system with inputs, outputs, and feedback loops.</div>
+      </div>
+      <div class="pillar">
+        <div class="pillar-icon" style="background:rgba(34,211,238,0.1);border-color:rgba(34,211,238,0.22);">⚡</div>
+        <div class="pillar-title">Builder-designer</div>
+        <div class="pillar-desc">Claude Code, Lovable, Figma, Vercel, Supabase — I take products from concept to live production without waiting for a full engineering team. Design and build are one motion.</div>
+      </div>
+      <div class="pillar">
+        <div class="pillar-icon" style="background:rgba(16,185,129,0.1);border-color:rgba(16,185,129,0.22);">◎</div>
+        <div class="pillar-title">Outcome-obsessed</div>
+        <div class="pillar-desc">Every project carries a metric. 40% efficiency gains. 52% faster response times. 28% higher lead conversion. Design earns its seat at the business table through results.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- QUALITY SCORES -->
+  <section class="section" style="padding-top:0">
+    <div class="s-label">Design quality scores</div>
+    <div class="score-section reveal">
+      <div style="margin-bottom:24px;">
+        <div style="font-size:18px;font-weight:700;color:var(--warm);margin-bottom:4px;letter-spacing:-0.02em;">Measured at every stage. Not just delivered.</div>
+        <div style="font-size:13px;color:var(--muted);">Every project from MoCreativeConcept carries a quality benchmark — so outcomes are tracked, not assumed.</div>
+      </div>
+      <div class="score-grid">
+        <div>
+          <div class="sg-head">Design Quality <span style="color:var(--indigo2);font-size:22px;font-weight:900;letter-spacing:-0.03em;">91</span><span style="color:var(--muted2);font-size:13px;">/100</span></div>
+          <div class="sg-sub">DQS · Visual & System</div>
+          <div class="bar-row"><span class="bar-label">Visual clarity</span><div class="bar-track"><div class="bar-fill" style="width:94%;background:var(--indigo)"></div></div><span class="bar-pct">94%</span></div>
+          <div class="bar-row"><span class="bar-label">System coherence</span><div class="bar-track"><div class="bar-fill" style="width:88%;background:var(--indigo)"></div></div><span class="bar-pct">88%</span></div>
+          <div class="bar-row"><span class="bar-label">Accessibility</span><div class="bar-track"><div class="bar-fill" style="width:91%;background:var(--indigo)"></div></div><span class="bar-pct">91%</span></div>
+          <div class="bar-row"><span class="bar-label">Outcome delivery</span><div class="bar-track"><div class="bar-fill" style="width:96%;background:var(--indigo)"></div></div><span class="bar-pct">96%</span></div>
+        </div>
+        <div>
+          <div class="sg-head">Motion Quality <span style="color:var(--sky);font-size:22px;font-weight:900;letter-spacing:-0.03em;">90</span><span style="color:var(--muted2);font-size:13px;">/100</span></div>
+          <div class="sg-sub">MQS · Animation</div>
+          <div class="bar-row"><span class="bar-label">Timing precision</span><div class="bar-track"><div class="bar-fill" style="width:90%;background:var(--sky)"></div></div><span class="bar-pct">90%</span></div>
+          <div class="bar-row"><span class="bar-label">Brand coherence</span><div class="bar-track"><div class="bar-fill" style="width:95%;background:var(--sky)"></div></div><span class="bar-pct">95%</span></div>
+          <div class="bar-row"><span class="bar-label">Interaction feel</span><div class="bar-track"><div class="bar-fill" style="width:88%;background:var(--sky)"></div></div><span class="bar-pct">88%</span></div>
+          <div class="bar-row"><span class="bar-label">Purposeful motion</span><div class="bar-track"><div class="bar-fill" style="width:93%;background:var(--sky)"></div></div><span class="bar-pct">93%</span></div>
+        </div>
+        <div>
+          <div class="sg-head">Outcome Quality <span style="color:var(--pulse);font-size:22px;font-weight:900;letter-spacing:-0.03em;">86</span><span style="color:var(--muted2);font-size:13px;">/100</span></div>
+          <div class="sg-sub">OQS · Real results</div>
+          <div class="bar-row"><span class="bar-label">Efficiency gain</span><div class="bar-track"><div class="bar-fill" style="width:40%;background:var(--pulse)"></div></div><span class="bar-pct">40%</span></div>
+          <div class="bar-row"><span class="bar-label">Speed improvement</span><div class="bar-track"><div class="bar-fill" style="width:52%;background:var(--pulse)"></div></div><span class="bar-pct">52%</span></div>
+          <div class="bar-row"><span class="bar-label">Conversion lift</span><div class="bar-track"><div class="bar-fill" style="width:28%;background:var(--pulse)"></div></div><span class="bar-pct">28%</span></div>
+          <div class="bar-row"><span class="bar-label">Engagement up</span><div class="bar-track"><div class="bar-fill" style="width:60%;background:var(--pulse)"></div></div><span class="bar-pct">60%</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EXPERIENCE -->
+  <section class="section" style="padding-top:0">
+    <div class="s-label">Experience highlights</div>
+    <h2 class="s-title reveal">Projects that<br><span class="accent">moved the needle.</span></h2>
+    <div class="exp-grid">
+
+      <div class="exp-card reveal">
+        <div class="exp-top">
+          <div>
+            <div class="exp-company">LeapTra · AI SaaS</div>
+            <div class="exp-role">Product Designer</div>
+          </div>
+          <span class="exp-period">Sept 2025 – Present</span>
+        </div>
+        <div class="exp-metrics">
+          <div><div class="em-v">40%</div><div class="em-l">Efficiency</div></div>
+          <div><div class="em-v">52%</div><div class="em-l">Faster flows</div></div>
+          <div><div class="em-v">28%</div><div class="em-l">Conversion</div></div>
+        </div>
+        <div class="exp-desc">Designed AI agents for sales, onboarding, and customer support automation. Built email organiser, lead qualifier, and admin dashboards for efficiency monitoring.</div>
+      </div>
+
+      <div class="exp-card reveal" style="transition-delay:.06s">
+        <div class="exp-top">
+          <div>
+            <div class="exp-company">Jomppa · Artisan PWA</div>
+            <div class="exp-role">Product Designer</div>
+          </div>
+          <span class="exp-period">Oct 2025 – Present</span>
+        </div>
+        <div class="exp-metrics">
+          <div><div class="em-v">45%</div><div class="em-l">Load time</div></div>
+          <div><div class="em-v">40%</div><div class="em-l">Handoff</div></div>
+          <div><div class="em-v">25%</div><div class="em-l">Onboarding</div></div>
+        </div>
+        <div class="exp-desc">Delivered MVP PWA and scalable design system. Improved artisan-client connection and platform engagement end-to-end.</div>
+      </div>
+
+      <div class="exp-card reveal" style="transition-delay:.1s">
+        <div class="exp-top">
+          <div>
+            <div class="exp-company">Young Titans · NGO</div>
+            <div class="exp-role">Product Design Intern</div>
+          </div>
+          <span class="exp-period">Jul – Oct 2025</span>
+        </div>
+        <div class="exp-metrics">
+          <div><div class="em-v">52%</div><div class="em-l">Engagement</div></div>
+          <div><div class="em-v">50+</div><div class="em-l">Interviews</div></div>
+        </div>
+        <div class="exp-desc">Led team of designers to ship WCAG 2.1-compliant website. Turned user research into measurable UX improvements across all key flows.</div>
+      </div>
+
+      <div class="exp-card reveal" style="transition-delay:.14s">
+        <div class="exp-top">
+          <div>
+            <div class="exp-company">Next Level Procurement · B2B</div>
+            <div class="exp-role">Design Engineer & Strategist</div>
+          </div>
+          <span class="exp-period">2021 – Present</span>
+        </div>
+        <div class="exp-metrics">
+          <div><div class="em-v">60%</div><div class="em-l">Social lift</div></div>
+          <div><div class="em-v">7yr</div><div class="em-l">Brand digital</div></div>
+        </div>
+        <div class="exp-desc">Sole designer and developer — built landing page via AI vibe coding. Led rebrand and currently building procurement management system.</div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- SKILLS -->
+  <section class="section" style="padding-top:0">
+    <div class="s-label">Core competencies</div>
+    <h2 class="s-title reveal">Skills that <span class="accent">ship products.</span></h2>
+    <div class="skills-layout reveal">
+      <div class="skill-group">
+        <div class="sg-title">Design & Research</div>
+        <div class="skill-tags">
+          <span class="stag">UX Research</span><span class="stag">Interaction Design</span><span class="stag">Design Systems</span><span class="stag">Wireframing</span><span class="stag">Prototyping</span><span class="stag">WCAG Accessibility</span><span class="stag">Data-driven UX</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <div class="sg-title">AI & Product</div>
+        <div class="skill-tags">
+          <span class="stag">AI Product Design</span><span class="stag">Automation Design</span><span class="stag">Prompt Engineering</span><span class="stag">Vibe Coding</span><span class="stag">Full-stack Delivery</span><span class="stag">Systems Design</span><span class="stag">Agile</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <div class="sg-title">Tools & Stack</div>
+        <div class="skill-tags">
+          <span class="stag">Figma</span><span class="stag">Framer</span><span class="stag">Lovable</span><span class="stag">Claude Code</span><span class="stag">Vercel</span><span class="stag">Supabase</span><span class="stag">Notion</span><span class="stag">Webflow</span><span class="stag">Git</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BRAND IDENTITY STRIP -->
+  <section class="section" style="padding-top:0">
+    <div class="s-label">Brand identity</div>
+    <div class="palette-strip">
+      <div class="ps" style="background:#0c0c14;"></div>
+      <div class="ps" style="background:#16161f;"></div>
+      <div class="ps" style="background:#1c1c26;"></div>
+      <div class="ps" style="background:#5b5bd6;"></div>
+      <div class="ps" style="background:#7c7cef;"></div>
+      <div class="ps" style="background:#22d3ee;"></div>
+      <div class="ps" style="background:#10b981;"></div>
+      <div class="ps" style="background:#e8e8f0;"></div>
+    </div>
+    <div style="display:flex;gap:14px;flex-wrap:wrap;margin-bottom:16px;">
+      <div style="font-family:var(--mono);font-size:10px;color:var(--muted2);">Typography: Inter (body) · JetBrains Mono (labels)</div>
+      <div style="font-family:var(--mono);font-size:10px;color:var(--muted2);">Direction: Luminous Dark · Praxiomai-inspired</div>
+    </div>
+    <div style="display:flex;gap:10px;flex-wrap:wrap;">
+      <span style="font-family:var(--mono);font-size:10px;color:var(--muted2);background:var(--bg2);border:0.5px solid var(--border2);border-radius:4px;padding:3px 8px;">B.Sc. Computer Science · NOUN</span>
+      <span style="font-family:var(--mono);font-size:10px;color:var(--muted2);background:var(--bg2);border:0.5px solid var(--border2);border-radius:4px;padding:3px 8px;">NCE Comp. Sci. & Math · LASUED</span>
+      <span style="font-family:var(--mono);font-size:10px;color:var(--muted2);background:var(--bg2);border:0.5px solid var(--border2);border-radius:4px;padding:3px 8px;">Design Thinking · IBMI Berlin</span>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <div class="cta-strip reveal">
+    <p class="cta-eyebrow">Ready to collaborate?</p>
+    <h2 class="cta-title">Let's build something<br>that <span class="accent">actually ships.</span></h2>
+    <p class="cta-sub">Open to AI product design roles, motion projects, and brand collaborations.</p>
+    <p class="cta-note">Lagos-based · Globally remote · No lengthy brief required.</p>
+    <div class="cta-btns">
+      <a href="mailto:Abiodunadedamola94@gmail.com" class="btn-p">Get in touch →</a>
+      <a href="https://mocreativeportfolio.lovable.app" target="_blank" rel="noopener" class="btn-s">View portfolio</a>
+    </div>
+  </div>
+
+  <div class="footer-strip">
+    <div class="fn">MoCreative<span>.</span></div>
+    <div class="fl-row">
+      <a href="/" class="fl">Home</a>
+      <a href="/motion" class="fl">Motion</a>
+      <a href="mailto:Abiodunadedamola94@gmail.com" class="fl">Contact</a>
+      <a href="https://mocreativeportfolio.lovable.app" target="_blank" rel="noopener" class="fl cta">Portfolio →</a>
+      <span class="fl" style="color:var(--muted2)">© 2026 MoCreativeConcept</span>
+    </div>
+  </div>
+
+</div>
+
+<script>
+const obs=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting){x.target.classList.add('show');obs.unobserve(x.target);}});},{threshold:0.07});
+document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+</script>
+</body>
+</html>
