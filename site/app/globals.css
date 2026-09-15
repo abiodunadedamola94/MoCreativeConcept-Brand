@@ -1,0 +1,13 @@
+html,
+body {
+  background: #0c0c14;
+  max-width: 100vw;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+a {
+  color: inherit;
+}

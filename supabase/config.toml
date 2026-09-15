@@ -1,0 +1,4 @@
+project_id = "wphdwifayyfbvgmymoia"
+
+[functions.revenue-tracker]
+verify_jwt = true

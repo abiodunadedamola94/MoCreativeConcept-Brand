@@ -81,8 +81,6 @@ pnpm-debug.log*
 .yarn/build-state.yml
 .yarn/install-state.gz
 .pnp.*
-package-lock.json
-yarn.lock
 
 
 # ── BUILD OUTPUTS ─────────────────────────
