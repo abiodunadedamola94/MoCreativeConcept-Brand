@@ -70,25 +70,28 @@
 
 [data-theme="light"] {
   color-scheme: light;
-  --sc-canvas:  #F3EEE5;
-  --sc-surface: #FBF8F2;
+  /* Toned down from a near-white #F3EEE5/#FBF8F2 paper: same warm-bone hue,
+     ~5-8% deeper, so the theme reads as paper rather than glare on a phone
+     screen at full brightness. Ink stays dark, so AA/AAA contrast holds. */
+  --sc-canvas:  #ECE4D3;
+  --sc-surface: #F5F0E6;
   --sc-ink:     #1A1714;
   --sc-ink-soft:#5C554C;
   --sc-accent:  #8A5A14;
-  --sc-accent-ink: #FBF8F2;
+  --sc-accent-ink: #F5F0E6;
 
-  --mo-ground-hi: #FBF7EF;
-  --mo-ground:    #EFE9DE;
-  --mo-clay:      #F8F4EC;
-  --mo-clay-2:    #E4DDD0;
-  --mo-card-a:    rgba(252, 249, 243, 0.9);
-  --mo-card-b:    rgba(243, 238, 229, 0.9);
-  --mo-chip-bg:   #FBF8F2;
-  --mo-nav-a:     rgba(247, 243, 235, 0.92);
-  --mo-nav-b:     rgba(247, 243, 235, 0.72);
-  --mo-ghost:     rgba(26, 23, 20, 0.05);
-  --mo-tile-a:    #F6F1E8;
-  --mo-tile-b:    #E6DFD2;
+  --mo-ground-hi: #F3EDE0;
+  --mo-ground:    #E7DFD0;
+  --mo-clay:      #F1EBDD;
+  --mo-clay-2:    #DBD2C0;
+  --mo-card-a:    rgba(245, 240, 230, 0.9);
+  --mo-card-b:    rgba(235, 228, 214, 0.9);
+  --mo-chip-bg:   #F5F0E6;
+  --mo-nav-a:     rgba(240, 234, 222, 0.92);
+  --mo-nav-b:     rgba(240, 234, 222, 0.72);
+  --mo-ghost:     rgba(26, 23, 20, 0.055);
+  --mo-tile-a:    #EFE8D9;
+  --mo-tile-b:    #DDD3BF;
   --mo-lit-1:     rgba(227, 169, 79, 0.7);
   --mo-lit-2:     rgba(227, 169, 79, 0.25);
 
@@ -128,7 +131,7 @@ body { background: transparent; color: var(--sc-ink); }
 .mo-p--ink { color: var(--sc-ink); }
 .mo-kick { font-family: var(--sc-font-mono); font-weight: 500; font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; margin: 0; color: var(--sc-ink-soft); }
 .mo-kick--gold { color: var(--mo-gold-text); }
-.mo-mono { font-family: var(--sc-font-mono); font-size: 12px; letter-spacing: 0.06em; }
+.mo-mono { font-family: var(--sc-font-mono); font-size: 12px; letter-spacing: 0.02em; }
 
 /* ── Pillar identity: gold = Product Design, platinum = AI Automation ─── */
 .pill-design { --pill: var(--pill-design); }
@@ -136,7 +139,7 @@ body { background: transparent; color: var(--sc-ink); }
 .mo-chip {
   justify-self: start; width: fit-content;
   display: inline-flex; align-items: center; gap: 7px;
-  font-family: var(--sc-font-mono); font-weight: 600; font-size: 10.5px;
+  font-family: var(--sc-font-mono); font-weight: 600; font-size: 11px;
   letter-spacing: 0.1em; text-transform: uppercase; white-space: nowrap;
   padding: 4px 10px 4px 8px; border-radius: 999px;
   color: var(--pill, var(--sc-ink-soft)); border: 1px solid color-mix(in oklab, var(--pill, var(--sc-ink-soft)) 50%, transparent);
@@ -144,7 +147,7 @@ body { background: transparent; color: var(--sc-ink); }
 .mo-chip::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
 .mo-chip--venture { --pill: var(--mo-gold-text); }
 
-.mo-tag { display: inline-block; font-family: var(--sc-font-mono); font-weight: 600; font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; padding: 2px 7px; border-radius: 999px; border: 1px solid currentColor; white-space: nowrap; vertical-align: 2px; }
+.mo-tag { display: inline-block; font-family: var(--sc-font-mono); font-weight: 600; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; padding: 2px 7px; border-radius: 999px; border: 1px solid currentColor; white-space: nowrap; vertical-align: 2px; }
 .mo-tag--verified { color: var(--mo-sage); }
 .mo-tag--claimed  { color: var(--sc-ink-soft); }
 .mo-tag--build    { color: var(--mo-gold-text); }

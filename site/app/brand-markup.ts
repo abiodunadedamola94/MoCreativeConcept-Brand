@@ -233,7 +233,7 @@ export const BRAND_MARKUP = `<span data-sc-progress></span>
     <div data-sc-stage class="os">
       <div class="os__copy">
         <div data-sc-cue="0 1 0 0" style="display:grid;gap:14px">
-          <span class="mo-chip pill-ai">AI Automation · practised in-house first</span>
+          <span class="mo-chip pill-ai">AI Automation · in-house first</span>
           <h2 class="mo-h mo-h--lg">A one-person brand, run on 33 agents.</h2>
           <p class="mo-p">The practice is being rebuilt as a system of agents, in public, as a template other brands can run. Three are in build today. The rest are planned, and labelled that way.</p>
         </div>
