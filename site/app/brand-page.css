@@ -1,0 +1,201 @@
+/* ── Nav ───────────────────────────────────────────────────────────────── */
+  .nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: var(--sc-z-chrome);
+    display: flex; align-items: center; gap: var(--sc-6);
+    padding: 14px var(--sc-gutter);
+    background: linear-gradient(180deg, var(--mo-nav-a), var(--mo-nav-b));
+    -webkit-backdrop-filter: blur(14px) saturate(120%); backdrop-filter: blur(14px) saturate(120%);
+    border-bottom: 1px solid var(--mo-hair);
+  }
+  .nav__brand { display: inline-flex; align-items: center; gap: 10px; text-decoration: none; color: var(--sc-ink);
+    font-family: var(--sc-font-display); font-weight: 700; font-size: 16px; letter-spacing: -0.01em; white-space: nowrap; }
+  .nav__brand b { color: var(--mo-gold); font-weight: 700; }
+  .nav__links { display: flex; gap: 26px; margin-left: auto; }
+  .nav__links a { color: var(--sc-ink-soft); text-decoration: none; font-family: var(--sc-font-text); font-size: 14px; font-weight: 500; transition: color 160ms var(--mo-ease); }
+  .nav__links a:hover, .nav__links a[aria-current="true"] { color: var(--sc-ink); }
+  .nav__cta { display: flex; gap: 10px; }
+  .nav .mo-btn { padding: 10px 16px; font-size: 13.5px; }
+  .nav__one { display: none; }
+  @media (max-width: 1080px) { .nav__links { display: none; } .nav__cta { margin-left: auto; } }
+  @media (max-width: 760px) { .nav__cta { display: none; } .nav__one { display: inline-flex; margin-left: auto; } }
+
+  /* ── 1 · Hero: the mark lights up ─────────────────────────────────────── */
+  .hero { overflow: hidden; }
+  .hero__ghost {
+    position: absolute; left: 0; right: 0; bottom: -2vw; text-align: center; z-index: 0;
+    transform: translateY(calc(var(--sc-p, 0) * -60px));
+    font-family: var(--sc-font-display); font-weight: 700; letter-spacing: -0.045em; line-height: 0.8;
+    font-size: 17vw; white-space: nowrap; color: var(--mo-ghost); user-select: none;
+  }
+  .hero__grid {
+    position: relative; z-index: 1; height: 100%;
+    display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr); align-items: center;
+    gap: clamp(1rem, 3vw, 3rem);
+    padding: calc(76px + 2vh) var(--sc-gutter) 4vh;
+  }
+  .hero__copy { display: grid; gap: var(--sc-5); align-content: center; transform: translateY(calc(var(--sc-p, 0) * -90px)); }
+  .hero__copy .mo-h { max-width: 13ch; }
+  .hero__ctas { display: flex; flex-wrap: wrap; gap: 12px; margin-top: var(--sc-2); }
+  .hero__trust { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 18px; margin-top: var(--sc-4);
+    font-family: var(--sc-font-mono); font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--mo-faint); }
+  .hero__trust span { color: var(--sc-ink-soft); }
+  /* the render carries generous empty ground: let it bleed past its column */
+  .hero__stage { position: relative; justify-self: center; width: min(64vw, 118vh, 980px); margin: -12vh -6vw -12vh 0;
+    transform: scale(calc(1 + var(--sc-p, 0) * 0.08)); transform-origin: 50% 55%; }
+  .hero__stage .mo-logo { --mo-lit-boost: calc(1 + var(--sc-p, 0) * 0.4); }
+
+  /* ── 2 · About the brand ──────────────────────────────────────────────── */
+  .brand { padding-block: clamp(4rem, 12vh, 8rem) clamp(4rem, 12vh, 8rem); }
+  .brand__grid { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); gap: clamp(2rem, 5vw, 5rem); align-items: start; }
+  .brand__pillars { display: grid; gap: var(--sc-4); }
+  .brand__pillar { padding: 22px 24px; display: grid; gap: 10px; }
+  .brand__pillar .mo-h--sm { color: var(--sc-ink); }
+
+  /* ── 3 · Method: the build room (peak) ────────────────────────────────── */
+  .room { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr); gap: clamp(2rem, 5vw, 5rem); align-items: center;
+    padding: calc(76px + 3vh) var(--sc-gutter) 5vh; }  /* stage size is engine mechanism: never set height here */
+  .room__card { aspect-ratio: 1; width: min(100%, 72vh); justify-self: center; display: grid; place-items: center; overflow: hidden; }
+  .room__svg { width: 58%; height: auto; overflow: visible; position: relative; z-index: 1; opacity: calc(1 - var(--b4, 0)); }
+  .room__svg .ln { fill: none; stroke: var(--sc-ink); stroke-width: 3.4; stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: 1; }
+  .room__svg .l1 { stroke-dashoffset: calc(1 - var(--b1, 0)); }
+  .room__svg .l2 { stroke-dashoffset: calc(1 - var(--b2, 0)); }
+  .room__svg .fl { fill: var(--mo-clay-2); opacity: var(--b3, 0); }
+  .room__lit { position: absolute; inset: 6%; opacity: var(--b4, 0); }
+  .room__lit .mo-logo { width: 100%; }
+  .room__label { position: absolute; left: 22px; top: 18px; z-index: 2; }
+  .room__steps { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; margin-top: var(--sc-6); }
+  .room__step { display: grid; gap: 8px; }
+  .room__step dt { font-family: var(--sc-font-mono); font-size: 10.5px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--sc-ink-soft); }
+  .room__step dd { margin: 0; height: 3px; border-radius: 3px; background: var(--mo-hair-2); position: relative; overflow: hidden; }
+  .room__step dd i { position: absolute; inset: 0 auto 0 0; width: calc(var(--v, 0) * 100%); background: var(--mo-gold); }
+  .room__lines { position: relative; min-height: 8.5em; margin-top: var(--sc-5); }
+  .room__lines p { position: absolute; inset: 0 0 auto 0; }
+
+  /* ── 4 · Services: two separate pillars ───────────────────────────────── */
+  .svc { padding-block: clamp(4rem, 11vh, 7rem); }
+  .svc__head { display: grid; gap: var(--sc-4); margin-bottom: var(--sc-8); max-width: 44rem; }
+  .svc__grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(1.2rem, 2.4vw, 2rem); }
+  .svc__card { padding: clamp(24px, 3vw, 40px); display: grid; gap: var(--sc-5); align-content: start; }
+  .svc__top { display: grid; grid-template-columns: minmax(0, 1fr) clamp(110px, 12vw, 170px); gap: var(--sc-4); align-items: center; }
+  .svc__list { list-style: none; margin: 0; padding: 0; display: grid; }
+  .svc__list li { display: grid; grid-template-columns: 1.4rem 1fr; gap: 10px; padding: 13px 0; border-top: 1px solid var(--mo-hair);
+    font-family: var(--sc-font-text); font-size: 15.5px; line-height: 1.45; color: var(--sc-ink); }
+  .svc__list li:last-child { border-bottom: 1px solid var(--mo-hair); }
+  .svc__list li span { font-family: var(--sc-font-mono); font-size: 11px; color: var(--pill); padding-top: 3px; }
+  .svc__list small { display: block; color: var(--sc-ink-soft); font-size: 13.5px; margin-top: 2px; }
+
+  /* ── 5 · Flagship venture: Harkardah ──────────────────────────────────── */
+  .venture { display: grid; grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr); gap: clamp(2rem, 5vw, 5rem); align-items: center;
+    padding: calc(76px + 3vh) var(--sc-gutter) 5vh; }  /* stage size is engine mechanism: never set height here */
+  .venture__art { width: min(100%, 66vh); justify-self: center; }
+  .venture__copy { display: grid; gap: var(--sc-5); align-content: center; }
+  .venture__prod { padding: 20px 22px; display: grid; gap: 8px; }
+  .venture__explore { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+  .venture__explore div { padding: 14px 16px; border-radius: 16px; box-shadow: var(--mo-press); display: grid; gap: 6px; }
+  .venture__explore b { font-family: var(--sc-font-display); font-size: 15px; letter-spacing: -0.01em; }
+  .venture__explore span { font-size: 13px; line-height: 1.45; color: var(--sc-ink-soft); font-family: var(--sc-font-text); }
+
+  /* ── 6 · Work: case studies ───────────────────────────────────────────── */
+  .work { padding-block: clamp(4rem, 11vh, 7rem); }
+  .work__head { display: grid; gap: var(--sc-4); margin-bottom: var(--sc-8); max-width: 44rem; }
+  .case { display: grid; grid-template-columns: clamp(160px, 22vw, 300px) minmax(0, 1fr); gap: clamp(1.5rem, 4vw, 4rem); align-items: center;
+    padding: clamp(24px, 3vw, 40px); margin-bottom: clamp(1.2rem, 2.4vw, 2rem); }
+  .case__body { display: grid; gap: var(--sc-4); }
+  .case__meta { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+  .case__facts { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+  .case__facts li { padding: 12px 14px; border-radius: 14px; box-shadow: var(--mo-press); display: grid; gap: 4px; }
+  .case__facts b { font-family: var(--sc-font-mono); font-size: 10.5px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--sc-ink-soft); font-weight: 500; }
+  .case__facts span { font-family: var(--sc-font-text); font-size: 14px; line-height: 1.4; }
+  .metric { display: flex; flex-wrap: wrap; align-items: baseline; gap: 12px 18px; padding: 20px 24px; border-radius: 20px; box-shadow: inset 0 0 0 1px var(--mo-hair); }
+  .metric b { font-family: var(--sc-font-display); font-size: clamp(1.6rem, 2.4vw, 2.2rem); letter-spacing: -0.02em; color: var(--sc-ink); }
+
+  /* ── 7 · The agent OS ─────────────────────────────────────────────────── */
+  .os { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: clamp(2rem, 5vw, 5rem); align-items: center;
+    padding: calc(76px + 3vh) var(--sc-gutter) 5vh; }  /* stage size is engine mechanism: never set height here */
+  .os__copy { display: grid; gap: var(--sc-5); }
+  .os__grid { display: grid; grid-template-columns: repeat(11, minmax(0, 1fr)); gap: clamp(6px, 0.8vw, 12px); }
+  .os__tile { aspect-ratio: 1; border-radius: 22%; background: linear-gradient(150deg, var(--mo-tile-a), var(--mo-tile-b));
+    box-shadow: var(--mo-raise-sm), var(--mo-edge);
+    opacity: min(1, max(0.14, calc(var(--sc-p, 0) * 46 - var(--i) * 0.9)));
+    transform: scale(calc(0.86 + min(1, max(0, var(--sc-p, 0) * 46 - var(--i) * 0.9)) * 0.14)); }
+  .os__tile--build { background: radial-gradient(circle at 50% 42%, var(--mo-lit-1), var(--mo-lit-2) 38%, var(--mo-tile-b) 72%);
+    box-shadow: var(--mo-raise-sm), inset 0 0 0 1px var(--mo-gold-line); }  /* lit from inside, no halo */
+  .os__legend { display: flex; flex-wrap: wrap; gap: 14px 22px; margin-top: var(--sc-4); font-family: var(--sc-font-mono); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--sc-ink-soft); }
+  .os__legend i { display: inline-block; width: 10px; height: 10px; border-radius: 3px; margin-right: 8px; vertical-align: -1px; }
+  .os__loop { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 8px; }
+  .os__loop li { list-style: none; padding: 12px 12px 14px; border-radius: 14px; box-shadow: var(--mo-press); display: grid; gap: 4px; position: relative; }
+  .os__loop li b { font-family: var(--sc-font-mono); font-size: 10px; letter-spacing: 0.1em; color: var(--mo-faint); }
+  .os__loop li span { font-family: var(--sc-font-text); font-size: 13px; line-height: 1.35; color: var(--sc-ink-soft); }
+  .os__loop li:last-child span { color: var(--sc-ink); }
+  .os__fix { padding: 16px 18px; border-radius: 16px; box-shadow: inset 0 0 0 1px var(--mo-gold-line-soft); display: grid; gap: 6px; }
+
+  /* ── 8 · Founder + contact (the close) ────────────────────────────────── */
+  .close { padding-block: clamp(4.5rem, 12vh, 8rem) clamp(2rem, 5vh, 3rem); }
+  .founder { display: grid; grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr); gap: clamp(2rem, 5vw, 5rem); align-items: start; margin-bottom: clamp(4rem, 12vh, 8rem); }
+  .founder__roles { list-style: none; margin: var(--sc-5) 0 0; padding: 0; display: grid; }
+  .founder__roles li { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 12px; align-items: baseline; padding: 14px 0; border-top: 1px solid var(--mo-hair); }
+  .founder__roles li:last-child { border-bottom: 1px solid var(--mo-hair); }
+  .founder__roles b { font-family: var(--sc-font-display); font-weight: 600; font-size: 17px; letter-spacing: -0.01em; }
+  .founder__roles span { font-family: var(--sc-font-text); font-size: 14px; color: var(--sc-ink-soft); display: block; margin-top: 3px; font-weight: 400; }
+  .contact { padding: clamp(28px, 4vw, 56px); display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr); gap: clamp(2rem, 4vw, 4rem); align-items: center; }
+  .contact__doors { display: grid; gap: 12px; }
+  .door { display: grid; grid-template-columns: 1fr auto; gap: 6px 14px; align-items: center; padding: 18px 20px; border-radius: 20px; text-decoration: none; color: var(--sc-ink);
+    box-shadow: var(--mo-raise-sm), var(--mo-edge), inset 0 0 0 1px var(--mo-hair); transition: box-shadow 180ms var(--mo-ease), transform 140ms var(--mo-ease); }
+  .door b { font-family: var(--sc-font-display); font-size: 18px; letter-spacing: -0.01em; }
+  .door span { grid-column: 1; font-family: var(--sc-font-text); font-size: 13.5px; color: var(--sc-ink-soft); }
+  .door svg { grid-row: 1 / span 2; grid-column: 2; width: 18px; height: 18px; color: var(--pill); }
+  @media (hover: hover) and (pointer: fine) { .door:hover { box-shadow: var(--mo-raise-sm), var(--mo-edge), inset 0 0 0 1px color-mix(in oklab, var(--pill) 60%, transparent); } }
+  .door:active { transform: translateY(1px); box-shadow: var(--mo-press); }
+  .foot { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; margin-top: clamp(2.5rem, 7vh, 4rem); padding-top: 18px; border-top: 1px solid var(--mo-hair);
+    font-family: var(--sc-font-mono); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--sc-ink-soft); }
+  .foot a { color: inherit; text-underline-offset: 4px; }
+
+  /* ── Phone ─────────────────────────────────────────────────────────────── */
+  @media (max-width: 900px) {
+    .hero__grid { grid-template-columns: 1fr; grid-template-rows: auto auto; align-content: center; gap: 0; padding-top: 84px; }
+    .hero__stage { order: -1; width: min(100%, 50vh); margin: -6vh auto -6vh; }
+    .hero__copy { transform: none; gap: var(--sc-4); }
+    .hero__ghost { display: none; }
+    .brand__grid, .founder, .contact { grid-template-columns: 1fr; }
+    .room { grid-template-columns: 1fr; gap: var(--sc-5); align-content: center; padding-top: 84px; }
+    .room__card { width: min(72vw, 36vh); }
+    .room__lines { min-height: 7.5em; }
+    .svc__grid { grid-template-columns: 1fr; }
+    /* the art parallaxes ±45px: keep a gap wider than its travel so it never
+       drifts under the copy (in light mode it is a dark tile) */
+    .venture { grid-template-columns: 1fr; gap: 56px; align-content: center; padding-top: 84px; }
+    .venture__art { width: min(40vw, 19vh); }
+    .venture__explore { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px; }
+    .venture__explore div { padding: 9px 10px; gap: 5px; }
+    .venture__explore b { font-size: 12.5px; }
+    .venture__prod { padding: 14px 16px; }
+    .venture .mo-h--lg { font-size: 1.9rem; }
+    .venture__explore span { display: none; }
+    .case { grid-template-columns: 1fr; }
+    .case .mo-render { width: min(58vw, 240px); justify-self: center; }
+    .case__facts { grid-template-columns: 1fr; }
+    .os { grid-template-columns: 1fr; gap: var(--sc-4); align-content: center; padding-top: 84px; }
+    .os__loop { display: none; }
+    .os__copy .mo-p { font-size: 0.95rem; }
+  }
+  @media (max-width: 520px) {
+    .svc__top { grid-template-columns: 1fr 96px; }
+    .room__steps { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  }
+  /* founder: a real portrait, framed like the renders */
+  .founder__intro { display: grid; gap: var(--sc-5); align-content: start; }
+  .founder__photo { margin: 0 0 var(--sc-3); position: relative; width: min(100%, 360px); aspect-ratio: 880 / 1056; border-radius: 28px; overflow: hidden;
+    box-shadow: var(--mo-raise), var(--mo-edge); }
+  .founder__photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .founder__photo figcaption { position: absolute; left: 14px; bottom: 14px; }
+  .founder__photo .mo-chip { background: var(--mo-nav-a); }
+  .nav .mo-theme { width: 36px; height: 36px; }
+  @media (max-width: 760px) { .nav { gap: 10px; } .nav .mo-theme { margin-left: auto; } .nav__one { margin-left: 0; padding: 9px 13px; font-size: 13px; } }
+  /* light mode: the mark sits in its own dark vitrine, so it stops bleeding */
+  [data-theme="light"] .hero__stage { width: min(38vw, 64vh, 560px); margin: 0; }
+  [data-theme="light"] .room__lit { inset: 12%; }
+  @media (max-width: 900px) { [data-theme="light"] .hero__stage { width: min(58vw, 30vh); margin: 0 auto 1.2rem; } }
+  @media (prefers-reduced-motion: reduce) {
+    .hero__ghost, .hero__copy, .hero__stage { transform: none; }
+    .os__tile { opacity: 1; transform: none; }
+  }

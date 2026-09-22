@@ -1,0 +1,269 @@
+/* ───────────────────────────────────────────────────────────────────────────
+   MoCreative Concept. — shared layer · "Graphite & Gold" (2026-09-19)
+
+   Brand colour system, replacing violet/teal (see BRAND-COLORS.md):
+   - Graphite: the ground. The owner's mark is graphite clay.
+   - Gold: the brand's light. It belongs to the mark, the primary action and
+     the Product Design pillar.
+   - Platinum: the AI Automation pillar. A cool metal against the warm one:
+     two metals, one light.
+   - Bone: type on dark, and the ground in light mode.
+   - Sage: evidence only ("Verified"). Quiet on purpose.
+   Every role is defined twice, once per theme. Light mode keeps the renders as
+   dark "vitrine" tiles, like product shots on paper.
+   ─────────────────────────────────────────────────────────────────────────── */
+:root, [data-theme="dark"] {
+  color-scheme: dark;
+  --sc-canvas:  #141210;
+  --sc-surface: #1d1b18;
+  --sc-ink:     #F3EFE7;
+  --sc-ink-soft:#ABA396;
+  --sc-accent:  #E3A94F;
+  --sc-accent-ink: #141210;
+  --sc-font-display: var(--font-space), "Space Grotesk", system-ui, sans-serif;
+  --sc-font-text:    var(--font-inter), "Inter", system-ui, sans-serif;
+  --sc-font-mono:    var(--font-jbmono), "JetBrains Mono", ui-monospace, monospace;
+
+  --mo-ground-hi: #27241f;
+  --mo-ground:    #141210;
+  --mo-clay:      #211e1a;
+  --mo-clay-2:    #2b2823;
+  --mo-card-a:    rgba(38, 35, 31, 0.86);
+  --mo-card-b:    rgba(26, 24, 21, 0.86);
+  --mo-chip-bg:   #1a1815;
+  --mo-nav-a:     rgba(20, 18, 16, 0.9);
+  --mo-nav-b:     rgba(20, 18, 16, 0.66);
+  --mo-ghost:     rgba(243, 239, 231, 0.035);
+  --mo-tile-a:    #25221e;
+  --mo-tile-b:    #191714;
+  --mo-lit-1:     rgba(255, 214, 150, 0.55);
+  --mo-lit-2:     rgba(227, 169, 79, 0.22);
+
+  --mo-gold:      #E3A94F;
+  --mo-gold-text: #E8B566;
+  --mo-gold-line: rgba(227, 169, 79, 0.5);
+  --mo-gold-line-soft: rgba(227, 169, 79, 0.32);
+  --mo-platinum:  #B6C4D0;
+  --mo-sage:      #9CC3A6;
+  --mo-faint:     #7d766c;
+  --mo-hair:      rgba(243, 239, 231, 0.09);
+  --mo-hair-2:    rgba(243, 239, 231, 0.16);
+
+  --pill-design: var(--mo-gold-text);
+  --pill-ai:     var(--mo-platinum);
+  --mo-violet:   var(--pill-design);
+  --mo-teal:     var(--pill-ai);
+
+  --g-design:    rgba(33, 29, 24, 0.78);
+  --g-design-hi: rgba(52, 46, 38, 0.6);
+  --g-ai:        rgba(19, 21, 23, 0.8);
+  --g-ai-hi:     rgba(36, 41, 46, 0.55);
+
+  --mo-raise: -10px -10px 22px rgba(255, 244, 225, 0.035), 12px 14px 30px rgba(0, 0, 0, 0.55);
+  --mo-raise-sm: -5px -5px 12px rgba(255, 244, 225, 0.03), 6px 8px 16px rgba(0, 0, 0, 0.5);
+  --mo-press: inset 4px 5px 10px rgba(0, 0, 0, 0.5), inset -3px -3px 8px rgba(255, 244, 225, 0.03);
+  --mo-edge: inset 0 1px 0 rgba(255, 244, 225, 0.06);
+  --mo-vitrine: #1b1916;
+
+  --mo-ease: cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+[data-theme="light"] {
+  color-scheme: light;
+  --sc-canvas:  #F3EEE5;
+  --sc-surface: #FBF8F2;
+  --sc-ink:     #1A1714;
+  --sc-ink-soft:#5C554C;
+  --sc-accent:  #8A5A14;
+  --sc-accent-ink: #FBF8F2;
+
+  --mo-ground-hi: #FBF7EF;
+  --mo-ground:    #EFE9DE;
+  --mo-clay:      #F8F4EC;
+  --mo-clay-2:    #E4DDD0;
+  --mo-card-a:    rgba(252, 249, 243, 0.9);
+  --mo-card-b:    rgba(243, 238, 229, 0.9);
+  --mo-chip-bg:   #FBF8F2;
+  --mo-nav-a:     rgba(247, 243, 235, 0.92);
+  --mo-nav-b:     rgba(247, 243, 235, 0.72);
+  --mo-ghost:     rgba(26, 23, 20, 0.05);
+  --mo-tile-a:    #F6F1E8;
+  --mo-tile-b:    #E6DFD2;
+  --mo-lit-1:     rgba(227, 169, 79, 0.7);
+  --mo-lit-2:     rgba(227, 169, 79, 0.25);
+
+  --mo-gold:      #C8902F;
+  --mo-gold-text: #845512;
+  --mo-gold-line: rgba(160, 110, 30, 0.5);
+  --mo-gold-line-soft: rgba(160, 110, 30, 0.3);
+  --mo-platinum:  #465563;
+  --mo-sage:      #3D6B4A;
+  --mo-faint:     #857D72;
+  --mo-hair:      rgba(26, 23, 20, 0.1);
+  --mo-hair-2:    rgba(26, 23, 20, 0.18);
+
+  --g-design:    rgba(246, 240, 230, 0.8);
+  --g-design-hi: rgba(255, 252, 245, 0.7);
+  --g-ai:        rgba(232, 235, 237, 0.8);
+  --g-ai-hi:     rgba(246, 248, 249, 0.7);
+
+  --mo-raise: -10px -10px 24px rgba(255, 255, 255, 0.7), 12px 14px 30px rgba(120, 100, 70, 0.16);
+  --mo-raise-sm: -5px -5px 12px rgba(255, 255, 255, 0.75), 6px 8px 16px rgba(120, 100, 70, 0.15);
+  --mo-press: inset 4px 5px 10px rgba(120, 100, 70, 0.14), inset -3px -3px 8px rgba(255, 255, 255, 0.8);
+  --mo-edge: inset 0 1px 0 rgba(255, 255, 255, 0.8);
+}
+
+html { background: var(--mo-ground); transition: background-color 300ms var(--mo-ease); }
+body { background: transparent; color: var(--sc-ink); }
+::selection { background: var(--mo-gold); color: #141210; }
+:focus-visible { outline: 2px solid var(--mo-gold); outline-offset: 3px; }
+
+/* ── Type ─────────────────────────────────────────────────────────────── */
+.mo-h { font-family: var(--sc-font-display); font-weight: 700; letter-spacing: -0.03em; line-height: 0.98; margin: 0; text-wrap: balance; }
+.mo-h--xl { font-size: clamp(2.4rem, 5.2vw, 5.2rem); }
+.mo-h--lg { font-size: clamp(2rem, 3.8vw, 3.8rem); }
+.mo-h--md { font-size: clamp(1.6rem, 2.6vw, 2.5rem); letter-spacing: -0.022em; }
+.mo-h--sm { font-size: clamp(1.2rem, 1.6vw, 1.5rem); letter-spacing: -0.015em; line-height: 1.1; }
+.mo-p { font-family: var(--sc-font-text); font-size: clamp(1rem, 0.96rem + 0.2vw, 1.12rem); line-height: 1.62; margin: 0; max-width: 58ch; text-wrap: pretty; color: var(--sc-ink-soft); }
+.mo-p--ink { color: var(--sc-ink); }
+.mo-kick { font-family: var(--sc-font-mono); font-weight: 500; font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; margin: 0; color: var(--sc-ink-soft); }
+.mo-kick--gold { color: var(--mo-gold-text); }
+.mo-mono { font-family: var(--sc-font-mono); font-size: 12px; letter-spacing: 0.06em; }
+
+/* ── Pillar identity: gold = Product Design, platinum = AI Automation ─── */
+.pill-design { --pill: var(--pill-design); }
+.pill-ai     { --pill: var(--pill-ai); }
+.mo-chip {
+  justify-self: start; width: fit-content;
+  display: inline-flex; align-items: center; gap: 7px;
+  font-family: var(--sc-font-mono); font-weight: 600; font-size: 10.5px;
+  letter-spacing: 0.1em; text-transform: uppercase; white-space: nowrap;
+  padding: 4px 10px 4px 8px; border-radius: 999px;
+  color: var(--pill, var(--sc-ink-soft)); border: 1px solid color-mix(in oklab, var(--pill, var(--sc-ink-soft)) 50%, transparent);
+}
+.mo-chip::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
+.mo-chip--venture { --pill: var(--mo-gold-text); }
+
+.mo-tag { display: inline-block; font-family: var(--sc-font-mono); font-weight: 600; font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; padding: 2px 7px; border-radius: 999px; border: 1px solid currentColor; white-space: nowrap; vertical-align: 2px; }
+.mo-tag--verified { color: var(--mo-sage); }
+.mo-tag--claimed  { color: var(--sc-ink-soft); }
+.mo-tag--build    { color: var(--mo-gold-text); }
+.mo-tag--plan     { color: var(--mo-faint); }
+
+/* ── Buttons: clay pills ──────────────────────────────────────────────── */
+.mo-btn {
+  display: inline-flex; align-items: center; gap: 10px;
+  padding: 14px 22px; border-radius: 999px; text-decoration: none; white-space: nowrap;
+  font-family: var(--sc-font-text); font-weight: 600; font-size: 15px;
+  color: var(--sc-ink); background: var(--mo-clay);
+  box-shadow: var(--mo-raise-sm), var(--mo-edge), inset 0 0 0 1px var(--mo-hair);
+  transition: transform 140ms var(--mo-ease), box-shadow 180ms var(--mo-ease), color 160ms var(--mo-ease), background-color 300ms var(--mo-ease);
+}
+.mo-btn i { width: 8px; height: 8px; border-radius: 50%; background: var(--pill, var(--mo-gold)); }
+.mo-btn svg { width: 14px; height: 14px; opacity: 0.7; transition: transform 180ms var(--mo-ease); }
+@media (hover: hover) and (pointer: fine) {
+  .mo-btn:hover { box-shadow: var(--mo-raise-sm), var(--mo-edge), inset 0 0 0 1px color-mix(in oklab, var(--pill, var(--mo-gold)) 60%, transparent); }
+  .mo-btn:hover svg { transform: translateX(2px); }
+}
+.mo-btn:active { transform: translateY(1px); box-shadow: var(--mo-press), inset 0 0 0 1px var(--mo-hair); }
+
+.mo-theme {
+  flex: none; width: 40px; height: 40px; border-radius: 50%; border: 0; cursor: pointer;
+  display: grid; place-items: center; color: var(--sc-ink); background: var(--mo-clay);
+  box-shadow: var(--mo-raise-sm), var(--mo-edge), inset 0 0 0 1px var(--mo-hair);
+  transition: transform 140ms var(--mo-ease), background-color 300ms var(--mo-ease);
+}
+.mo-theme:active { transform: translateY(1px); box-shadow: var(--mo-press); }
+.mo-theme svg { width: 17px; height: 17px; }
+.mo-theme .sun { display: none; }
+[data-theme="dark"] .mo-theme .sun { display: block; }
+[data-theme="dark"] .mo-theme .moon { display: none; }
+
+/* ── Clay card ─────────────────────────────────────────────────────────── */
+.mo-card {
+  background: linear-gradient(155deg, var(--mo-card-a), var(--mo-card-b));
+  -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px);
+  border-radius: 28px; box-shadow: var(--mo-raise), var(--mo-edge);
+  position: relative;
+}
+
+/* ── Morphic render: blended into the ground (dark) / a vitrine (light) ─ */
+.mo-render { display: block; width: 100%; height: auto; aspect-ratio: 1; object-fit: cover;
+  -webkit-mask-image: radial-gradient(closest-side, #000 58%, transparent 100%);
+          mask-image: radial-gradient(closest-side, #000 58%, transparent 100%); }
+[data-theme="light"] .mo-render {
+  -webkit-mask-image: none; mask-image: none; border-radius: 24%;
+  box-shadow: 0 18px 36px -14px rgba(60, 45, 25, 0.45);
+}
+
+/* ── The mark, lit: one component on every MoCreative build ─────────── */
+.mo-logo { position: relative; aspect-ratio: 1; isolation: isolate; }
+.mo-logo img { position: absolute; inset: 0; width: 100%; height: 100%; max-width: none; }
+.mo-logo__base, .mo-logo__light, .mo-logo__bloom, .mo-logo__sheen {
+  -webkit-mask-image: radial-gradient(closest-side, #000 64%, transparent 100%);
+          mask-image: radial-gradient(closest-side, #000 64%, transparent 100%);
+}
+.mo-logo__light { opacity: var(--mo-lit, 0); }
+.mo-logo__bloom { opacity: calc(var(--mo-lit, 0) * 0.8); filter: blur(10px) brightness(1.5) saturate(1.2); mix-blend-mode: screen; }
+.mo-logo__sheen {
+  opacity: 0; filter: brightness(2.2) saturate(1.1); mix-blend-mode: screen;
+  -webkit-mask-image: linear-gradient(118deg, transparent 38%, #000 48%, #000 52%, transparent 62%);
+          mask-image: linear-gradient(118deg, transparent 38%, #000 48%, #000 52%, transparent 62%);
+  -webkit-mask-size: 100% 260%; mask-size: 100% 260%;
+}
+.mo-logo__tip {
+  position: absolute; left: 44.35%; top: 64.45%; width: 9%; aspect-ratio: 1;
+  transform: translate(-50%, -50%); border-radius: 50%; pointer-events: none;
+  background: radial-gradient(circle, rgba(255, 232, 190, 0.95) 0%, rgba(255, 196, 110, 0.45) 22%, rgba(227, 169, 79, 0) 70%);
+  opacity: calc(var(--mo-lit, 0) * 0.9); mix-blend-mode: screen;
+}
+[data-theme="light"] .mo-logo { background: var(--mo-vitrine); border-radius: 22%; overflow: hidden;
+  box-shadow: 0 30px 60px -24px rgba(60, 45, 25, 0.55); }
+[data-theme="light"] .mo-logo__base, [data-theme="light"] .mo-logo__light,
+[data-theme="light"] .mo-logo__bloom { -webkit-mask-image: none; mask-image: none; }
+.mo-logo[data-lit] { animation: mo-rise 2600ms 500ms cubic-bezier(0.3, 0, 0.2, 1) both; }
+.mo-logo[data-lit] .mo-logo__light,
+.mo-logo[data-lit] .mo-logo__bloom,
+.mo-logo[data-lit] .mo-logo__tip { animation: mo-breathe 6200ms 3100ms ease-in-out infinite; }
+.mo-logo[data-lit] .mo-logo__sheen { animation: mo-sheen 9000ms 3600ms cubic-bezier(0.45, 0, 0.25, 1) infinite; }
+@property --mo-lit { syntax: "<number>"; inherits: true; initial-value: 0; }
+@keyframes mo-rise { from { --mo-lit: 0; } to { --mo-lit: 1; } }
+@keyframes mo-breathe { 0%, 100% { opacity: calc(var(--mo-lit) * 1); } 50% { opacity: calc(var(--mo-lit) * 0.66); } }
+@keyframes mo-sheen {
+  0%   { opacity: 0; -webkit-mask-position: 0 0%;   mask-position: 0 0%; }
+  8%   { opacity: 0.55; }
+  26%  { opacity: 0; -webkit-mask-position: 0 100%; mask-position: 0 100%; }
+  100% { opacity: 0; -webkit-mask-position: 0 100%; mask-position: 0 100%; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .mo-logo[data-lit] { animation: none; --mo-lit: 1; }
+  .mo-logo[data-lit] .mo-logo__light, .mo-logo[data-lit] .mo-logo__bloom,
+  .mo-logo[data-lit] .mo-logo__tip, .mo-logo[data-lit] .mo-logo__sheen { animation: none; }
+}
+
+.mo-mark { width: 30px; height: 30px; border-radius: 9px; overflow: hidden; flex: none; position: relative; background: var(--mo-vitrine);
+  box-shadow: var(--mo-raise-sm), inset 0 0 0 1px var(--mo-hair); }
+.mo-mark img { position: absolute; width: 190%; height: 190%; left: -45%; top: -45%; max-width: none; }
+
+/* ── Glass: a fixed fluted-glass field under the whole page ───────────── */
+.mo-glass { position: fixed; inset: 0; width: 100%; height: 100%; z-index: -1; pointer-events: none; display: block; }
+
+/* ── The feather: the pointer on fine-pointer devices ─────────────────── */
+.mo-cursor-on, .mo-cursor-on * { cursor: none !important; }
+.mo-cursor-on input, .mo-cursor-on textarea { cursor: text !important; }
+.mo-feather {
+  position: fixed; left: 0; top: 0; z-index: 2147483000; pointer-events: none;
+  width: 44px; height: 80px; margin: -78px 0 0 -4px;          /* hotspot = the nib tip */
+  background: url("/assets/mc-cursor-feather.webp") no-repeat center / contain;
+  transform-origin: 8% 97%; opacity: 0; transition: opacity 240ms var(--mo-ease);
+  filter: drop-shadow(0 6px 8px rgba(0, 0, 0, 0.35));
+  will-change: transform;
+}
+.mo-feather.is-on { opacity: 1; }
+.mo-feather__ink {
+  position: absolute; left: 3px; bottom: 1px; width: 6px; height: 6px; border-radius: 50%;
+  background: var(--mo-gold); transform: scale(var(--ink, 0.4)); transition: transform 200ms var(--mo-ease);
+}
+
+.sc-grain { opacity: 0.05; }
+[data-theme="light"] .sc-grain { opacity: 0.035; }
