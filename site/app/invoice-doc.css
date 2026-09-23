@@ -84,6 +84,10 @@
   display:grid;grid-template-columns:0.85fr 1.3fr 0.85fr;gap:18px;
   justify-self:end;
 }
+/* the proposal masthead carries two columns, not three */
+.mast-contact:has(.mc-col:nth-child(2):last-child){
+  grid-template-columns:1.25fr 1fr;
+}
 .mc-col{min-width:0}
 .mc-label{
   font-family:var(--sc-font-mono);font-size:10px;font-weight:600;
@@ -181,6 +185,15 @@
   text-align:right;font-family:var(--sc-font-mono);
   font-size:12.5px;font-weight:600;white-space:nowrap;
 }
+
+/* two-column, read-only variant — the proposal page, where nothing is editable */
+.inv-table--simple .tbl-head,
+.inv-table--simple .tbl-row{
+  grid-template-columns:1fr 160px;
+}
+.tbl-row.is-static .td{padding:14px 16px}
+.item-title{font-weight:600;font-size:14px;color:var(--sc-ink)}
+.item-sub{color:var(--sc-ink-soft);font-size:12.5px;line-height:1.5;margin-top:2px}
 
 .title-input,.sub-input{
   display:block;width:100%;border:0;background:transparent;

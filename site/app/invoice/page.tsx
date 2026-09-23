@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Script from "next/script";
 import "../brand-tokens.css";
-import "./invoice.css";
+import "../invoice-doc.css";
 import { INVOICE_MARKUP } from "./invoice-markup";
 
 export const metadata: Metadata = {
