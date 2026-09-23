@@ -1,186 +1,154 @@
-# MoCreativeConcept — Brand & Portfolio Site
+# MoCreative Concept — Brand Site & Agentic OS
 
-> **AI Product Designer · Motion Designer · Builder-Designer · Lagos → World**
+> **Product design that ships · AI automation that runs**
 > Live: [mocreativeconcept.vercel.app](https://mocreativeconcept.vercel.app)
 
+MoCreative Concept is the AI-native practice of **Abiodun Adedamola David** (Lagos, Nigeria).
+Two pillars: product design taken from brief to deployed code, and AI automation
+consulting for teams and schools.
+
+This repository holds the brand site **and** the client-facing documents the
+practice's agent system sends out.
+
 ---
 
-## About
+## Tech stack
 
-**MoCreativeConcept** is the personal creative brand of **Abiodun Adedamola** — an AI product designer, motion designer, and builder-designer based in Lagos, Nigeria.
-
-This repository contains the full source for the MoCreativeConcept brand hub — a static HTML/CSS/JS site deployed on Vercel, covering six brand pillars:
-
-| Pillar | Description |
+| Layer | What |
 |---|---|
-| 🎨 **Portfolio** | Selected product design case studies with outcome metrics |
-| 📦 **Products** | AI-powered tools and digital products built and shipped |
-| 🛠 **Services** | Brand identity, UI/UX design, motion design, AI-native builds |
-| 📚 **Edutech** | Design tutorials, Figma courses, AI design workflows |
-| 📱 **Social Reels** | Motion design content, process videos, design breakdowns |
-| 🚀 **Future Mission** | Vision, roadmap, and what MoCreativeConcept is building toward |
+| Framework | **Next.js 16 (App Router) + TypeScript + React 19** |
+| Styling | Plain CSS with a shared token layer — no Tailwind, no CSS-in-JS |
+| Fonts | `next/font/google` — Space Grotesk (display), Inter (body), JetBrains Mono (labels/data) |
+| Hosting | Vercel, auto-deploys on push to `main` |
+| Backend | Supabase (Postgres + Edge Functions + pg_cron) |
+| Email | Resend, sending on `email.mocreativeconcept.com` |
+
+> **Note:** this repo was originally a set of static `.html` files. It was migrated to
+> Next.js in `9991d34`; `index.html`, `about.html` and `motion.html` no longer exist.
 
 ---
 
-## Site Structure
+## Layout
 
 ```
-mocreativeconcept-portfolio/
-├── index.html              # Hub homepage — links to all pillars
-├── motion.html             # Motion & animation portfolio (Figma prototypes)
-├── about.html              # Brand one-pager / resume
-├── vercel.json             # Vercel routing config
-├── README.md               # This file
-└── .gitignore              # Git ignore rules
+site/
+├── app/
+│   ├── layout.tsx            # fonts, theme-before-paint script
+│   ├── page.tsx              # home — injects BRAND_MARKUP, loads /brand.js
+│   ├── brand-markup.ts       # home page markup
+│   ├── brand-tokens.css      # ← the design system. Start here.
+│   ├── brand-page.css        # home page styles
+│   ├── scrollcraft.css       # scroll-stage engine styles
+│   ├── invoice-doc.css       # shared styles: /invoice + /proposal
+│   ├── about/                # about page
+│   ├── motion/               # motion portfolio
+│   ├── invoice/              # /invoice — editable client invoice
+│   └── proposal/[id]/        # /proposal/<uuid> — generated proposals
+└── public/
+    ├── assets/               # logo renders, case imagery, cursor
+    ├── brand.js              # home page interactivity
+    └── invoice.js            # invoice line-item engine
+
+supabase/
+├── migrations/               # leads, projects, revenue, agent_logs, proposals
+└── functions/                # edge function sources
 ```
 
 ---
 
-## Tech Stack
+## Design system — "Graphite & Gold"
 
-| Layer | Tool |
+Adopted 2026-09-19, replacing the retired violet/teal pair. All tokens live in
+`site/app/brand-tokens.css`, defined twice — once per theme.
+
+- **Graphite** is the ground. **Gold** is the light — the mark, the primary
+  action, the Product Design pillar. **Platinum** is the AI Automation pillar.
+  **Sage** appears only on a "Verified" stamp.
+- **Two metals, one light.** Gold and platinum never mix inside one element.
+- **Gold is light, not paint** — never a large fill or gradient wash.
+- **No glow.** Light comes from the render itself, or from directional clay
+  relief. No coloured halos, no gradient text.
+- Both themes are first-class. `?theme=dark|light` forces one.
+- Panels that must stay dark in light mode use `--mo-vitrine`.
+
+Full rationale: [`BRAND_PROMPT.md`](./BRAND_PROMPT.md).
+
+---
+
+## Client-facing document routes
+
+| Route | Purpose |
 |---|---|
-| Markup | HTML5 (vanilla, no framework) |
-| Styling | CSS3 with custom properties (dark-themed) |
-| Scripts | Vanilla JavaScript (no dependencies) |
-| Fonts | Google Fonts — Syne, DM Sans, DM Mono |
-| Hosting | Vercel (free tier, auto-deploy on push) |
-| Version control | GitHub |
-| Design source | Figma |
-| Build tools | None — pure static files |
+| `/invoice` | Branded invoice. Line items, prices and quantities are editable in place with live recalculation through subtotal → grand total → milestone amounts. Print/save-as-PDF via the native dialog. This is the `INVOICE_LINK` destination. |
+| `/proposal/<uuid>` | Renders a proposal generated by Agent 09 from `public.proposals`. Server-rendered; the Supabase service-role key never reaches the browser. This is the `PROPOSAL_LINK` destination. |
+
+Both are `noindex` — they are private client documents, not marketing pages.
+
+### Required environment variables (Vercel)
+
+```
+SUPABASE_URL=https://wphdwifayyfbvgmymoia.supabase.co
+SUPABASE_SERVICE_ROLE_KEY=<service role key>
+```
+
+Only `/proposal/[id]` reads these. Without them that route returns 404.
 
 ---
 
-## Brand Identity
+## The Agentic OS
 
-```
-Brand name     : MoCreativeConcept
-Designer       : Abiodun Adedamola David
-Location       : Lagos, Nigeria (Remote)
-Primary colour : #7b68ee (Signal violet)
-Accent colours : #38bdf8 (Sky), #10b981 (Pulse green)
-Background     : #07070e (Void black)
-Typography     : Syne (display) · DM Sans (body) · DM Mono (mono/labels)
-Direction      : Luminous Dark
-```
+A 33-agent system operating the business. Three layers, each owning distinct data:
+
+- **Notion** — CRM, Project Tracker, Content Calendar, Revenue, Agent Build
+  Roadmap. Anything a human reads or edits. Database of record.
+- **Supabase** — webhook landing zones, high-frequency agent run logs,
+  generated proposals. Anything machine-facing.
+- **Resend** — all outbound branded email, on a sending subdomain.
+
+**11 agents live**, all on `pg_cron`:
+
+| # | Agent | Function | Cadence |
+|---|---|---|---|
+| 01 | Retainer | `retainer-agent` | daily 09:00 |
+| 08 | Screening | `screening-agent` | every 2h |
+| 09 | **Proposal** | `proposal-agent` | hourly |
+| 10 | Contract + Invoice | `contract-invoice-agent` | hourly |
+| 14 | Client Comms | `client-comms-agent` | — |
+| 15 | Delivery | `delivery-agent` | hourly |
+| 16 | Referral | `referral-agent` | — |
+| 18 | Churn Prevention | `churn-agent` | — |
+| 20 | CEO Brief | `ceo-agent` | — |
+| 26 | Revenue Tracker | `revenue-tracker` | — |
+| 27 | Payment Chase | `payment-chase-agent` | — |
+
+### Agent 09 is the only metered agent
+
+Every other agent is deterministic — rules and formatting, zero marginal cost.
+Agent 09 makes a real Claude API call because writing a scoped proposal for a
+specific client is genuine synthesis, not formatting wearing synthesis's clothes.
+
+- Model `claude-sonnet-4-6`, ~**$0.016 per proposal** measured, not estimated
+- Real token counts and USD cost are stored per row in `proposals.cost_usd`
+- Anchored to a real rate card so it cannot price work from imagination
+- Requires `ANTHROPIC_API_KEY` in Supabase Edge Function secrets
 
 ---
 
-## Deployment
-
-This site auto-deploys to Vercel on every push to `main`.
-
-### Deploy from scratch
-
-1. Fork or clone this repository
-2. Go to [vercel.com](https://vercel.com) → New Project → Import from GitHub
-3. Select this repo → leave all settings default → Deploy
-4. (Optional) Set a custom domain in Vercel → Settings → Domains
-
-### Local preview
-
-No build step required. Open any `.html` file directly in your browser, or use a simple local server:
+## Local development
 
 ```bash
-# Python (built-in)
-python3 -m http.server 3000
-
-# Node (if you have npx)
-npx serve .
+cd site
+npm install
+npm run dev        # http://localhost:3000
+npx tsc --noEmit   # type check
+npx eslint app     # lint
 ```
+
+`npm run build` fetches fonts from Google at build time, so it needs network
+access — it will fail behind a restrictive proxy even when the code is fine.
 
 ---
 
-## Adding New Work
+## Deploying
 
-### Add a motion project
-Open `motion.html` and find the relevant card slot comment:
-```html
-<!-- CARD 4 -->
-```
-Replace the placeholder art with your embed:
-```html
-<!-- For Figma prototype -->
-<iframe src="https://www.figma.com/embed?embed_host=share&url=YOUR_LINK" allowfullscreen></iframe>
-
-<!-- For MP4 video -->
-<video src="your-clip.mp4" autoplay muted loop playsinline></video>
-```
-
-### Add a portfolio case study
-Each case study card in `index.html` follows this pattern:
-```html
-<div class="case-card">
-  <div class="case-meta">Company · Year</div>
-  <div class="case-title">Project title</div>
-  <div class="case-desc">Problem → approach → outcome</div>
-  <div class="case-metrics">
-    <span class="metric-val">40%</span>
-    <span class="metric-label">efficiency gain</span>
-  </div>
-</div>
-```
-
----
-
-## Updating the Site
-
-All updates auto-deploy via Vercel. Workflow:
-
-```bash
-# Clone the repo
-git clone https://github.com/YOUR_USERNAME/mocreativeconcept-portfolio.git
-cd mocreativeconcept-portfolio
-
-# Make your changes, then:
-git add .
-git commit -m "feat: add new motion project — Project Name"
-git push origin main
-
-# Vercel picks up the push and deploys in ~30 seconds
-```
-
-### Commit message format
-```
-feat: add new [thing]         # new content or feature
-update: [what changed]        # edit to existing content
-fix: [what was broken]        # bug or layout fix
-brand: [what changed]         # brand/style updates
-```
-
----
-
-## Figma Source Files
-
-Design source files live in Figma (not in this repo). Key files:
-
-| File | Description |
-|---|---|
-| Fanta | Brand motion concept — expressive transitions |
-| Liquid Glass | Glassmorphic UI motion study |
-| SmallClosedWorld | Motion storytelling concept |
-| MoCreativeConcept Brand | Logo, colour palette, type system |
-
-> Request access: Abiodunadedamola94@gmail.com
-
----
-
-## Contact
-
-| | |
-|---|---|
-| Email | Abiodunadedamola94@gmail.com |
-| Portfolio | [mocreativeportfolio.lovable.app](https://mocreativeportfolio.lovable.app) |
-| Motion | [mocreativeconcept.vercel.app/motion](https://mocreativeconcept.vercel.app/motion) |
-| LinkedIn | [Abiodun Adedamola](https://linkedin.com/in/abiodun-adedamola) |
-| Location | Lagos, Nigeria · Open to remote |
-
----
-
-## License
-
-© 2026 MoCreativeConcept · Abiodun Adedamola. All rights reserved.
-
-Design work, case studies, and visual assets in this repository are the intellectual property of Abiodun Adedamola and may not be reproduced without permission.
-
-The HTML/CSS/JS code structure may be referenced for learning purposes with attribution.
+Push to `main`. Vercel builds and deploys automatically (~30s).
