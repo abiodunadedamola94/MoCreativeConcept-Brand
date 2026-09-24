@@ -8,6 +8,8 @@
 
 .inv-page{
   min-height:100vh;
+  font-family:var(--sc-font-text);
+  color:var(--sc-ink);
   background:linear-gradient(150deg,var(--mo-ground-hi),var(--mo-ground));
   padding:clamp(16px,4vw,48px) 0 80px;
 }
