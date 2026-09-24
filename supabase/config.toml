@@ -32,3 +32,6 @@ verify_jwt = true
 
 [functions.screening-agent]
 verify_jwt = true
+
+[functions.prospecting-agent]
+verify_jwt = true

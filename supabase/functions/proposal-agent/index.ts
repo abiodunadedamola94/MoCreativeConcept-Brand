@@ -36,26 +36,22 @@ const SITE = "https://mocreativeconcept.com";
 const REPLY_TO = "hello@mocreativeconcept.com";
 const NGN = (n: number) => `₦${Number(n).toLocaleString("en-NG", { maximumFractionDigits: 0 })}`;
 
-// MoCreative Concept's real rate card, taken from actual issued invoices.
-// The model anchors to these instead of inventing numbers — it may adjust
-// for scope, but it is not free to price the work from imagination.
-const RATE_CARD = `
-Product Strategy & UX Planning — ₦120,000 (product architecture, structural build)
-UI/UX Design — ₦220,000 (UI design, prototyping, design system)
-Frontend Development — ₦280,000 (coding and implementation)
-CMS Integration — ₦60,000
-Blog & Reviews System — ₦50,000
-WhatsApp & Inquiry Integration — ₦40,000
-SEO & Mobile Optimization — ₦45,000
-Deployment & Launch Setup — ₦35,000 (DNS configuration)
-Project Management & QA — ₦25,000
-Custom Domain (.com) — ₦25,000/yr
-Hosting / VPS — ₦60,000/yr
-Brand Identity Design — ₦350,000 (logo system, palette, typography, usage rules)
-AI Automation build (per agent/workflow) — ₦150,000 to ₦400,000 depending on integrations
-`.trim();
+// MoCreative Concept's real rate card lives in public.rate_card (private,
+// service-role only), not in this file, because this repository is public.
+// The model anchors to those prices instead of inventing numbers — it may
+// adjust for scope, but it is not free to price the work from imagination.
+type RateRow = { item: string; price_ngn: number; price_max_ngn: number | null; unit: string | null; notes: string | null };
 
-const SYSTEM_PROMPT = `You write project proposals for MoCreative Concept, a solo-operated,
+function formatRateCard(rows: RateRow[]): string {
+  return rows.map((r) => {
+    const price = r.price_max_ngn ? `${NGN(r.price_ngn)} to ${NGN(r.price_max_ngn)}` : NGN(r.price_ngn);
+    const unit = r.unit ? ` ${r.unit}` : "";
+    const notes = r.notes ? ` (${r.notes})` : "";
+    return `${r.item} — ${price}${unit}${notes}`;
+  }).join("\n");
+}
+
+const systemPrompt = (RATE_CARD: string) => `You write project proposals for MoCreative Concept, a solo-operated,
 AI-native product design and build practice run by Abiodun Adedamola David out of Lagos, Nigeria.
 
 Two pillars: product design taken from brief to deployed code, and AI automation
@@ -102,6 +98,13 @@ Deno.serve(async (_req: Request) => {
       );
     }
 
+    const { data: rateRows, error: rateErr } = await supabase
+      .from("rate_card")
+      .select("item, price_ngn, price_max_ngn, unit, notes")
+      .eq("active", true)
+      .order("sort", { ascending: true });
+    if (rateErr) throw rateErr;
+
     const { data: leads, error: leadErr } = await supabase
       .from("leads")
       .select("id, contact_or_company, email, source, client_tier, fit_score, notes, screening_recommendation, stage")
@@ -116,6 +119,20 @@ Deno.serve(async (_req: Request) => {
       triggered_by: "scheduled-intent-check",
     };
     const results: Record<string, unknown>[] = [];
+
+    // never price from nothing: an empty rate card stops the run, visibly
+    if ((leads ?? []).length && !(rateRows ?? []).length) {
+      await supabase.from("agent_logs").insert({
+        ...logBase,
+        status: "failed",
+        output_summary: `${leads!.length} lead(s) at Intent, but public.rate_card has no active rows — no proposal written.`,
+      });
+      return new Response(JSON.stringify({ error: "rate_card is empty" }), {
+        status: 500,
+        headers: { "Content-Type": "application/json" },
+      });
+    }
+    const SYSTEM_PROMPT = systemPrompt(formatRateCard((rateRows ?? []) as RateRow[]));
 
     for (const lead of leads ?? []) {
       if (!lead.email) {
