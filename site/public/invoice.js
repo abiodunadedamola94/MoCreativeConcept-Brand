@@ -20,7 +20,7 @@
       name: "MoCreative Concept",
       role: "Product Design & AI Automation",
       phone: ["+234 814 536 1262", "+234 811 828 6894"],
-      email: "hello@email.mocreativeconcept.com",
+      email: "hello@mocreativeconcept.com",
       website: "mocreativeconcept.com",
     },
 
@@ -71,7 +71,7 @@
 
     notes: [
       "Payment is due within <strong>7 days</strong> of the invoice date. Please quote the invoice number in your transfer description.",
-      "Deliverables are released within 24 hours of payment confirmation. Questions: <strong>hello@email.mocreativeconcept.com</strong>.",
+      "Deliverables are released within 24 hours of payment confirmation. Questions: <strong>hello@mocreativeconcept.com</strong>.",
     ],
 
     payment: {

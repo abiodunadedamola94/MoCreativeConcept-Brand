@@ -2,3 +2,33 @@ project_id = "wphdwifayyfbvgmymoia"
 
 [functions.revenue-tracker]
 verify_jwt = true
+
+[functions.ceo-agent]
+verify_jwt = true
+
+[functions.churn-agent]
+verify_jwt = true
+
+[functions.client-comms-agent]
+verify_jwt = true
+
+[functions.contract-invoice-agent]
+verify_jwt = true
+
+[functions.delivery-agent]
+verify_jwt = true
+
+[functions.payment-chase-agent]
+verify_jwt = true
+
+[functions.proposal-agent]
+verify_jwt = true
+
+[functions.referral-agent]
+verify_jwt = true
+
+[functions.retainer-agent]
+verify_jwt = true
+
+[functions.screening-agent]
+verify_jwt = true

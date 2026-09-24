@@ -87,7 +87,7 @@ export default async function ProposalPage({
           <div className="mast-contact">
             <div className="mc-col">
               <div className="mc-label">Email</div>
-              <div className="mc-val">hello@email.mocreativeconcept.com</div>
+              <div className="mc-val">hello@mocreativeconcept.com</div>
             </div>
             <div className="mc-col">
               <div className="mc-label">Website</div>
@@ -193,7 +193,7 @@ export default async function ProposalPage({
             </div>
             <div className="pay-info">
               <div className="pi-label">Contact</div>
-              <div className="pay-holder">hello@email.mocreativeconcept.com</div>
+              <div className="pay-holder">hello@mocreativeconcept.com</div>
               <div className="pay-holder">Abiodun Adedamola David · Lagos</div>
             </div>
           </footer>

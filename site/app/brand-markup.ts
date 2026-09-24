@@ -285,13 +285,13 @@ export const BRAND_MARKUP = `<span data-sc-progress></span>
           <p class="mo-kick mo-kick--gold">Contact</p>
           <h2 class="mo-h mo-h--lg">Bring the brief you haven't been able to get built.</h2>
           <p class="mo-p">Booking 20 to 25 hours a week for new engagements. Lagos, WAT, working with teams anywhere.</p>
-          <p class="mo-mono" style="color:var(--sc-ink-soft)">hello@email.mocreativeconcept.com</p>
+          <p class="mo-mono" style="color:var(--sc-ink-soft)">hello@mocreativeconcept.com</p>
         </div>
         <div class="contact__doors">
-          <a id="contact-design" class="door pill-design" href="mailto:hello@email.mocreativeconcept.com?subject=Design%20project">
+          <a id="contact-design" class="door pill-design" href="mailto:hello@mocreativeconcept.com?subject=Design%20project">
             <b>Start a design project</b><span>UI/UX, web, design systems, full build</span>
             <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg></a>
-          <a id="contact-ai" class="door pill-ai" href="mailto:hello@email.mocreativeconcept.com?subject=AI%20automation%20audit">
+          <a id="contact-ai" class="door pill-ai" href="mailto:hello@mocreativeconcept.com?subject=AI%20automation%20audit">
             <b>Book an AI audit</b><span>Automation, agents, AI adoption</span>
             <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg></a>
         </div>
@@ -299,7 +299,7 @@ export const BRAND_MARKUP = `<span data-sc-progress></span>
 
       <footer class="foot">
         <span>MoCreative Concept. · The creative brand that ships</span>
-        <a href="mailto:hello@email.mocreativeconcept.com">hello@email.mocreativeconcept.com</a>
+        <a href="mailto:hello@mocreativeconcept.com">hello@mocreativeconcept.com</a>
       </footer>
     </div>
   </section>
