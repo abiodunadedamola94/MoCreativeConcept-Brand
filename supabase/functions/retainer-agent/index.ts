@@ -1,5 +1,6 @@
 import "jsr:@supabase/functions-js/edge-runtime.d.ts";
 import { createClient } from "jsr:@supabase/supabase-js@2";
+import { refuseUnlessAgentCall } from "../_shared/agent-guard.ts";
 
 // Agent 16 — Retainer Agent
 // The highest-leverage agent on the roadmap: proposes a monthly retainer to
@@ -25,6 +26,8 @@ import { createClient } from "jsr:@supabase/supabase-js@2";
 const REPLY_TO = "hello@mocreativeconcept.com";
 
 Deno.serve(async (req: Request) => {
+  const refused = await refuseUnlessAgentCall(req);
+  if (refused) return refused;
   try {
     const supabaseUrl = Deno.env.get("SUPABASE_URL")!;
     const serviceRoleKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;

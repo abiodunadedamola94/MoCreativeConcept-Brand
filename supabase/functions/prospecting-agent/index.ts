@@ -1,5 +1,6 @@
 import "jsr:@supabase/functions-js/edge-runtime.d.ts";
 import { createClient } from "jsr:@supabase/supabase-js@2";
+import { refuseUnlessAgentCall } from "../_shared/agent-guard.ts";
 
 // Agent 06 — Prospecting Agent
 // Finds businesses that could use MoCreative Concept's services, records how
@@ -132,6 +133,8 @@ function parseArray(text: string): Found[] {
 }
 
 Deno.serve(async (req: Request) => {
+  const refused = await refuseUnlessAgentCall(req);
+  if (refused) return refused;
   const supabase = createClient(Deno.env.get("SUPABASE_URL")!, Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!);
   const body = await req.json().catch(() => ({}));
   const sector: string | null = clean(body?.sector);

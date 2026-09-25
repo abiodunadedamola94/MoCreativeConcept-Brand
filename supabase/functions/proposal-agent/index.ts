@@ -1,5 +1,6 @@
 import "jsr:@supabase/functions-js/edge-runtime.d.ts";
 import { createClient } from "jsr:@supabase/supabase-js@2";
+import { refuseUnlessAgentCall } from "../_shared/agent-guard.ts";
 
 // Agent 09 — Proposal Agent
 // ────────────────────────────────────────────────────────────────────────
@@ -78,7 +79,9 @@ Respond with ONLY a JSON object, no prose before or after, no markdown fences:
   "assumptions": "the assumptions this scope rests on, as one paragraph. Be specific about what you did not know."
 }`;
 
-Deno.serve(async (_req: Request) => {
+Deno.serve(async (req: Request) => {
+  const refused = await refuseUnlessAgentCall(req);
+  if (refused) return refused;
   try {
     const supabaseUrl = Deno.env.get("SUPABASE_URL")!;
     const serviceRoleKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;

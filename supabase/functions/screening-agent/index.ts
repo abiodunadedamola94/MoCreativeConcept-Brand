@@ -1,5 +1,6 @@
 import "jsr:@supabase/functions-js/edge-runtime.d.ts";
 import { createClient } from "jsr:@supabase/supabase-js@2";
+import { refuseUnlessAgentCall } from "../_shared/agent-guard.ts";
 
 // Agent 08 — Screening Agent
 // Scores every new, unscreened lead against ICP fit using fields already in
@@ -23,7 +24,9 @@ import { createClient } from "jsr:@supabase/supabase-js@2";
 // email.mocreativeconcept.com is send-only; replies go to the brand inbox
 const REPLY_TO = "hello@mocreativeconcept.com";
 
-Deno.serve(async (_req: Request) => {
+Deno.serve(async (req: Request) => {
+  const refused = await refuseUnlessAgentCall(req);
+  if (refused) return refused;
   try {
     const supabaseUrl = Deno.env.get("SUPABASE_URL")!;
     const serviceRoleKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;

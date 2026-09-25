@@ -1,5 +1,6 @@
 import "jsr:@supabase/functions-js/edge-runtime.d.ts";
 import { createClient } from "jsr:@supabase/supabase-js@2";
+import { refuseUnlessAgentCall } from "../_shared/agent-guard.ts";
 
 // Agent 18 — Churn Prevention Agent
 // Watches retained clients (projects.status = 'Retained') for silence,
@@ -17,7 +18,9 @@ import { createClient } from "jsr:@supabase/supabase-js@2";
 // replies and forwards founder alerts (Cloudflare Email Routing).
 const INBOX = "hello@mocreativeconcept.com";
 
-Deno.serve(async (_req: Request) => {
+Deno.serve(async (req: Request) => {
+  const refused = await refuseUnlessAgentCall(req);
+  if (refused) return refused;
   try {
     const supabaseUrl = Deno.env.get("SUPABASE_URL")!;
     const serviceRoleKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;

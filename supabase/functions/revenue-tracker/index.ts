@@ -1,5 +1,6 @@
 import "jsr:@supabase/functions-js/edge-runtime.d.ts";
 import { createClient } from "jsr:@supabase/supabase-js@2";
+import { refuseUnlessAgentCall } from "../_shared/agent-guard.ts";
 
 // Agent 26 — Revenue Tracker
 // Computes live MRR + revenue breakdown from the `revenue` table, and writes
@@ -11,7 +12,9 @@ import { createClient } from "jsr:@supabase/supabase-js@2";
 
 const NOTION_SNAPSHOT_PAGE_ID = "3de454c7-01c4-811a-ab21-f1b1def3b562";
 
-Deno.serve(async (_req: Request) => {
+Deno.serve(async (req: Request) => {
+  const refused = await refuseUnlessAgentCall(req);
+  if (refused) return refused;
   try {
     const supabaseUrl = Deno.env.get("SUPABASE_URL")!;
     const serviceRoleKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
