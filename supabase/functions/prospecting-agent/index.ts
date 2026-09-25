@@ -171,7 +171,7 @@ Deno.serve(async (_req: Request) => {
           type: "web_search_20250305",
           name: "web_search",
           max_uses: MAX_SEARCHES_PER_QUERY,
-          user_location: { type: "approximate", city: "Lagos", country: "NG", timezone: "Africa/Lagos" },
+          // no user_location: the search tool rejects country "NG"; every query names Lagos instead
         }],
         messages: [{ role: "user", content: `Find: ${q.query}` }],
       });
