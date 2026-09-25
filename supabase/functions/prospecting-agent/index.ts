@@ -19,15 +19,23 @@ import { refuseUnlessAgentCall } from "../_shared/agent-guard.ts";
 // active queries and draft only that sector's prospects. No body (the cron)
 // keeps the normal rotation across all sectors.
 //
-// WHAT TO PITCH (from website_status):
-//   found       -> AI Automation (they have a site; offer the AI audit)
-//   none_found  -> Product Design (searched, no site; offer a website)
-//   unknown     -> Product Design, flagged "check before pitching"
+// WHAT TO PITCH (references/outreach-playbook.md in the AIOS workspace; keep
+// the two in step). Having a website is not the same as having one that
+// works, so every business's own site is fetched and read first:
+//   no website found                        -> Product Design (a website)
+//   site shows a problem (placeholder page,
+//     no admissions/booking path, CTA that
+//     goes to the contact page, template
+//     text left in, no mobile viewport)     -> Product Design (a redesign)
+//   site works and has a path to act        -> AI Automation (the AI audit)
+//   site blocked or unreachable             -> AI Automation, no site claims
+// What was seen is stored in site_findings and becomes the draft's personal
+// line; nothing else about the business is claimed.
 // HOW TO REACH (contact_channel, best first): email, phone (drafted as a
 // WhatsApp message), social (Instagram/Facebook DM), none (not drafted).
 //
 // SCORING (rules, documented — adjust here if the ICP changes):
-//   website none_found +3, found +1, unknown +1
+//   website none_found +3, site problem seen +3, working site +1, unknown +1
 //   email +2, phone +2, social +1        (reachability matters most)
 //   sector Education +2; Healthcare / Real estate / Logistics +1
 //   no way to contact at all -> 0
@@ -70,45 +78,179 @@ Rules:
 Reply with ONLY a JSON array, no prose, no markdown fences:
 [{"name":"","website":null,"website_status":"unknown","phone":null,"email":null,"social_url":null,"address":null,"source_urls":[]}]`;
 
-const LIMITS = { email: "60 to 90 words", whatsapp: "under 60 words", social_dm: "under 50 words" };
+const LIMITS = { email: "about 100 words", whatsapp: "under 70 words", social_dm: "under 60 words" };
 
-const draftSystem = (channel: "email" | "whatsapp" | "social_dm") =>
-  `You draft a first outreach message from Damola, founder of MoCreative Concept (Lagos):
-a one-person, AI-native practice with two services: product design taken from brief to a
-live website or app, and AI automation audits that find where a business can save staff hours.
+// How each sector is addressed, what the audit looks at, and what a working
+// website must let a visitor do.
+const SECTORS: Record<string, { plural: string; examples: string; action: RegExp; path: string }> = {
+  Education: { plural: "schools", examples: "admissions enquiries, fee reminders, parent messages, report cards", action: /admission|apply|enrol|application|register/i, path: "admissions page or application form" },
+  Healthcare: { plural: "clinics and hospitals", examples: "appointment reminders, patient enquiries, follow-ups", action: /appointment|book|schedule|consult/i, path: "appointment booking page" },
+  Logistics: { plural: "logistics companies", examples: "delivery status enquiries, dispatch updates, customer messages", action: /track|quote|pickup|pick-up|book|ship/i, path: "tracking, quote or booking page" },
+  "Real estate": { plural: "real estate firms", examples: "property enquiries, viewing bookings, tenant messages", action: /listing|propert|viewing|inspection|enquir|inquir/i, path: "listings or viewing request page" },
+};
+const OTHER_SECTOR = { plural: "businesses", examples: "customer enquiries, bookings, follow-ups", action: /book|order|enquir|inquir|quote|appointment/i, path: "booking or enquiry page" };
+const sectorOf = (s: string) => SECTORS[s] ?? OTHER_SECTOR;
 
-This message is a ${channel === "email" ? "short email" : channel === "whatsapp" ? "WhatsApp message" : "Instagram/Facebook direct message"}.
+// The founder's approved templates (25 Sep 2026). Only the personal line and
+// the sector words change between messages.
+const draftSystem = (channel: "email" | "whatsapp" | "social_dm", sector: string) => {
+  const s = sectorOf(sector);
+  const signoff = `Adedamola\nMoCreative Concept · ${INBOX}`;
+  const ps = `P.S. I used AI to help find ${s.plural} and draft this note. I read and send every message myself.`;
+  return `You draft a first outreach message from Adedamola, founder of MoCreative Concept.
+Use the approved template for the pillar you are given, word for word, changing only the
+parts in {braces}.
+
+THE PERSONAL LINE: one sentence built ONLY from "Seen on their site" in the facts you
+receive. Name one concrete thing (for Product Design, the website problem; for AI
+Automation, something like an admissions window, an online application or a portal).
+If there is nothing there, write: "I came across {Business} while looking at ${s.plural} in Lagos."
+Never add anything you were not given.
+
+AI AUTOMATION template:
+Subject: A short AI audit for {Business}
+
+Hi {Business} team,
+
+I'm Adedamola, founder of MoCreative Concept, a design and AI automation practice in Lagos. {Personal line}
+
+I run a short AI audit for ${s.plural}. I spend time with your admin team, map where the hours go on repeat work (${s.examples}), and hand you a written report with one change you can make straight away.
+
+If that sounds useful, I can send a one-page outline of how it works and what it costs.
+
+${signoff}
+
+${ps}
+
+PRODUCT DESIGN template:
+Subject: {a short subject naming the website issue, or "A website for {Business}" if they have none}
+
+Hi {Business} team,
+
+I'm Adedamola, founder of MoCreative Concept, a design and AI automation practice in Lagos. {Personal line}
+
+I design and build websites for ${s.plural} made to turn visits into enquiries: a clear ${s.path}, an online form, and pages that load fast on a phone.
+
+If that sounds useful, I can send a one-page outline of how it works and what it costs.
+
+${signoff}
+
+${ps}
+
 Rules:
-- ${LIMITS[channel]}. Plain, warm, direct. No hype, no emojis, no em dashes.
-- Mention one specific, observable fact you are given about the business (its sector, or
-  that it has / has no website). Use ONLY the facts in the message you receive.
-- Never describe or assume how the business runs internally (no "I noticed you handle X
-  manually", no guesses about their scheduling, records, staff or problems). You do not know.
-- Offer exactly one thing, matching the pillar given: "Product Design" = a website;
-  "AI Automation" = a short AI audit (a written report plus one quick win). Never say the
-  audit or anything else is free, and never mention a price.
-- Never claim past clients, results or numbers. Never promise outcomes.
-- Never offer or mention school management software, even to a school.
-- End with a soft question, then sign off "Damola, MoCreative Concept"${channel === "email" ? ` and ${INBOX}` : ""}.
-Return only the message text${channel === "email" ? ", starting with a subject line as 'Subject: ...'" : ""}.`;
+- Never claim experience, clients or results ("I work with...", "I've seen...").
+- Never describe how the business runs internally. Never say or imply anything is free, and never state a price.
+- Never mention school management software.
+- No emojis, no em dashes, no hype.${channel === "email" ? "" : `
+- This is a ${channel === "whatsapp" ? "WhatsApp message" : "Instagram/Facebook direct message"}: no subject line, no greeting line of its own, ${LIMITS[channel]}. Keep the introduction, the personal line, the offer in one sentence, the question about the outline, the AI note in one short sentence, and sign "Adedamola, MoCreative Concept".`}
+Return only the message text${channel === "email" ? ", starting with the Subject line" : ""}.`;
+};
+
+// Sources that are directories or social networks, never the business's own site.
+const NOT_OWN_SITE = /(^|\.)(wikipedia\.org|wikidata\.org|facebook\.com|instagram\.com|linkedin\.com|x\.com|twitter\.com|tiktok\.com|youtube\.com|google\.[a-z.]+|nigeriaprivateschools\.com|schoolscompass\.com\.ng|businesslist\.com\.ng|nigeriapropertycentre\.com|crunchbase\.com|clutch\.co|contactout\.com|synctrack\.io|businessconnect\.com\.ng|vconnect\.com|finelib\.com|nairaland\.com)$/i;
+const GENERIC_NAME_WORDS = new Set(["school", "schools", "international", "college", "group", "lagos", "lekki", "ikeja", "limited", "hospital", "clinic", "clinics", "dental", "logistics", "real", "estate", "the", "and", "services"]);
+const FREEMAIL = /@(gmail|yahoo|hotmail|outlook|live|icloud)\./i;
+const validEmail = (e?: string | null) =>
+  !!e && /^[^\s@[\]<>()]+@[^\s@[\]<>()]+\.[a-z]{2,}$/i.test(e) && !/protected|example\.|sentry|wixpress|\.(png|jpe?g|gif|webp|svg)$/i.test(e);
+
+// The business's own site: the website the search reported, or a source URL
+// on a non-directory host that carries a distinctive word from the name.
+function ownSite(b: Found, name: string): string | null {
+  const w = clean(b.website);
+  if (w) return w.startsWith("http") ? w : `https://${w}`;
+  const words = name.toLowerCase().split(/[^a-z0-9]+/).filter((x) => x.length >= 4 && !GENERIC_NAME_WORDS.has(x));
+  for (const u of b.source_urls ?? []) {
+    try {
+      const host = new URL(u).hostname.replace(/^www\./, "");
+      if (!NOT_OWN_SITE.test(host) && words.some((x) => host.includes(x))) return `https://${new URL(u).hostname}/`;
+    } catch (_e) { /* not a URL */ }
+  }
+  return null;
+}
+
+type SiteCheck = { state: "ok" | "blocked"; problems: string[]; seen: string[]; emails: string[] };
+
+// Reads the homepage once. Only claims what is on the page; a site that times
+// out or blocks automated visits is "blocked" and no claim is made about it.
+async function checkSite(url: string, sector: string): Promise<SiteCheck> {
+  const out: SiteCheck = { state: "ok", problems: [], seen: [], emails: [] };
+  let host = "", html = "";
+  try {
+    host = new URL(url).hostname.replace(/^www\./, "");
+    const res = await fetch(url, { redirect: "follow", signal: AbortSignal.timeout(15000), headers: { "user-agent": "Mozilla/5.0 (compatible; MoCreativeResearch/1.0)" } });
+    html = await res.text();
+  } catch (_e) {
+    return { ...out, state: "blocked" };
+  }
+  const text = html.replace(/<script[\s\S]*?<\/script>|<style[\s\S]*?<\/style>/gi, " ").replace(/<[^>]+>/g, " ").replace(/&[a-z#0-9]+;/gi, " ").replace(/\s+/g, " ");
+  const lower = text.toLowerCase();
+
+  if (/coming soon|under construction|launching (in|soon)|under maintenance|maintenance mode/.test(lower.slice(0, 3000))) {
+    out.problems.push(`${host} shows a "coming soon" or under-construction page instead of a working site`);
+    return out;
+  }
+  if (/_Incapsula_Resource|cf-browser-verification|just a moment\.\.\./i.test(html) || text.trim().length < 300) {
+    return { ...out, state: "blocked" };
+  }
+
+  const leftovers = ["lorem ipsum", "sample page", "just another wordpress site", "0 lessons", ...(["Retail", "Food"].includes(sector) ? [] : ["buy now"])]
+    .filter((p) => lower.includes(p));
+  if (leftovers.length) out.problems.push(`the homepage still shows template text such as ${leftovers.map((p) => `"${p}"`).join(" and ")}`);
+  if (!/name=["']viewport/i.test(html)) out.problems.push("the homepage has no mobile viewport setting, so it may not fit phone screens");
+
+  const s = sectorOf(sector);
+  const links = [...html.matchAll(/<a\b[^>]*href=["']([^"'#]+)["'][^>]*>([\s\S]*?)<\/a>/gi)]
+    .map((m) => ({ href: m[1], label: m[2].replace(/<[^>]+>/g, " ").replace(/\s+/g, " ").trim() }));
+  const actionLinks = links.filter((l) => s.action.test(`${l.href} ${l.label}`));
+  if (!actionLinks.length) out.problems.push(`the homepage doesn't link to an ${s.path}`);
+  else if (actionLinks.every((l) => /contact/i.test(l.href))) {
+    const label = actionLinks.find((l) => l.label)?.label.slice(0, 30);
+    out.problems.push(`${label ? `the "${label}" button leads` : "the main call to action leads"} to the general contact page, not an ${s.path}`);
+  }
+
+  const intake = text.match(/(\d{4}\s*\/\s*\d{4})\s+admissions?/i) ?? text.match(/admissions?\s+(?:are\s+|is\s+)?(?:now\s+)?open\s+(?:for\s+)?(?:the\s+)?(\d{4}\s*\/\s*\d{4})/i);
+  if (intake) out.seen.push(`admissions for ${intake[1].replace(/\s/g, "")} are open`);
+  if (/online application|apply online|start (an )?application/i.test(text) || actionLinks.some((l) => /apply|application|regist|form/i.test(`${l.href} ${l.label}`))) out.seen.push("applications or registration can start online");
+  if (/portal/i.test(text)) out.seen.push("there is an online portal");
+  if (/virtual tour/i.test(text)) out.seen.push("there is a virtual tour");
+  if (/fee payment|pay (your )?fees|tuition payment|pay online/i.test(text)) out.seen.push("fees can be paid online");
+  if (/wa\.me\/|api\.whatsapp\.com/i.test(html)) out.seen.push("there is a WhatsApp contact link");
+  const campuses = text.match(/\b(\d{1,2})\s+campuses\b/i);
+  if (campuses) out.seen.push(`it runs ${campuses[1]} campuses`);
+
+  const root = host.split(".").slice(-3).join(".");
+  out.emails = [...new Set(html.match(/[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[a-z]{2,}/g) ?? [])]
+    .filter((e) => validEmail(e))
+    .sort((a, b) => Number(b.toLowerCase().includes(root)) - Number(a.toLowerCase().includes(root)));
+  return out;
+}
+
+const findingsText = (site: SiteCheck | null) =>
+  !site ? null
+  : site.state === "blocked" ? "Site not checked (it blocked automated visits or did not load)."
+  : [site.problems.length ? `Website problems: ${site.problems.join("; ")}.` : "", site.seen.length ? `Seen on their site: ${site.seen.join("; ")}.` : ""]
+      .filter(Boolean).join(" ") || "Site checked; nothing specific stood out.";
 
 const clean = (v?: string | null) => (v && String(v).trim() && String(v).trim().toLowerCase() !== "null" ? String(v).trim() : null);
 const dedupeKey = (name: string, sector: string) =>
   `${name.toLowerCase().replace(/[^a-z0-9]+/g, " ").trim()}|${sector.toLowerCase()}`;
 
-function classify(b: Found, sector: string) {
-  const website = clean(b.website);
-  const email = clean(b.email);
+function classify(b: Found, sector: string, website: string | null, site: SiteCheck | null) {
+  // Prefer an address on the business's own domain over a free-mail one from a directory.
+  const searched = validEmail(clean(b.email)) ? clean(b.email) : null;
+  const email = (!searched || FREEMAIL.test(searched)) && site?.emails.length ? site.emails[0] : searched;
   const phone = clean(b.phone);
   const social = clean(b.social_url);
   const status = website ? "found" : (b.website_status === "none_found" ? "none_found" : "unknown");
-  const pillar = status === "found" ? "AI Automation" : "Product Design";
+  const siteProblem = !!site && site.state === "ok" && site.problems.length > 0;
+  const pillar = status === "found" && !siteProblem ? "AI Automation" : "Product Design";
   const channel = email ? "email" : phone ? "phone" : social ? "social" : "none";
 
   const why: string[] = [];
   let fit = 0;
   if (status === "none_found") { fit += 3; why.push("no website found (website pitch)"); }
-  else if (status === "found") { fit += 1; why.push("has a website (AI audit pitch)"); }
+  else if (siteProblem) { fit += 3; why.push(`website problem seen (redesign pitch): ${site!.problems[0]}`); }
+  else if (status === "found") { fit += 1; why.push(site?.state === "blocked" ? "has a website, not readable (AI audit pitch)" : "working website (AI audit pitch)"); }
   else { fit += 1; why.push("website unknown, check before pitching"); }
   if (email) { fit += 2; why.push("email found"); }
   if (phone) { fit += 2; why.push("phone found"); }
@@ -211,11 +353,16 @@ Deno.serve(async (req: Request) => {
         continue;
       }
 
-      for (const b of businesses) {
-        const name = clean(b.name);
-        if (!name) continue;
+      // Read every business's own site in parallel before deciding the pitch.
+      const named = businesses.map((b) => ({ b, name: clean(b.name) })).filter((x): x is { b: Found; name: string } => !!x.name);
+      const checked = await Promise.all(named.map(async ({ b, name }) => {
+        const website = ownSite(b, name);
+        return { b, name, website, site: website ? await checkSite(website, q.sector) : null };
+      }));
+
+      for (const { b, name, website, site } of checked) {
         found++;
-        const c = classify(b, q.sector);
+        const c = classify(b, q.sector, website, site);
         const { data: ins, error: insErr } = await supabase
           .from("prospects")
           .upsert({
@@ -233,6 +380,8 @@ Deno.serve(async (req: Request) => {
             pillar: c.pillar,
             fit_score: c.fit,
             fit_reason: c.reason,
+            site_findings: findingsText(site),
+            site_checked_at: site ? new Date().toISOString() : null,
             sources: Array.isArray(b.source_urls) ? b.source_urls.slice(0, 5) : null,
           }, { onConflict: "dedupe_key", ignoreDuplicates: true })
           .select("id");
@@ -244,7 +393,7 @@ Deno.serve(async (req: Request) => {
     // ── 2. draft messages for the best reachable new fits ───────────────
     let draftRows = supabase
       .from("prospects")
-      .select("id, name, sector, pillar, website, website_status, contact_channel")
+      .select("id, name, sector, pillar, website, website_status, contact_channel, site_findings")
       .eq("status", "New")
       .is("draft_message", null)
       .neq("contact_channel", "none")
@@ -264,12 +413,13 @@ Deno.serve(async (req: Request) => {
         p.website_status === "found" ? `Website: ${p.website}`
           : p.website_status === "none_found" ? "Website: none found; appears only on directories or social media"
           : "Website: not confirmed",
+        p.site_findings ?? "Seen on their site: nothing (site not checked).",
       ].join("\n");
 
       const ai = await claude({
         model: MODEL,
-        max_tokens: 400,
-        system: draftSystem(channel),
+        max_tokens: 600,
+        system: draftSystem(channel, p.sector),
         messages: [{ role: "user", content: facts }],
       });
       const aiJson = await ai.json();
