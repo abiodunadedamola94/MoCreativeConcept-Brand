@@ -34,7 +34,7 @@ import { createClient } from "jsr:@supabase/supabase-js@2";
 
 const QUERIES_PER_RUN = 2;
 const MAX_SEARCHES_PER_QUERY = 5;
-const DRAFT_MIN_SCORE = 5;
+const DRAFT_MIN_SCORE = 4;  // 4 lets phone-only businesses (the common Lagos case) get a WhatsApp draft
 const MAX_DRAFTS_PER_RUN = 15;
 const MODEL = "claude-haiku-4-5-20251001";
 const INBOX = "hello@mocreativeconcept.com";
@@ -75,9 +75,13 @@ live website or app, and AI automation audits that find where a business can sav
 This message is a ${channel === "email" ? "short email" : channel === "whatsapp" ? "WhatsApp message" : "Instagram/Facebook direct message"}.
 Rules:
 - ${LIMITS[channel]}. Plain, warm, direct. No hype, no emojis, no em dashes.
-- Mention one specific, observable fact you are given about the business. Never invent facts.
+- Mention one specific, observable fact you are given about the business (its sector, or
+  that it has / has no website). Use ONLY the facts in the message you receive.
+- Never describe or assume how the business runs internally (no "I noticed you handle X
+  manually", no guesses about their scheduling, records, staff or problems). You do not know.
 - Offer exactly one thing, matching the pillar given: "Product Design" = a website;
-  "AI Automation" = a short AI audit (a written report plus one quick win).
+  "AI Automation" = a short AI audit (a written report plus one quick win). Never say the
+  audit or anything else is free, and never mention a price.
 - Never claim past clients, results or numbers. Never promise outcomes.
 - End with a soft question, then sign off "Damola, MoCreative Concept"${channel === "email" ? ` and ${INBOX}` : ""}.
 Return only the message text${channel === "email" ? ", starting with a subject line as 'Subject: ...'" : ""}.`;
