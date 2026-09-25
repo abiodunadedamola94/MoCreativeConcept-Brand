@@ -1,16 +1,20 @@
-/* Home page script. Needs mo-core.js (ScrollCraft); queued until it has run. */
+/* Generated: the home page script. Needs mo-core.js; queued until it has run. */
 (window.__moReady = window.__moReady || []).push(function () {
 ScrollCraft.mount(document.body);
 
-/* The agent OS: 33 tiles. Three are real work in build; every other tile is
-   planned and says so. Order is fixed so the lit tiles land mid-grid. */
+/* The agent OS: one tile per roadmap agent, in number order (tile 0 = Agent 01).
+   Mirrors Notion's Agent Build Roadmap as of 2026-09-24; update both lists
+   when an agent's status changes. */
 (function () {
   var grid = document.getElementById('os-grid');
   if (!grid) return;
-  var lit = { 5: 1, 16: 1, 27: 1 };
+  var live = [1, 8, 9, 10, 14, 15, 16, 18, 20, 26, 27];
+  var building = [6];
   var html = '';
   for (var i = 0; i < 33; i++) {
-    html += '<span class="os__tile' + (lit[i] ? ' os__tile--build' : '') + '" style="--i:' + i + '"></span>';
+    var n = i + 1;
+    var cls = live.indexOf(n) >= 0 ? ' os__tile--build' : building.indexOf(n) >= 0 ? ' os__tile--next' : '';
+    html += '<span class="os__tile' + cls + '" style="--i:' + i + '"></span>';
   }
   grid.innerHTML = html;
 })();
@@ -63,6 +67,6 @@ ScrollCraft.mount(document.body);
       links.forEach(function (a) { a.toggleAttribute('aria-current', a.getAttribute('href') === '#' + e.target.id); });
     });
   }, { rootMargin: '-45% 0px -45% 0px' });
-  ['about', 'services', 'harkardah', 'work', 'contact'].forEach(function (id) { var el = document.getElementById(id); if (el) io.observe(el); });
+  ['about', 'services', 'os', 'work', 'contact'].forEach(function (id) { var el = document.getElementById(id); if (el) io.observe(el); });
 })();
 });

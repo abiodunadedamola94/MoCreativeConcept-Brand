@@ -1,7 +1,5 @@
-/* MoCreative Concept. shared behaviour for every page: the scrollcraft engine
-   + mo.js (theme, feather cursor, fluted glass), in load order. Page scripts
-   (home.js, about.js, motion.js) queue on window.__moReady, so they run after
-   this file whatever order the browser executes the two in. */
+/* Generated: scrollcraft.js + mo.js, shared by /, /about and /motion. Page
+   scripts queue on window.__moReady and run once this file has. */
 /* ============================================================================
    scrollcraft: a scroll-driven interaction runtime
    ----------------------------------------------------------------------------

@@ -7,7 +7,7 @@ export const BRAND_MARKUP = `<span data-sc-progress></span>
 <header class="nav">
   <a class="nav__brand" href="#top"><span class="mo-mark"><img src="assets/mc-logo-lit.webp" alt=""></span><span>MoCreative Concept<b>.</b></span></a>
   <nav class="nav__links" aria-label="Sections">
-    <a href="#about">About</a><a href="#services">Services</a><a href="#harkardah">Harkardah</a><a href="#work">Work</a><a href="#contact">Contact</a>
+    <a href="/about">About</a><a href="#services">Services</a><a href="#os">Agentic OS</a><a href="#work">Work</a><a href="/motion">Motion</a><a href="#contact">Contact</a>
   </nav>
   <button class="mo-theme" type="button" data-theme-toggle aria-label="Switch theme"><svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.2M12 19.3v2.2M4.6 4.6l1.6 1.6M17.8 17.8l1.6 1.6M2.5 12h2.2M19.3 12h2.2M4.6 19.4l1.6-1.6M17.8 6.2l1.6-1.6"/></svg><svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/></svg></button>
   <div class="nav__cta">
@@ -34,7 +34,7 @@ export const BRAND_MARKUP = `<span data-sc-progress></span>
             <a class="mo-btn pill-ai" href="#contact-ai"><i></i>Book an AI audit
               <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg></a>
           </div>
-          <p class="hero__trust" aria-label="Work includes">Built for <span>Topkids Montessori</span>·<span>Harkardah</span>·<span>Next Level Procurement</span></p>
+          <p class="hero__trust" aria-label="Work includes">Built for <span>Topkids Montessori</span>·<span>Next Level Procurement</span></p>
         </div>
         <div class="hero__stage">
           <div class="mo-logo" data-lit role="img" aria-label="The MoCreative Concept mark: a pen nib between two curly brackets, its edge lit gold">
@@ -157,28 +157,33 @@ export const BRAND_MARKUP = `<span data-sc-progress></span>
     </div>
   </section>
 
-  <!-- 5 · FLAGSHIP VENTURE — pin + parallax on the render. -->
-  <section id="harkardah" data-sc-act="pin" data-sc-span="2.2">
-    <div data-sc-stage class="venture">
-      <div class="venture__art" data-sc-parallax="-0.9">
-        <img class="mo-render" src="assets/mc-venture-harkardah.webp" width="1024" height="1024" alt="An open clay book with gold light rising from its fold">
-      </div>
-      <div class="venture__copy">
+  <!-- 5 · FLAGSHIP: THE AGENT OS — pin. 33 tiles light as you scroll; the lit
+       ones are live, and the flagship product sits inside the system. -->
+  <section id="os" data-sc-act="pin" data-sc-span="2.4">
+    <div data-sc-stage class="os">
+      <div class="os__copy">
         <div data-sc-cue="0 1 0 0" style="display:grid;gap:14px">
-          <span class="mo-chip mo-chip--venture">Flagship venture · Co-founder</span>
-          <h2 class="mo-h mo-h--lg">Harkardah</h2>
-          <p class="mo-p mo-p--ink">Harkardah builds digital solutions for learners, teachers, schools and educational institutions. It is a co-founded company, not a client engagement.</p>
+          <span class="mo-chip pill-ai">Flagship · the Agentic OS</span>
+          <h2 class="mo-h mo-h--lg">A one-person brand, run on 33 agents.</h2>
+          <p class="mo-p">The practice runs on its own system of agents, built in public as a template other brands can run. Eleven are live today, one is in build, and the rest are planned and labelled that way.</p>
         </div>
-        <article class="mo-card venture__prod" data-sc-cue="0.12 1 0.16 0">
+        <div class="os__fix" data-sc-cue="0.3 1 0.18 0">
           <p class="mo-kick mo-kick--gold">Flagship product</p>
-          <h3 class="mo-h mo-h--sm">Harkardah Schools</h3>
-          <p class="mo-p" style="font-size:15px">A school operating system that unifies administration, academics, attendance, fees and parent communication.</p>
-        </article>
-        <div class="venture__explore" data-sc-cue="0.28 1 0.18 0">
-          <div><b>Academic Support</b><span>A platform for learning support</span><em class="mo-tag mo-tag--plan" style="font-style:normal;justify-self:start">Exploring</em></div>
-          <div><b>QuestEd</b><span>AI-powered, story-based science learning</span><em class="mo-tag mo-tag--plan" style="font-style:normal;justify-self:start">Exploring</em></div>
-          <div><b>CrossTalk</b><span>Discourse on education and society</span><em class="mo-tag mo-tag--plan" style="font-style:normal;justify-self:start">Exploring</em></div>
+          <h3 class="mo-h mo-h--sm">Job Search Agent</h3>
+          <p class="mo-p mo-p--ink" style="font-size:15px">It scores every role against your profile, drafts the application, and holds it at a gate until you approve. Nothing is sent without your sign-off.</p>
+          <span class="mo-tag mo-tag--build" style="justify-self:start">In build</span>
         </div>
+        <ol class="os__loop" data-sc-cue="0.16 1 0.18 0" aria-label="The job hunt it replaces">
+          <li><b>01</b><span>Polish the portfolio</span></li>
+          <li><b>02</b><span>Search hundreds of roles</span></li>
+          <li><b>03</b><span>Tailor every application</span></li>
+          <li><b>04</b><span>Wait for weeks</span></li>
+          <li><b>05</b><span>Hear nothing back</span></li>
+        </ol>
+      </div>
+      <div data-sc-cue="0 1 0 0">
+        <div class="os__grid" id="os-grid" role="img" aria-label="33 agent tiles: 11 lit as live, 1 outlined as in build, 21 planned"></div>
+        <div class="os__legend"><span><i style="background:var(--mo-gold)"></i>Live · 11</span><span><i style="background:transparent;box-shadow:inset 0 0 0 1.5px var(--mo-gold)"></i>In build · Prospecting</span><span><i style="background:var(--mo-clay-2);box-shadow:inset 0 0 0 1px var(--mo-hair-2)"></i>Planned · 21</span></div>
       </div>
     </div>
   </section>
@@ -219,6 +224,20 @@ export const BRAND_MARKUP = `<span data-sc-progress></span>
         </div>
       </article>
 
+      <article class="mo-card case pill-design" data-sc-in data-sc-stagger="70">
+        <img class="mo-render" src="assets/mc-case-rcv.webp" width="1024" height="1024" alt="The Raw Concept Ventures (RCV) logo" loading="lazy">
+        <div class="case__body">
+          <div class="case__meta"><span class="mo-chip">Product Design</span><span class="mo-tag mo-tag--claimed">Delivered</span></div>
+          <h3 class="mo-h mo-h--md">Raw Concept Ventures Ltd.</h3>
+          <p class="mo-p">A supplier of ceramic and porcelain tiles, with offices in Lagos, Benin and Abuja. The brand work was print collateral built for how they sell to architects and developers: a company profile laid out like a product catalogue, and a compliment card for the team.</p>
+          <ul class="case__facts">
+            <li><b>Profile</b><span>Mission, collections, specs and services in one document</span></li>
+            <li><b>Card</b><span>Two-sided compliment card for the office</span></li>
+            <li><b>Delivered</b><span>April 2026, for a tile supplier in Ikeja, Lagos</span></li>
+          </ul>
+        </div>
+      </article>
+
       <div class="metric pill-design" data-sc-in>
         <span class="mo-chip">Product Design</span>
         <b>+18%</b>
@@ -228,35 +247,7 @@ export const BRAND_MARKUP = `<span data-sc-progress></span>
     </div>
   </section>
 
-  <!-- 7 · THE AGENT OS — pin. 33 tiles light as you scroll; three are real. -->
-  <section id="os" data-sc-act="pin" data-sc-span="2.4">
-    <div data-sc-stage class="os">
-      <div class="os__copy">
-        <div data-sc-cue="0 1 0 0" style="display:grid;gap:14px">
-          <span class="mo-chip pill-ai">AI Automation · in-house first</span>
-          <h2 class="mo-h mo-h--lg">A one-person brand, run on 33 agents.</h2>
-          <p class="mo-p">The practice is being rebuilt as a system of agents, in public, as a template other brands can run. Three are in build today. The rest are planned, and labelled that way.</p>
-        </div>
-        <div class="os__fix" data-sc-cue="0.3 1 0.18 0">
-          <p class="mo-kick mo-kick--gold">In build · Job Search Agent</p>
-          <p class="mo-p mo-p--ink" style="font-size:15px">It scores every role against your profile, drafts the application, and holds it at a gate until you approve. Nothing is sent without your sign-off.</p>
-        </div>
-        <ol class="os__loop" data-sc-cue="0.16 1 0.18 0" aria-label="The job hunt it replaces">
-          <li><b>01</b><span>Polish the portfolio</span></li>
-          <li><b>02</b><span>Search hundreds of roles</span></li>
-          <li><b>03</b><span>Tailor every application</span></li>
-          <li><b>04</b><span>Wait for weeks</span></li>
-          <li><b>05</b><span>Hear nothing back</span></li>
-        </ol>
-      </div>
-      <div data-sc-cue="0 1 0 0">
-        <div class="os__grid" id="os-grid" role="img" aria-label="33 agent tiles; three lit as in build: Job Search, Morning Brief, Proposal Generator"></div>
-        <div class="os__legend"><span><i style="background:var(--mo-gold)"></i>In build · Job Search, Morning Brief, Proposal</span><span><i style="background:var(--mo-clay-2);box-shadow:inset 0 0 0 1px var(--mo-hair-2)"></i>Planned</span></div>
-      </div>
-    </div>
-  </section>
-
-  <!-- 8 · FOUNDER + CONTACT — flow, the close. -->
+  <!-- 7 · FOUNDER + CONTACT — flow, the close. -->
   <section id="contact" class="sc-section close" data-sc-act="flow" style="padding-top:clamp(2.5rem,8vh,5rem)">
     <div class="sc-wrap">
       <div class="founder">
@@ -273,10 +264,10 @@ export const BRAND_MARKUP = `<span data-sc-progress></span>
             <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M5 11l6-6M6 5h5v5"/></svg></a>
         </div>
         <ul class="founder__roles" data-sc-in data-sc-stagger="60">
-          <li><div><b>Co-founder, Harkardah</b><span>Digital solutions for learners, teachers and schools</span></div><span class="mo-chip mo-chip--venture">Venture</span></li>
+          <li><div><b>Building the Agentic OS in public</b><span>11 agents live; the Job Search Agent in build</span></div><span class="mo-chip pill-ai">AI</span></li>
           <li><div><b>Built the Topkids Montessori school system</b><span>Discovery first, then admin, teacher and parent portals</span></div><span class="mo-chip pill-design">Design</span></li>
           <li><div><b>Designer and developer, Next Level Procurement</b><span>UK procurement partner, since 2021</span></div><span class="mo-chip pill-design">Design</span></li>
-          <li><div><b>Building the agent OS in public</b><span>Job search, morning brief and proposal agents in build</span></div><span class="mo-chip pill-ai">AI</span></li>
+          <li><div><b>Co-founder, Harkardah</b><span>A separate venture: school-operations software</span></div><span class="mo-chip mo-chip--venture">Founder</span></li>
         </ul>
       </div>
 

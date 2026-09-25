@@ -35,10 +35,11 @@ export function SiteTop() {
           </span>
         </a>
         <nav className="nav__links" aria-label="Sections">
-          <a href="/#about">About</a>
+          <a href="/about">About</a>
           <a href="/#services">Services</a>
-          <a href="/#harkardah">Harkardah</a>
+          <a href="/#os">Agentic OS</a>
           <a href="/#work">Work</a>
+          <a href="/motion">Motion</a>
           <a href="#contact">Contact</a>
         </nav>
         <button className="mo-theme" type="button" data-theme-toggle aria-label="Switch theme">
