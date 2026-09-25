@@ -1,0 +1,174 @@
+/* /about — page layer over brand-tokens.css + brand-page.css (nav, contact,
+   footer, .svc__list, .founder__roles, .room__lines come from there).
+   Rule: never set position or height on a [data-sc-stage] element here. The
+   engine owns both; setting either silently stops the act from pinning. */
+
+/* ── 1 · Hero: the founder, lit like the renders ─────────────────────────── */
+.ab-hero { overflow: hidden; }
+.ab-hero__ghost {
+  position: absolute; left: 0; right: 0; bottom: -2vw; text-align: center; z-index: 0;
+  transform: translateY(calc(var(--sc-p, 0) * -60px));
+  font-family: var(--sc-font-display); font-weight: 700; letter-spacing: -0.045em; line-height: 0.8;
+  font-size: 19vw; white-space: nowrap; color: var(--mo-ghost); user-select: none;
+}
+.ab-hero__grid {
+  position: relative; z-index: 1; height: 100%;
+  display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr); align-items: center;
+  gap: clamp(1.5rem, 5vw, 5rem);
+  padding: calc(76px + 2vh) var(--sc-gutter) 4vh;
+  max-width: var(--sc-maxw); margin-inline: auto;
+}
+.ab-hero__copy { display: grid; gap: var(--sc-5); align-content: center; transform: translateY(calc(var(--sc-p, 0) * -90px)); }
+.ab-hero__copy .mo-h { max-width: 14ch; }
+.ab-hero__pillars { display: flex; flex-wrap: wrap; gap: 8px; }
+.ab-portrait {
+  margin: 0; position: relative; justify-self: center;
+  width: min(100%, 400px, 52vh); aspect-ratio: 880 / 1056; border-radius: 28px; overflow: hidden;
+  box-shadow: var(--mo-raise), var(--mo-edge);
+  transform: translateY(calc(var(--sc-p, 0) * -40px)) scale(calc(1 + var(--sc-p, 0) * 0.05));
+  transform-origin: 50% 60%;
+}
+.ab-portrait img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.ab-portrait figcaption { position: absolute; left: 14px; bottom: 14px; }
+.ab-portrait .mo-chip { background: var(--mo-nav-a); }
+
+/* ── shared section head ─────────────────────────────────────────────────── */
+.ab-head { display: grid; gap: var(--sc-4); margin-bottom: var(--sc-8); max-width: 44rem; }
+
+/* ── 2 · Mission + vision ───────────────────────────────────────────────── */
+.ab-mv { padding-block: clamp(4rem, 12vh, 8rem) clamp(3rem, 9vh, 6rem); }
+.ab-mv__grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(1.2rem, 2.4vw, 2rem); }
+.ab-mv__card { padding: clamp(24px, 3vw, 40px); display: grid; gap: var(--sc-4); align-content: start; }
+.ab-mv__text {
+  margin: 0; font-family: var(--sc-font-display); font-weight: 500; letter-spacing: -0.015em;
+  font-size: clamp(1.2rem, 1.05rem + 0.6vw, 1.55rem); line-height: 1.32; color: var(--sc-ink); text-wrap: pretty;
+}
+
+/* ── 3 · The whole job: three plates light in turn ──────────────────────── */
+.ab-job {
+  display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: clamp(2rem, 5vw, 5rem); align-items: center;
+  padding: calc(76px + 3vh) var(--sc-gutter) 5vh;   /* stage size is engine mechanism: never set height here */
+  max-width: var(--sc-maxw); margin-inline: auto;
+}
+.ab-stack {
+  margin: 0; width: min(100%, 560px); justify-self: center;
+  padding: clamp(52px, 6vh, 64px) clamp(18px, 2.4vw, 30px) clamp(18px, 2.4vw, 30px);
+  display: grid; gap: clamp(10px, 1.6vh, 16px);
+}
+.ab-stack__label { position: absolute; left: 22px; top: 18px; }
+
+/* each plate's progress, straight from the act's --sc-p */
+.ab-job { --s1: clamp(0, calc((var(--sc-p, 0) - 0.02) * 6), 1);
+          --s2: clamp(0, calc((var(--sc-p, 0) - 0.35) * 6), 1);
+          --s3: clamp(0, calc((var(--sc-p, 0) - 0.68) * 6), 1); }
+.ab-plate--1 { --on: var(--s1); }
+.ab-plate--2 { --on: var(--s2); }
+.ab-plate--3 { --on: var(--s3); }
+.ab-plate {
+  display: grid; grid-template-columns: 7.5rem minmax(0, 1fr); gap: 16px; align-items: center;
+  padding: 16px 18px; border-radius: 20px; min-height: clamp(78px, 11vh, 118px);
+  box-shadow: var(--mo-press);
+  opacity: calc(0.32 + var(--on) * 0.68);
+  transform: translateY(calc((1 - var(--on)) * 10px));
+  position: relative;
+}
+/* the lit edge: the pillar's metal as a hairline, never a glow */
+.ab-plate::after {
+  content: ""; position: absolute; inset: 0; border-radius: inherit; pointer-events: none;
+  box-shadow: inset 0 0 0 1px color-mix(in oklab, var(--pill) 55%, transparent);
+  opacity: var(--on);
+}
+.ab-plate .mo-chip { justify-self: start; }
+
+.ab-wire { display: grid; grid-template-columns: 22% 1fr; grid-template-rows: 8px 1fr 1fr; gap: 6px; height: clamp(46px, 7vh, 72px); }
+.ab-wire i { border-radius: 4px; box-shadow: inset 0 0 0 1px var(--mo-hair-2); }
+.ab-wire__bar { grid-column: 1 / -1; background: color-mix(in oklab, var(--pill) 40%, transparent); box-shadow: none !important;
+  transform-origin: 0 50%; transform: scaleX(var(--on)); }
+.ab-wire__side { grid-row: 2 / span 2; }
+.ab-code { display: grid; gap: 2px; font-family: var(--sc-font-mono); font-size: 12px; line-height: 1.5; color: var(--sc-ink-soft); white-space: nowrap; overflow: hidden; }
+.ab-code span:first-child, .ab-code span:last-child { color: var(--pill); }
+.ab-nodes { display: flex; align-items: center; height: clamp(46px, 7vh, 72px); }
+.ab-nodes i { flex: none; width: 16px; height: 16px; border-radius: 50%; box-shadow: inset 0 0 0 1.5px var(--pill); }
+.ab-nodes b { flex: 1; height: 1.5px; background: color-mix(in oklab, var(--pill) 60%, transparent);
+  transform-origin: 0 50%; transform: scaleX(var(--on)); }
+.ab-nodes__gate { border-radius: 5px !important; background: color-mix(in oklab, var(--pill) calc(var(--on) * 70%), transparent); }
+
+.ab-job__copy { min-width: 0; }
+.ab-job__lines { min-height: 8.5em; }
+.ab-job__steps { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin: var(--sc-6) 0 0; }
+.ab-job__steps > div { display: grid; gap: 8px; }
+.ab-job__steps dt { font-family: var(--sc-font-mono); font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--sc-ink-soft); }
+.ab-job__steps dd { margin: 0; height: 3px; border-radius: 3px; background: var(--mo-hair-2); position: relative; overflow: hidden; }
+.ab-bar { position: absolute; inset: 0; background: var(--pill); transform-origin: 0 50%; }
+.ab-bar--1 { transform: scaleX(clamp(0, calc(var(--sc-p, 0) * 3), 1)); }
+.ab-bar--2 { transform: scaleX(clamp(0, calc((var(--sc-p, 0) - 0.333) * 3), 1)); }
+.ab-bar--3 { transform: scaleX(clamp(0, calc((var(--sc-p, 0) - 0.667) * 3), 1)); }
+
+/* ── 4 · The practice ─────────────────────────────────────────────────── */
+.ab-practice { padding-block: clamp(4rem, 11vh, 7rem); }
+.ab-practice__grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(1.2rem, 2.4vw, 2rem); }
+.ab-pillar { padding: clamp(24px, 3vw, 40px); display: grid; gap: var(--sc-5); align-content: start; }
+.ab-flagship {
+  margin-top: clamp(1.2rem, 2.4vw, 2rem); padding: clamp(20px, 2.6vw, 32px);
+  display: grid; grid-template-columns: auto minmax(0, 1fr) auto; gap: 14px 28px; align-items: center;
+  border-radius: 24px; box-shadow: inset 0 0 0 1px color-mix(in oklab, var(--pill) 40%, transparent);
+}
+.ab-flagship .mo-p { max-width: 60ch; }
+
+/* ── 5 · Skills ─────────────────────────────────────────────────────── */
+.ab-skills { padding-block: clamp(4rem, 11vh, 7rem); }
+.ab-skills__grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(1.2rem, 2.4vw, 2rem); }
+.ab-skillset { padding: 22px 24px 24px; border-radius: 24px; box-shadow: var(--mo-press); display: grid; gap: var(--sc-4); align-content: start; }
+.ab-skillset h3 { margin: 0; }
+.ab-skillset ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px; }
+.ab-skillset li {
+  font-family: var(--sc-font-mono); font-size: 12px; letter-spacing: 0.02em; color: var(--sc-ink);
+  padding: 6px 11px; border-radius: 999px; background: var(--mo-clay);
+  box-shadow: var(--mo-raise-sm), var(--mo-edge), inset 0 0 0 1px var(--mo-hair);
+}
+
+/* ── 6 · Track record + education ──────────────────────────────────────── */
+.ab-history { padding-block: clamp(4rem, 11vh, 7rem) clamp(2rem, 6vh, 4rem); }
+.ab-history__grid { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 0.8fr); gap: clamp(2rem, 5vw, 5rem); align-items: start; }
+.ab-group { margin: var(--sc-7) 0 0; }
+.ab-head + .ab-group { margin-top: 0; }
+.ab-note { margin-top: var(--sc-2); font-size: 15px; }
+.ab-roles { margin-top: var(--sc-4); }
+.ab-roles li { align-items: center; }
+.ab-when { color: var(--sc-ink-soft); white-space: nowrap; }
+.ab-edu { padding: clamp(22px, 2.6vw, 32px); border-radius: 24px; box-shadow: var(--mo-press); display: grid; gap: var(--sc-4); position: sticky; top: 96px; }
+.ab-edu ul { list-style: none; margin: 0; padding: 0; display: grid; }
+.ab-edu li { display: grid; gap: 4px; padding: 14px 0; border-top: 1px solid var(--mo-hair); }
+.ab-edu li:last-child { border-bottom: 1px solid var(--mo-hair); }
+.ab-edu b { font-family: var(--sc-font-display); font-weight: 600; font-size: 17px; letter-spacing: -0.01em; }
+.ab-edu span { color: var(--sc-ink-soft); }
+
+/* ── Phone ─────────────────────────────────────────────────────────────── */
+@media (max-width: 900px) {
+  .ab-hero__ghost { display: none; }
+  .ab-hero__grid { grid-template-columns: 1fr; align-content: center; gap: var(--sc-5); padding-top: 84px; }
+  .ab-hero__copy { transform: none; gap: var(--sc-4); }
+  .ab-portrait { order: -1; width: min(46vw, 24vh); border-radius: 22px; justify-self: start; }
+  .ab-mv__grid, .ab-practice__grid, .ab-skills__grid, .ab-history__grid { grid-template-columns: 1fr; }
+  .ab-job { grid-template-columns: 1fr; gap: var(--sc-5); align-content: center; padding-top: 84px; }
+  .ab-stack { width: 100%; padding-top: 46px; }
+  .ab-plate { grid-template-columns: 6.2rem minmax(0, 1fr); padding: 12px 14px; min-height: 0; }
+  .ab-wire, .ab-nodes { height: 40px; }
+  .ab-job__lines { min-height: 8em; }
+  .ab-job .mo-h--lg { font-size: 1.9rem; }
+  .ab-job__steps { margin-top: var(--sc-4); }
+  .ab-flagship { grid-template-columns: 1fr; }
+  .ab-flagship .mo-btn { justify-self: start; }
+  .ab-edu { position: static; }
+}
+@media (max-width: 520px) {
+  .ab-hero .mo-h--xl { font-size: 2.3rem; }
+  .ab-hero .hero__ctas .mo-btn { padding: 12px 18px; font-size: 14px; }
+  .ab-roles li { grid-template-columns: 1fr; gap: 8px; }
+  .ab-code { font-size: 11px; }
+}
+
+/* reduced motion: opacity still carries the story; nothing translates */
+@media (prefers-reduced-motion: reduce) {
+  .ab-hero__ghost, .ab-hero__copy, .ab-portrait, .ab-plate { transform: none; }
+}

@@ -15,7 +15,8 @@ export default function Home() {
   return (
     <>
       <div dangerouslySetInnerHTML={{ __html: BRAND_MARKUP }} />
-      <Script src="/brand.js" strategy="afterInteractive" />
+      <Script src="/mo-core.js" strategy="afterInteractive" />
+      <Script src="/home.js" strategy="afterInteractive" />
     </>
   );
 }

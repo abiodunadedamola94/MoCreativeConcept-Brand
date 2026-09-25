@@ -1,0 +1,4 @@
+/* Shared chrome for /about and /motion: only what the home page's
+   brand-page.css does not already carry. */
+.site-links { display: flex; flex-wrap: wrap; gap: 8px 18px; margin: 0; }
+.site-links a { color: var(--sc-ink); text-underline-offset: 4px; }

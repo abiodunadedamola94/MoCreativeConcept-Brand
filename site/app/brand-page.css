@@ -84,16 +84,6 @@
   .svc__list li span { font-family: var(--sc-font-mono); font-size: 11px; color: var(--pill); padding-top: 3px; }
   .svc__list small { display: block; color: var(--sc-ink-soft); font-size: 13.5px; margin-top: 2px; }
 
-  /* ── 5 · Flagship venture: Harkardah ──────────────────────────────────── */
-  .venture { display: grid; grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr); gap: clamp(2rem, 5vw, 5rem); align-items: center;
-    padding: calc(76px + 3vh) var(--sc-gutter) 5vh; }  /* stage size is engine mechanism: never set height here */
-  .venture__art { width: min(100%, 66vh); justify-self: center; }
-  .venture__copy { display: grid; gap: var(--sc-5); align-content: center; }
-  .venture__prod { padding: 20px 22px; display: grid; gap: 8px; }
-  .venture__explore { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
-  .venture__explore div { padding: 14px 16px; border-radius: 16px; box-shadow: var(--mo-press); display: grid; gap: 6px; }
-  .venture__explore b { font-family: var(--sc-font-display); font-size: 15px; letter-spacing: -0.01em; }
-  .venture__explore span { font-size: 13px; line-height: 1.45; color: var(--sc-ink-soft); font-family: var(--sc-font-text); }
 
   /* ── 6 · Work: case studies ───────────────────────────────────────────── */
   .work { padding-block: clamp(4rem, 11vh, 7rem); }
@@ -120,6 +110,7 @@
     transform: scale(calc(0.86 + min(1, max(0, var(--sc-p, 0) * 46 - var(--i) * 0.9)) * 0.14)); }
   .os__tile--build { background: radial-gradient(circle at 50% 42%, var(--mo-lit-1), var(--mo-lit-2) 38%, var(--mo-tile-b) 72%);
     box-shadow: var(--mo-raise-sm), inset 0 0 0 1px var(--mo-gold-line); }  /* lit from inside, no halo */
+  .os__tile--next { box-shadow: var(--mo-raise-sm), inset 0 0 0 1.5px var(--mo-gold); }  /* in build: gold outline, not yet lit */
   .os__legend { display: flex; flex-wrap: wrap; gap: 14px 22px; margin-top: var(--sc-4); font-family: var(--sc-font-mono); font-size: 12px; letter-spacing: 0.02em; color: var(--sc-ink-soft); }
   .os__legend i { display: inline-block; width: 10px; height: 10px; border-radius: 3px; margin-right: 8px; vertical-align: -1px; }
   .os__loop { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 8px; }
@@ -161,16 +152,6 @@
     .room__card { width: min(72vw, 36vh); }
     .room__lines { min-height: 7.5em; }
     .svc__grid { grid-template-columns: 1fr; }
-    /* the art parallaxes ±45px: keep a gap wider than its travel so it never
-       drifts under the copy (in light mode it is a dark tile) */
-    .venture { grid-template-columns: 1fr; gap: 56px; align-content: center; padding-top: 84px; }
-    .venture__art { width: min(40vw, 19vh); }
-    .venture__explore { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px; }
-    .venture__explore div { padding: 9px 10px; gap: 5px; }
-    .venture__explore b { font-size: 12.5px; }
-    .venture__prod { padding: 14px 16px; }
-    .venture .mo-h--lg { font-size: 1.9rem; }
-    .venture__explore span { display: none; }
     .case { grid-template-columns: 1fr; }
     .case .mo-render { width: min(58vw, 240px); justify-self: center; }
     .case__facts { grid-template-columns: 1fr; }

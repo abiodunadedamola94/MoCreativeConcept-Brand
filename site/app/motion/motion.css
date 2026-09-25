@@ -1,0 +1,136 @@
+/* /motion — page layer over brand-tokens.css + brand-page.css (nav, contact,
+   footer, .case__meta, .room__lines come from there).
+   Rule: never set position or height on a [data-sc-stage] element here. The
+   engine owns both; setting either silently stops the act from pinning. */
+
+/* ── 1 · Hero: scroll is the playhead ─────────────────────────────────── */
+.mt-hero { overflow: hidden; }
+.mt-hero__ghost {
+  position: absolute; left: 0; right: 0; bottom: -2vw; text-align: center; z-index: 0;
+  transform: translateY(calc(var(--sc-p, 0) * -60px));
+  font-family: var(--sc-font-display); font-weight: 700; letter-spacing: -0.045em; line-height: 0.8;
+  font-size: 21vw; white-space: nowrap; color: var(--mo-ghost); user-select: none;
+}
+.mt-hero__grid {
+  position: relative; z-index: 1; height: 100%;
+  display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); align-items: center;
+  gap: clamp(1.5rem, 5vw, 5rem);
+  padding: calc(76px + 2vh) var(--sc-gutter) 4vh;
+  max-width: var(--sc-maxw); margin-inline: auto;
+}
+.mt-hero__copy { display: grid; gap: var(--sc-5); align-content: center; }
+.mt-hero__copy .mo-h { max-width: 10ch; }
+
+.mt-curve { margin: 0; padding: clamp(18px, 2.4vw, 28px); display: grid; gap: 12px; width: min(100%, 520px); justify-self: center; }
+.mt-curve__head { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; }
+.mt-curve__frame { color: var(--sc-ink-soft); white-space: nowrap; }
+.mt-curve__frame b { color: var(--sc-ink); font-weight: 500; font-variant-numeric: tabular-nums; }
+.mt-curve__svg { width: 100%; height: auto; overflow: visible; }
+.mt-curve__grid { fill: none; stroke: var(--mo-hair); stroke-width: 1; }
+.mt-curve__ghost { fill: none; stroke: var(--mo-hair-2); stroke-width: 2; stroke-dasharray: 3 5; }
+.mt-curve__line { fill: none; stroke: var(--pill); stroke-width: 2.6; stroke-linecap: round; }
+.mt-curve__head-line { stroke: var(--sc-ink-soft); stroke-width: 1; stroke-dasharray: 2 4; }
+.mt-curve__dot { fill: var(--mo-clay); stroke: var(--pill); stroke-width: 2.5; }
+.mt-curve__ease { color: var(--sc-ink-soft); margin: 0; }
+
+.mt-track { position: relative; height: 34px; border-radius: 999px; box-shadow: var(--mo-press); }
+.mt-track__rail { position: absolute; left: 20px; right: 20px; top: 50%; height: 1px; background: var(--mo-hair-2); }
+.mt-key { position: absolute; top: 50%; width: 9px; height: 9px; margin: -4.5px 0 0 -4.5px; transform: rotate(45deg);
+  box-shadow: inset 0 0 0 1.5px var(--mo-hair-2); }
+.mt-key--1 { left: calc(20px + (100% - 40px) * 0.12); background: color-mix(in oklab, var(--pill) calc(clamp(0, (var(--sc-p, 0) - 0.12) * 40, 1) * 100%), transparent); }
+.mt-key--2 { left: calc(20px + (100% - 40px) * 0.45); background: color-mix(in oklab, var(--pill) calc(clamp(0, (var(--sc-p, 0) - 0.45) * 40, 1) * 100%), transparent); }
+.mt-key--3 { left: calc(20px + (100% - 40px) * 0.8);  background: color-mix(in oklab, var(--pill) calc(clamp(0, (var(--sc-p, 0) - 0.8) * 40, 1) * 100%), transparent); }
+/* the object: positioned by motion.js at ease(p) along the rail */
+.mt-track__obj {
+  position: absolute; top: 50%; left: 20px; width: 20px; height: 20px; margin: -10px 0 0 -10px; border-radius: 7px;
+  background: var(--mo-clay); box-shadow: var(--mo-raise-sm), var(--mo-edge), inset 0 0 0 1.5px var(--pill);
+  transform: translateX(var(--mt-x, 0px));
+}
+.mt-rules { min-height: 4.8em; margin-top: 4px; }
+.mt-rules .mo-p { font-size: 15px; line-height: 1.55; }
+
+/* ── shared section head ─────────────────────────────────────────────── */
+.mt-head { display: grid; gap: var(--sc-4); max-width: 44rem; align-content: start; }
+
+/* ── 2 · The reel ──────────────────────────────────────────────────────── */
+.mt-reel { padding-block: clamp(4rem, 11vh, 7rem); }
+.mt-reel__head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: end; gap: var(--sc-6); margin-bottom: var(--sc-8); }
+.mt-facts { display: flex; flex-wrap: wrap; gap: 10px; margin: 0; }
+.mt-facts > div { padding: 12px 16px; border-radius: 16px; box-shadow: var(--mo-press); display: grid; gap: 4px; min-width: 8.5rem; }
+.mt-facts dt { font-family: var(--sc-font-mono); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--sc-ink-soft); }
+.mt-facts dd { margin: 0; font-family: var(--sc-font-display); font-weight: 600; font-size: 20px; letter-spacing: -0.01em; }
+
+.mt-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(1.2rem, 2.4vw, 2rem); }
+.mt-piece { padding: clamp(14px, 1.6vw, 20px); display: grid; gap: var(--sc-5); align-content: start; }
+.mt-piece--lead { grid-column: 1 / -1; grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); align-items: center; }
+.mt-piece__body { display: grid; gap: var(--sc-4); padding: 4px 8px 8px; align-content: start; }
+.mt-piece__index { margin-left: auto; color: var(--sc-ink-soft); }
+.mt-piece__foot { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 16px; margin-top: var(--sc-2); }
+.mt-piece__format { color: var(--sc-ink-soft); }
+.mt-tags { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 6px; }
+.mt-tags li { font-family: var(--sc-font-mono); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--sc-ink-soft);
+  padding: 3px 9px; border-radius: 999px; box-shadow: inset 0 0 0 1px var(--mo-hair-2); }
+
+/* the screen: a dark vitrine in both themes, like the renders on paper */
+.mt-media { position: relative; aspect-ratio: 16 / 9; border-radius: 20px; overflow: hidden; background: var(--mo-vitrine);
+  box-shadow: var(--mo-press); isolation: isolate; }
+.mt-media__poster {
+  position: absolute; inset: 0; z-index: 1; border: 0; padding: 18px 20px; cursor: pointer; text-align: left;
+  display: grid; grid-template-rows: auto 1fr auto; justify-items: start;
+  color: #F3EFE7; background:
+    repeating-linear-gradient(90deg, rgba(243, 239, 231, 0.035) 0 1px, transparent 1px 58px),
+    linear-gradient(180deg, rgba(255, 244, 225, 0.04), rgba(0, 0, 0, 0.22));
+  transition: opacity 260ms var(--mo-ease);
+}
+.mt-media__label { color: #ABA396; position: relative; }
+.mt-media__title { position: absolute; left: 20px; right: 20px; bottom: 44px; font-family: var(--sc-font-display); font-weight: 700;
+  font-size: clamp(28px, 4.2vw, 60px); letter-spacing: -0.035em; line-height: 0.95; color: rgba(243, 239, 231, 0.07); text-wrap: balance; pointer-events: none; }
+.mt-media.is-offline .mt-media__hint { color: #E8B566; }
+.mt-media__hint { color: #ABA396; position: relative; }
+.mt-media__play {
+  align-self: center; justify-self: center; width: clamp(56px, 6vw, 72px); aspect-ratio: 1; border-radius: 50%;
+  display: grid; place-items: center; background: #211e1a; color: #E8B566;
+  box-shadow: -5px -5px 12px rgba(255, 244, 225, 0.03), 6px 8px 16px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 244, 225, 0.06), inset 0 0 0 1px rgba(227, 169, 79, 0.45);
+  transition: transform 180ms var(--mo-ease);
+}
+.mt-media__play svg { width: 42%; height: 42%; margin-left: 8%; }
+@media (hover: hover) and (pointer: fine) { .mt-media__poster:hover .mt-media__play { transform: scale(1.06); } }
+.mt-media__poster:active .mt-media__play { transform: scale(0.97); }
+.mt-media__embed { position: absolute; inset: 0; z-index: 0; }
+.mt-media__embed video, .mt-media__embed iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; object-fit: cover; background: #000; }
+.mt-media.is-playing .mt-media__poster { opacity: 0; pointer-events: none; }
+.mt-media.is-playing .mt-media__embed { z-index: 2; }
+
+/* ── 3 · What I animate ────────────────────────────────────────────────── */
+.mt-craft { padding-block: clamp(4rem, 11vh, 7rem) clamp(2rem, 6vh, 4rem); }
+.mt-craft__grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: clamp(2rem, 5vw, 5rem); align-items: start; }
+.mt-craft__list { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+.mt-craft__list li { display: grid; gap: 6px; padding: 14px 16px; border-radius: 16px; box-shadow: var(--mo-press);
+  font-family: var(--sc-font-display); font-weight: 600; font-size: 16px; letter-spacing: -0.01em; }
+.mt-craft__list li span { color: var(--mo-gold-text); font-weight: 400; font-size: 11px; }
+
+/* ── Phone ─────────────────────────────────────────────────────────────── */
+@media (max-width: 900px) {
+  .mt-hero__ghost { display: none; }
+  .mt-hero__grid { grid-template-columns: 1fr; align-content: center; gap: var(--sc-5); padding-top: 84px; }
+  .mt-hero__copy { gap: var(--sc-3); }
+  .mt-hero__copy .mo-p { font-size: 0.95rem; }
+  .mt-curve { width: 100%; gap: 8px; }
+  .mt-curve__svg { max-height: 20vh; }
+  .mt-rules { min-height: 5.2em; }
+  .mt-rules .mo-p { font-size: 14px; }
+  .mt-grid, .mt-craft__grid { grid-template-columns: 1fr; }
+  .mt-piece--lead { grid-template-columns: 1fr; }
+}
+@media (max-width: 520px) {
+  .mt-hero .mo-h--xl { font-size: 2.4rem; }
+  .mt-hero .hero__ctas { display: none; }
+  .mt-hero__copy .mo-p { font-size: 0.92rem; line-height: 1.5; }
+  .mt-curve__ease { display: none; }
+  .mt-craft__list { grid-template-columns: 1fr; }
+  .mt-facts > div { min-width: 0; flex: 1 1 30%; padding: 10px 12px; }
+  .mt-facts dd { font-size: 16px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .mt-hero__ghost { transform: none; }
+}
