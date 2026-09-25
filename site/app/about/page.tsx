@@ -278,7 +278,7 @@ export default function AboutPage() {
                 <li>
                   <div>
                     <b>Next Level Procurement</b>
-                    <span>Sole designer and developer. A rebrand and a rebuilt live site. Started in 2021, now concluded.</span>
+                    <span>Sole designer and developer. A rebrand and a rebuilt live site. Since 2021, and the relationship is still growing.</span>
                   </div>
                   <span className="mo-chip pill-design">Design</span>
                 </li>
