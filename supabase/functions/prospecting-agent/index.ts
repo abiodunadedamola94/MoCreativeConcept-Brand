@@ -14,6 +14,10 @@ import { createClient } from "jsr:@supabase/supabase-js@2";
 // least-recently-run active queries. Only facts seen in search results are
 // stored, each with its source URL; nothing is guessed.
 //
+// SECTOR RUNS: POST {"sector": "Education"} to search only that sector's
+// active queries and draft only that sector's prospects. No body (the cron)
+// keeps the normal rotation across all sectors.
+//
 // WHAT TO PITCH (from website_status):
 //   found       -> AI Automation (they have a site; offer the AI audit)
 //   none_found  -> Product Design (searched, no site; offer a website)
@@ -83,6 +87,7 @@ Rules:
   "AI Automation" = a short AI audit (a written report plus one quick win). Never say the
   audit or anything else is free, and never mention a price.
 - Never claim past clients, results or numbers. Never promise outcomes.
+- Never offer or mention school management software, even to a school.
 - End with a soft question, then sign off "Damola, MoCreative Concept"${channel === "email" ? ` and ${INBOX}` : ""}.
 Return only the message text${channel === "email" ? ", starting with a subject line as 'Subject: ...'" : ""}.`;
 
@@ -126,13 +131,15 @@ function parseArray(text: string): Found[] {
   }
 }
 
-Deno.serve(async (_req: Request) => {
+Deno.serve(async (req: Request) => {
   const supabase = createClient(Deno.env.get("SUPABASE_URL")!, Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!);
+  const body = await req.json().catch(() => ({}));
+  const sector: string | null = clean(body?.sector);
   const log = (status: string, output_summary: string, error_detail?: string) =>
     supabase.from("agent_logs").insert({
       agent_name: "06 — Prospecting Agent",
       layer: "Layer 1 — Acquisition",
-      triggered_by: "scheduled-daily",
+      triggered_by: sector ? `manual (sector: ${sector})` : "scheduled-daily",
       status,
       output_summary,
       error_detail: error_detail ?? null,
@@ -154,10 +161,12 @@ Deno.serve(async (_req: Request) => {
         body: JSON.stringify(body),
       });
 
-    const { data: queries, error: qErr } = await supabase
+    let queryRows = supabase
       .from("prospect_queries")
       .select("id, query, sector, runs")
-      .eq("active", true)
+      .eq("active", true);
+    if (sector) queryRows = queryRows.eq("sector", sector);
+    const { data: queries, error: qErr } = await queryRows
       .order("last_run_at", { ascending: true, nullsFirst: true })
       .limit(QUERIES_PER_RUN);
     if (qErr) throw qErr;
@@ -230,13 +239,15 @@ Deno.serve(async (_req: Request) => {
     }
 
     // ── 2. draft messages for the best reachable new fits ───────────────
-    const { data: toDraft } = await supabase
+    let draftRows = supabase
       .from("prospects")
       .select("id, name, sector, pillar, website, website_status, contact_channel")
       .eq("status", "New")
       .is("draft_message", null)
       .neq("contact_channel", "none")
-      .gte("fit_score", DRAFT_MIN_SCORE)
+      .gte("fit_score", DRAFT_MIN_SCORE);
+    if (sector) draftRows = draftRows.eq("sector", sector);
+    const { data: toDraft } = await draftRows
       .order("fit_score", { ascending: false })
       .limit(MAX_DRAFTS_PER_RUN);
 
@@ -271,7 +282,7 @@ Deno.serve(async (_req: Request) => {
     }
 
     // one row per run, including quiet runs, so a silent failure is visible
-    const summary =
+    const summary = (sector ? `[${sector} only] ` : "") +
       `Searched ${(queries ?? []).map((q) => `"${q.query}"`).join(", ") || "nothing (no active queries)"} ` +
       `(${searches} web searches): ${found} found, ${added} new, ${drafted} drafts written. Nothing sent.`;
     await log(errors.length ? "failed" : "success", summary, errors.length ? errors.join(" | ").slice(0, 2000) : undefined);
