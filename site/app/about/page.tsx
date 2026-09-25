@@ -222,8 +222,9 @@ export default function AboutPage() {
             <article className="ab-flagship pill-ai" data-sc-in data-sc-stagger="70">
               <span className="mo-chip">Flagship · Agentic OS</span>
               <p className="mo-p mo-p--ink">
-                The practice itself is being rebuilt as a system of agents, in public, as a template other brands can
-                run. The agents in build are labelled that way. So are the ones still planned.
+                The practice runs on its own system of 33 agents, built in public as a template other brands can
+                run. Eleven are live, one is in build, and the rest are planned and labelled that way. Its flagship
+                product is the Job Search Agent, in build.
               </p>
               <a className="mo-btn pill-ai" href="/#os">
                 <i></i>See the agent OS
@@ -285,7 +286,7 @@ export default function AboutPage() {
                 <li>
                   <div>
                     <b>The agent OS, built in public</b>
-                    <span>The practice&apos;s own system of agents. The first ones are in build.</span>
+                    <span>The practice&apos;s own system of 33 agents. Eleven are live; the Job Search Agent is in build.</span>
                   </div>
                   <span className="mo-chip pill-ai">AI</span>
                 </li>
