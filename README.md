@@ -34,19 +34,21 @@ practice's agent system sends out.
 site/
 ├── app/
 │   ├── layout.tsx            # fonts, theme-before-paint script
-│   ├── page.tsx              # home — injects BRAND_MARKUP, loads /brand.js
+│   ├── page.tsx              # home: injects BRAND_MARKUP, loads /mo-core.js + /home.js
 │   ├── brand-markup.ts       # home page markup
 │   ├── brand-tokens.css      # ← the design system. Start here.
-│   ├── brand-page.css        # home page styles
+│   ├── brand-page.css        # home page styles; also nav, contact, footer for every page
+│   ├── site-chrome.tsx       # nav + contact/footer for /about and /motion (mirrors the home markup)
 │   ├── scrollcraft.css       # scroll-stage engine styles
 │   ├── invoice-doc.css       # shared styles: /invoice + /proposal
-│   ├── about/                # about page
-│   ├── motion/               # motion portfolio
+│   ├── about/                # /about: founder, practice, track record (page.tsx + about.css)
+│   ├── motion/               # /motion: motion work reel (page.tsx + motion.css)
 │   ├── invoice/              # /invoice — editable client invoice
 │   └── proposal/[id]/        # /proposal/<uuid> — generated proposals
 └── public/
     ├── assets/               # logo renders, case imagery, cursor
-    ├── brand.js              # home page interactivity
+    ├── mo-core.js            # shared: scrollcraft engine + theme, feather cursor, glass
+    ├── home.js | about.js | motion.js   # one page script each, queued on window.__moReady
     └── invoice.js            # invoice line-item engine
 
 supabase/
