@@ -3,9 +3,13 @@ import { createClient } from "jsr:@supabase/supabase-js@2";
 import { refuseUnlessAgentCall } from "../_shared/agent-guard.ts";
 
 // Agent 01 — CEO Agent (lite: no LLM call, zero marginal cost)
-// Formats yesterday's agent activity + revenue + project status into a plain
-// rules-based daily brief, sent every morning. No ANTHROPIC_API_KEY needed —
-// only RESEND_API_KEY, already set from Agent 16.
+// Formats the last 24 hours of agent activity + the outreach pipeline +
+// revenue + project status into a plain rules-based daily brief, sent every
+// morning. No ANTHROPIC_API_KEY needed — only RESEND_API_KEY.
+//
+// An agent is flagged only while its latest run is a failure: a failure that a
+// later successful run already fixed is not news. POST {"dry_run": true} to get
+// the brief back as JSON without sending it.
 //
 // Deliberately simpler than a Claude-synthesized brief: exact numbers, plain
 // rule-based flags, no narrative writing. Upgradeable later to call Claude
@@ -31,20 +35,26 @@ Deno.serve(async (req: Request) => {
       );
     }
 
+    const dryRun = (await req.json().catch(() => ({})))?.dry_run === true;
     const supabase = createClient(supabaseUrl, serviceRoleKey);
 
     const now = new Date();
     const todayStart = new Date(now);
     todayStart.setUTCHours(0, 0, 0, 0);
-    const yesterdayStart = new Date(todayStart);
-    yesterdayStart.setUTCDate(todayStart.getUTCDate() - 1);
+    const dayAgo = new Date(now.getTime() - 24 * 3600 * 1000);
+    const weekAgo = new Date(now.getTime() - 7 * 24 * 3600 * 1000);
+    const lagosToday = new Date(now.getTime() + 3600 * 1000).toISOString().slice(0, 10);
 
+    // A week of runs, so an agent whose last run failed stays flagged until it recovers.
     const { data: logs } = await supabase
       .from("agent_logs")
       .select("agent_name, status, output_summary, run_at")
-      .gte("run_at", yesterdayStart.toISOString())
-      .lt("run_at", todayStart.toISOString())
+      .gte("run_at", weekAgo.toISOString())
       .order("run_at", { ascending: true });
+
+    const { data: prospects } = await supabase
+      .from("prospects")
+      .select("name, status, draft_message, created_at, follow_up_due, bounced_at");
 
     const { data: revenue } = await supabase.from("revenue").select("type, amount_ngn, status, entry_date");
     const { data: projects } = await supabase.from("projects").select("project_name, status");
@@ -66,14 +76,41 @@ Deno.serve(async (req: Request) => {
       projectStatusCounts[p.status] = (projectStatusCounts[p.status] ?? 0) + 1;
     }
 
-    const failedLogs = (logs ?? []).filter((l) => l.status === "failed");
+    // Latest run per agent; flag only agents whose latest run failed.
+    const latest = new Map<string, { status: string; run_at: string }>();
+    for (const l of logs ?? []) latest.set(l.agent_name, l);
+    const stillFailing = [...latest.entries()].filter(([, l]) => l.status === "failed").map(([name]) => name);
+    const runsToday = (logs ?? []).filter((l) => l.run_at >= dayAgo.toISOString());
+
+    // Outreach pipeline.
+    const ps = prospects ?? [];
+    const newLeads = ps.filter((p) => p.created_at >= dayAgo.toISOString()).length;
+    const draftsWaiting = ps.filter((p) => p.status === "New" && p.draft_message).length;
+    const approvedUnsent = ps.filter((p) => p.status === "Approved").length;
+    const contacted = ps.filter((p) => p.status === "Contacted").length;
+    const replied = ps.filter((p) => p.status === "Replied").length;
+    const followUps = ps.filter((p) => p.status === "Contacted" && !p.bounced_at && p.follow_up_due && p.follow_up_due <= lagosToday);
+    const bounced = ps.filter((p) => p.bounced_at && p.status === "Contacted");
 
     // --- Rules-based priority flags, in order of urgency ---
     const priorities: string[] = [];
-    if (failedLogs.length > 0) {
-      priorities.push(
-        `Check ${failedLogs.length} failed agent run(s) from the last 24hrs: ${failedLogs.map((l) => l.agent_name).join(", ")}.`,
-      );
+    if (replied > 0) {
+      priorities.push(`${replied} prospect(s) replied: answer them first.`);
+    }
+    if (followUps.length > 0) {
+      priorities.push(`${followUps.length} follow-up(s) due today: ${followUps.map((p) => p.name).join(", ")}.`);
+    }
+    if (stillFailing.length > 0) {
+      priorities.push(`Still failing on their latest run: ${stillFailing.join(", ")}. Check the agent logs.`);
+    }
+    if (bounced.length > 0) {
+      priorities.push(`${bounced.length} email(s) bounced, reach them another way: ${bounced.map((p) => p.name).join(", ")}.`);
+    }
+    if (approvedUnsent > 0) {
+      priorities.push(`${approvedUnsent} approved message(s) not sent yet.`);
+    }
+    if (draftsWaiting > 0) {
+      priorities.push(`${draftsWaiting} draft(s) waiting for your review.`);
     }
     if (overdueCount > 0) {
       priorities.push(`${overdueCount} invoice(s) marked Overdue, totaling ${fmtNgn(outstanding)} — worth a follow-up.`);
@@ -85,8 +122,12 @@ Deno.serve(async (req: Request) => {
       );
     }
     if (priorities.length === 0) {
-      priorities.push("No flagged items in the last 24hrs — clear runway for deep work or pipeline building.");
+      priorities.push("Nothing flagged — clear runway for deep work or pipeline building.");
     }
+
+    const pipelineLine =
+      `New leads (last 24hrs): ${newLeads}<br>Drafts waiting for review: ${draftsWaiting}<br>Contacted: ${contacted} · Replied: ${replied}<br>` +
+      `Follow-ups due today: ${followUps.length}<br>Agent runs (last 24hrs): ${runsToday.length}, ${runsToday.filter((l) => l.status === "failed").length} failed`;
 
     const projectLines = Object.keys(projectStatusCounts).length
       ? Object.entries(projectStatusCounts).map(([status, count]) => `${status}: ${count}`).join("<br>")
@@ -101,6 +142,8 @@ Deno.serve(async (req: Request) => {
 <tr><td style="padding:32px;">
 <p style="font-family:Arial,Helvetica,sans-serif;font-size:13px;font-weight:bold;color:#00A5F7;text-transform:uppercase;margin:0 0 8px 0;">Top priorities</p>
 <p style="font-family:Georgia,'Times New Roman',serif;font-size:15px;line-height:24px;color:#0A0A0A;margin:0 0 20px 0;">${priorities.map((p) => `• ${p}`).join("<br>")}</p>
+<p style="font-family:Arial,Helvetica,sans-serif;font-size:13px;font-weight:bold;color:#00A5F7;text-transform:uppercase;margin:0 0 8px 0;">Pipeline</p>
+<p style="font-family:Georgia,'Times New Roman',serif;font-size:15px;line-height:24px;color:#0A0A0A;margin:0 0 20px 0;">${pipelineLine}</p>
 <p style="font-family:Arial,Helvetica,sans-serif;font-size:13px;font-weight:bold;color:#00A5F7;text-transform:uppercase;margin:0 0 8px 0;">Project status</p>
 <p style="font-family:Georgia,'Times New Roman',serif;font-size:15px;line-height:24px;color:#0A0A0A;margin:0 0 20px 0;">${projectLines}</p>
 <p style="font-family:Arial,Helvetica,sans-serif;font-size:13px;font-weight:bold;color:#00A5F7;text-transform:uppercase;margin:0 0 8px 0;">Revenue snapshot</p>
@@ -108,6 +151,13 @@ Deno.serve(async (req: Request) => {
 ${decisionLine}
 </td></tr>
 </table></td></tr></table></body></html>`;
+
+    if (dryRun) {
+      return new Response(
+        JSON.stringify({ dry_run: true, priorities, pipeline: pipelineLine.split("<br>"), stillFailing, mrr, outstanding, projectStatusCounts }, null, 2),
+        { headers: { "Content-Type": "application/json" } },
+      );
+    }
 
     const sendRes = await fetch("https://api.resend.com/emails", {
       method: "POST",
